@@ -8,8 +8,16 @@ namespace LanguageFeatures.Controllers
         public ViewResult Index()
         {
             Product?[] products = Product.GetProducts();
-            
-            return View(new string[] { products[2]?.Name ?? "No Value" });
+
+            ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
+            decimal cartTotal = cart.TotalPrices();
+            return View("Index", new string[] { $"Total: {cartTotal:C2}" });
+
+            //return View(new string[] {
+            //    $"Name: {products[0]?.Name}, Price: { products[0]?.Price }"
+            //});
+
+            //return View(new string[] { products[0]?.Name ?? "No Value" });
 
             //return View(new string[] { products[2]!.Name });
 
