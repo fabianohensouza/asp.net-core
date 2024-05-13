@@ -4,6 +4,8 @@
     {
         public string Name { get; set; } = string.Empty;
         public decimal? Price { get; set; }
+        public bool NameBeginsWithS => Name?[0] == 'S';
+
         public static Product?[] GetProducts()
         {
             Product kayak = new Product

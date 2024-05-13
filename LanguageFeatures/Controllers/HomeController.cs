@@ -5,6 +5,11 @@ namespace LanguageFeatures.Controllers
 {
     public class HomeController : Controller
     {
+        //bool FilterByPrice(Product? p)
+        //{
+        //    return (p?.Price ?? 0) >= 20;
+        //}
+
         public ViewResult Index()
         {
             ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
@@ -16,9 +21,20 @@ namespace LanguageFeatures.Controllers
                 new Product {Name = "Corner flag", Price = 34.95M}
             };
 
-            decimal arrayTotal = productArray.FilterByPrice(20).TotalPrices();
+            //Func<Product?, bool> nameFilter = delegate (Product? prod) {
+            //    return prod?.Name?[0] == 'S';
+            //};
 
-            return View("Index", new string[] { $"Array Total: {arrayTotal:C2}" });
+            decimal priceFilterTotal = productArray
+                .Filter(p => (p?.Price ?? 0) >= 20)
+                .TotalPrices();
+            decimal nameFilterTotal = productArray
+                .Filter(p => p?.Name?[0] == 'S')
+                .TotalPrices();
+
+            return View("Index", new string[] {
+                $"Price Total: {priceFilterTotal:C2}",
+                $"Name Total: {nameFilterTotal:C2}" });
 
             //return View(new string[] {
             //    $"Name: {products[0]?.Name}, Price: { products[0]?.Price }"
@@ -35,6 +51,13 @@ namespace LanguageFeatures.Controllers
             //}
             //return View(new string[] { "No Value" });
         }
+
+        public ViewResult Index2()
+        {
+            return View(Product.GetProducts().Select(p => p?.Name));
+        }
+
+        public ViewResult Index3() => View(Product.GetProducts().Select(p => p?.Name));
     }
 }
  
