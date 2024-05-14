@@ -18,8 +18,13 @@
                 Name = "Lifejacket",
                 Price = 48.95M
             };
+            Product soccerball = new Product
+            {
+                Name = "Soccer ball",
+                Price = 18.75M
+            };
 
-            return new Product?[] { kayak, lifejacket, null };
+            return new Product?[] { kayak, lifejacket, soccerball, null };
         }
     }
 }

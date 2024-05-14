@@ -58,6 +58,39 @@ namespace LanguageFeatures.Controllers
         }
 
         public ViewResult Index3() => View(Product.GetProducts().Select(p => p?.Name));
+
+        public ViewResult Index4()
+        {
+            return View(Product.GetProducts()
+                .Where(pr => (pr?.NameBeginsWithS == true))
+                .Select(p => p?.Name));
+        }
+
+        public ViewResult Index5()
+        {
+            var products = new[] {
+                new { Name = "Kayak", Price = 275M },
+                new { Name = "Lifejacket", Price = 48.95M },
+                new { Name = "Soccer ball", Price = 19.50M },
+                new { Name = "Corner flag", Price = 34.95M }
+            };
+
+            //return View(products.Select(p => p.GetType().Name)); 
+            return View(products.Select(p => p.Name));
+        }
+
+        public ViewResult Index6()
+        {
+            IProductSelection cart = new ShoppingCart2(
+                new Product { Name = "Kayak", Price = 275M },
+                new Product { Name = "Lifejacket", Price = 48.95M },
+                new Product { Name = "Soccer ball", Price = 19.50M },
+                new Product { Name = "Corner flag", Price = 34.95M }
+            );
+
+            return View(cart.Names);
+            //return View(cart.Products?.Select(p => p.Name));
+        }
     }
 }
  
