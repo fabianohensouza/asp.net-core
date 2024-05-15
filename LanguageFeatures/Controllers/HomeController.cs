@@ -91,6 +91,12 @@ namespace LanguageFeatures.Controllers
             return View(cart.Names);
             //return View(cart.Products?.Select(p => p.Name));
         }
+
+        public async Task<ViewResult> Index7()
+        {
+            long? length = await MyAsyncMethods.GetPageLength();
+            return View(new string[] { $"Length: {length}" });
+        }
     }
 }
  
