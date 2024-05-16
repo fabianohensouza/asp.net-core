@@ -97,6 +97,20 @@ namespace LanguageFeatures.Controllers
             long? length = await MyAsyncMethods.GetPageLength();
             return View(new string[] { $"Length: {length}" });
         }
+
+        public async Task<ViewResult> Index8()
+        {
+            List<string> output = new List<string>();
+            await foreach (long? len in MyAsyncMethods.GetPageLengths(
+                output,
+                "apress.com", 
+                "microsoft.com", 
+                "amazon.com"))
+            {
+                output.Add($"Page length: {len}");
+            }
+            return View(output);
+        }
     }
 }
  
