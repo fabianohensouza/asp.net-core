@@ -37,6 +37,7 @@ namespace SportsStore.Infrastructure
                     new { productPage = i });
                     tag.InnerHtml.Append(i.ToString());
                     result.InnerHtml.AppendHtml(tag);
+                    if (i < PageModel.TotalPages) result.InnerHtml.AppendHtml(" - ");
                 }
 
                 output.Content.AppendHtml(result.InnerHtml);
