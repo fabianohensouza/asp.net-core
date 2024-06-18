@@ -20,8 +20,6 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseSession();
 
-//app.MapGet("/", () => "Hello World!");
-
 app.MapControllerRoute("catpage", "{category}/Page{productPage:int}",
     new { Controller = "Home", action = "Index" });
 
