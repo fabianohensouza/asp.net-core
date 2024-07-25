@@ -12,7 +12,7 @@ namespace SportsStore.Controllers
         public HomeController(IStoreRepository repo) => repository = repo;
         //Expression bodied function (constructor)
 
-        public ViewResult Index(string? category, int productPage = 1) 
+        public ViewResult Index(string? category, int productPage = 1)
             => View(new ProductsListViewModel
             {
                 Products = repository.Products
