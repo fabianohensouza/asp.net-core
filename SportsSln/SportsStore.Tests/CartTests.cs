@@ -86,6 +86,7 @@ namespace SportsStore.Tests
 
             // Assert
             Assert.Equal(450M, result);
+
         }
 
         [Fact]
@@ -105,6 +106,7 @@ namespace SportsStore.Tests
 
             // Assert
             Assert.Empty(target.Lines);
+
         }
     }
 }
