@@ -20,7 +20,6 @@ namespace SportsStore.Tests
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
             Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
-
             mockRepo.Setup(m => m.Products).Returns((new Product[] {
                 p1, p2
             }).AsQueryable<Product>());
@@ -93,6 +92,7 @@ namespace SportsStore.Tests
             Assert.Single(testCart.Lines);
             Assert.Equal("P1", testCart.Lines.First().Product.Name);
             Assert.Equal(1, testCart.Lines.First().Quantity);
+
         }
     }
 
