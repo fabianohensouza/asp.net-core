@@ -2,6 +2,7 @@
 using Moq;
 using SportsStore.Controllers;
 using SportsStore.Models;
+using SportsStore.Models.Repositories;
 using SportsStore.Models.ViewModels;
 using Xunit;
 namespace SportsStore.Tests

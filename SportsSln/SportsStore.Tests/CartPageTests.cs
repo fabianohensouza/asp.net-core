@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using Moq;
 using SportsStore.Models;
+using SportsStore.Models.Repositories;
 using SportsStore.Pages;
 using System.Text;
 using System.Text.Json;

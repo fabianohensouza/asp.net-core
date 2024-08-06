@@ -1,4 +1,4 @@
-﻿namespace SportsStore.Models
+﻿namespace SportsStore.Models.Repositories
 {
     public interface IStoreRepository
     {

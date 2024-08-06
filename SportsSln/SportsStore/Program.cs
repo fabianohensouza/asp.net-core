@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SportsStore.Models;
+using SportsStore.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts => {
 });
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
 
 builder.Services.AddRazorPages(); 
 builder.Services.AddDistributedMemoryCache();

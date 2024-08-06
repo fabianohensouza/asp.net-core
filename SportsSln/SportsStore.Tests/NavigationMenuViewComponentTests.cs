@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Moq;
 using SportsStore.Components;
 using SportsStore.Models;
+using SportsStore.Models.Repositories;
 namespace SportsStore.Tests
 {
     public class NavigationMenuViewComponentTests

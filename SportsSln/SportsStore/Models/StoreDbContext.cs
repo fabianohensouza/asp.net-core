@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace SportsStore.Models
 {
@@ -6,6 +7,8 @@ namespace SportsStore.Models
     {
         public StoreDbContext(DbContextOptions<StoreDbContext> options)
         : base(options) { }
+
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Order> Orders => Set<Order>();
     }
 }

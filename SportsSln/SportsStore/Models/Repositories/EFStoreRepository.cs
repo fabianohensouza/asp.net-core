@@ -1,5 +1,4 @@
-﻿
-namespace SportsStore.Models
+﻿namespace SportsStore.Models.Repositories
 {
     public class EFStoreRepository : IStoreRepository
     {

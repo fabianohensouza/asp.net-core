@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SportsStore.Infrastructure;
 using SportsStore.Models;
+using SportsStore.Models.Repositories;
 
 namespace SportsStore.Pages
 {
