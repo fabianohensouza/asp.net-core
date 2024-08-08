@@ -32,7 +32,6 @@ namespace SportsStore.Controllers
                 cart.Clear();
                 return RedirectToPage("/Completed", new { orderId = order.OrderID });
             }
-
             else
             {
                 return View();
