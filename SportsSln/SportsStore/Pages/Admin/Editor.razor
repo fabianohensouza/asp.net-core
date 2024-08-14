@@ -11,7 +11,7 @@
 
 <EditForm Model="Product" OnValidSubmit="SaveProduct">
     <DataAnnotationsValidator />
-    @if(Product.ProductID != 0) {
+    @if(Id != 0) {
         <div class="form-group">
             <label>ID</label>
             <input class="form-control" disabled value="@Product.ProductID" />
