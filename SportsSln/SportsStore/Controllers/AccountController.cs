@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models.ViewModels;
+
 namespace SportsStore.Controllers
 {
     public class AccountController : Controller
@@ -34,12 +35,14 @@ namespace SportsStore.Controllers
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
+
                     if ((await signInManager.PasswordSignInAsync(user,
-                    loginModel.Password, false, false)).Succeeded)
+                        loginModel.Password, false, false)).Succeeded)
                     {
                         return Redirect(loginModel?.ReturnUrl ?? "/Admin");
                     }
                 }
+
                 ModelState.AddModelError("", "Invalid name or password");
             }
             return View(loginModel);
