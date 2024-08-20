@@ -28,6 +28,17 @@ builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
+if (app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/error");
+}
+
+app.UseRequestLocalization(opts => {
+    opts.AddSupportedCultures("pt-BR")
+    .AddSupportedUICultures("pt-BR")
+    .SetDefaultCulture("pt-BR");
+});
+
 app.UseStaticFiles();
 app.UseSession();
 
