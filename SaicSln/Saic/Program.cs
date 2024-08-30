@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Saic.Models;
 using Saic.Models.Repositories;
+using Saic.Models.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<StoreDbContext>(opts => {
     opts.UseSqlServer(
-    builder.Configuration["ConnectionStrings:SportsCoopConnection"]);
+    builder.Configuration["ConnectionStrings:SaicConnection"]);
 });
 
 builder.Services.AddScoped<ICoopRepository, EFCoopRepository>();
@@ -42,5 +43,7 @@ app.UseAuthorization();
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 app.MapBlazorHub();
+
+SeedCoop.EnsurePopulated(app);
 
 app.Run();
