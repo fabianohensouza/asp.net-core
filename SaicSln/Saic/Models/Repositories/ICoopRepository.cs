@@ -2,6 +2,6 @@
 {
     public class ICoopRepository
     {
-        IQueryable<Coop> Coops { get; }
+        public IQueryable<Coop> Coops { get; }
     }
 }

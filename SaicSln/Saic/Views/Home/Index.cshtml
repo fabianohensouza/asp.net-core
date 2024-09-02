@@ -1,1 +1,9 @@
-﻿<h4>Saic</h4>
+﻿@model IQueryable<Coop>
+@foreach (var p in Model ?? Enumerable.Empty<Coop>())
+{
+    <div>
+        <h3>@p.CoopNumero</h3>
+        <h3>@p.CoopNome</h3>
+        @p.CoopCidade
+    </div>
+}

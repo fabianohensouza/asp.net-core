@@ -1,12 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Saic.Models;
+using Saic.Models.Repositories;
 
 namespace Saic.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private ICoopRepository repository;
+
+        public HomeController(ICoopRepository repo)
         {
-            return View();
+            repository = repo;
         }
+
+        public IActionResult Index() => View(repository.Coops);
     }
 }
