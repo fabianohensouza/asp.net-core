@@ -6,6 +6,7 @@ namespace Saic.Models
     {
         public StoreDbContext(DbContextOptions<StoreDbContext> options)
         : base(options) { }
+
         public DbSet<Coop> Coops => Set<Coop>();
     }
 }

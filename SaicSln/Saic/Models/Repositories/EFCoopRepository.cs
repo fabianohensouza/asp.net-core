@@ -9,21 +9,21 @@
             context = ctx;
         }
 
-        public IQueryable<Coop> Coops { get; }
+        public IQueryable<Coop> Coops => context.Coops;
 
-        public void CreateCoop(Coop p)
+        public void CreateCoop(Coop c)
         {
-            context.Add(p);
+            context.Add(c);
             context.SaveChanges();
         }
 
-        public void DeleteCoop(Coop p)
+        public void DeleteCoop(Coop c)
         {
-            context.Remove(p);
+            context.Remove(c);
             context.SaveChanges();
         }
 
-        public void SaveCoop(Coop p)
+        public void SaveCoop(Coop c)
         {
             context.SaveChanges();
         }

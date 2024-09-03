@@ -1,7 +1,11 @@
 ﻿namespace Saic.Models.Repositories
 {
-    public class ICoopRepository
-    {
-        public IQueryable<Coop> Coops { get; }
+    public interface ICoopRepository
+    {        
+        IQueryable<Coop> Coops { get; }
+
+        void SaveCoop(Coop c);
+        void CreateCoop(Coop c);
+        void DeleteCoop(Coop c);
     }
 }
