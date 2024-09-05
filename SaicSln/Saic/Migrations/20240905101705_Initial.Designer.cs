@@ -12,7 +12,7 @@ using Saic.Models;
 namespace Saic.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20240902094846_Initial")]
+    [Migration("20240905101705_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

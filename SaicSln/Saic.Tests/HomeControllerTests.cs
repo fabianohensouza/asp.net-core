@@ -30,10 +30,36 @@ public class HomeControllerTests
         as IEnumerable<Coop>;
 
         // Assert
-        Coop[] prodArray = result?.ToArray() ?? Array.Empty<Coop>();
-        Assert.True(prodArray.Length == 2);
-        Assert.Equal("P1", prodArray[0].CoopNome);
-        Assert.Equal("P2", prodArray[1].CoopNome);
+        Coop[] coopArray = result?.ToArray() ?? Array.Empty<Coop>();
+        Assert.True(coopArray.Length == 2);
+        Assert.Equal("P1", coopArray[0].CoopNome);
+        Assert.Equal("P2", coopArray[1].CoopNome);
 
+    }
+    [Fact]
+    public void Can_Paginate()
+    {
+        // Arrange
+        Mock<ICoopRepository> mock = new Mock<ICoopRepository>();
+        mock.Setup(m => m.Coops).Returns((new Coop[] {
+            new Coop {CoopID = 1, CoopNome = "P1"},
+            new Coop {CoopID = 2, CoopNome = "P2"},
+            new Coop {CoopID = 3, CoopNome = "P3"},
+            new Coop {CoopID = 4, CoopNome = "P4"},
+            new Coop {CoopID = 5, CoopNome = "P5"}
+        }).AsQueryable<Coop>());
+        HomeController controller = new HomeController(mock.Object);
+        controller.PageSize = 3;
+
+        // Act
+        IEnumerable<Coop> result = (controller.Index(2) as ViewResult)?
+            .ViewData.Model as IEnumerable<Coop>
+            ?? Enumerable.Empty<Coop>();
+
+        // Assert
+        Coop[] coopArray = result.ToArray();
+        Assert.True(coopArray.Length == 2);
+        Assert.Equal("P4", coopArray[0].CoopNome);
+        Assert.Equal("P5", coopArray[1].CoopNome);
     }
 }
