@@ -7,6 +7,7 @@ using Moq;
 using Saic.Controllers;
 using Saic.Models;
 using Saic.Models.Repositories;
+using Saic.Models.ViewModels;
 using Xunit;
 
 namespace Saic.Tests;
@@ -25,17 +26,16 @@ public class HomeControllerTests
         HomeController controller = new HomeController(mock.Object);
 
         // Act
-        IEnumerable<Coop>? result =
-        (controller.Index() as ViewResult)?.ViewData.Model
-        as IEnumerable<Coop>;
+        CoopsListViewModel result = controller.Index()?.ViewData.Model
+            as CoopsListViewModel ?? new();
 
         // Assert
-        Coop[] coopArray = result?.ToArray() ?? Array.Empty<Coop>();
+        Coop[] coopArray = result.Coops.ToArray();
         Assert.True(coopArray.Length == 2);
         Assert.Equal("P1", coopArray[0].CoopNome);
         Assert.Equal("P2", coopArray[1].CoopNome);
-
     }
+
     [Fact]
     public void Can_Paginate()
     {
@@ -52,14 +52,41 @@ public class HomeControllerTests
         controller.PageSize = 3;
 
         // Act
-        IEnumerable<Coop> result = (controller.Index(2) as ViewResult)?
-            .ViewData.Model as IEnumerable<Coop>
-            ?? Enumerable.Empty<Coop>();
+        CoopsListViewModel result = controller.Index(2)?.ViewData.Model
+            as CoopsListViewModel ?? new();
 
         // Assert
-        Coop[] coopArray = result.ToArray();
+        Coop[] coopArray = result.Coops.ToArray();
         Assert.True(coopArray.Length == 2);
         Assert.Equal("P4", coopArray[0].CoopNome);
         Assert.Equal("P5", coopArray[1].CoopNome);
+    }
+
+    [Fact]
+    public void Can_Send_Pagination_View_Model()
+    {
+        // Arrange
+        Mock<ICoopRepository> mock = new Mock<ICoopRepository>();
+        mock.Setup(m => m.Coops).Returns((new Coop[] {
+            new Coop {CoopID = 1, CoopNome = "P1"},
+            new Coop {CoopID = 2, CoopNome = "P2"},
+            new Coop {CoopID = 3, CoopNome = "P3"},
+            new Coop {CoopID = 4, CoopNome = "P4"},
+            new Coop {CoopID = 5, CoopNome = "P5"}
+        }).AsQueryable<Coop>());
+
+        // Arrange
+        HomeController controller = new HomeController(mock.Object) { PageSize = 3 };
+
+        // Act
+        CoopsListViewModel result = controller.Index(2)?.ViewData.Model 
+            as CoopsListViewModel ?? new();
+
+        // Assert
+        PagingInfo pageInfo = result.PagingInfo;
+        Assert.Equal(2, pageInfo.PagAtual);
+        Assert.Equal(3, pageInfo.ItemsPorPag);
+        Assert.Equal(5, pageInfo.TotalItens);
+        Assert.Equal(2, pageInfo.TotalPages);
     }
 }
