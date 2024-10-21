@@ -1,11 +1,12 @@
 ﻿@model CoopsListViewModel
 
-@foreach (var p in Model?.Coops ?? Enumerable.Empty<Coop>())
+@foreach (var c in Model?.Coops ?? Enumerable.Empty<Coop>())
 {
     <div>
-        <h3>@p.CoopNumero</h3>
-        <h3>@p.CoopNome</h3>
-        @p.CoopCidade
+        <p>
+            <h3>@c.CoopNumero - @c.CoopNome</h3>
+        </p>
+        @c.CoopCidade
     </div>
 }
 

@@ -7,7 +7,7 @@ namespace Saic.Controllers
     public class HomeController : Controller
     {
         private ICoopRepository repository;
-        public int PageSize = 10;
+        public int PageSize = 4;
 
         public HomeController(ICoopRepository repo)
         {
