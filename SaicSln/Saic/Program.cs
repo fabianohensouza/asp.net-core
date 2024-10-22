@@ -35,6 +35,9 @@ app.UseRequestLocalization(opts => {
 });
 
 app.UseStaticFiles();
+app.MapControllerRoute("pagination",
+    "Coops/Page{coopPage}",
+    new { Controller = "Home", action = "Index" });
 app.UseSession();
 
 app.UseAuthentication();
