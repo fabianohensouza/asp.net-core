@@ -14,9 +14,14 @@ namespace Saic.Controllers
             repository = repo;
         }
 
-        public ViewResult Index(int coopPage = 1) => View(new CoopsListViewModel
+        public ViewResult Index(string? coopSelecionada, int coopPage = 1) => View(new CoopsListViewModel
         {
+            ListaCoops = repository.Coops
+                .Select(c => c.CoopNumero)
+                .Distinct()
+                .ToList(),
             Coops = repository.Coops
+                .Where(c => coopSelecionada == null || c.CoopNumero == coopSelecionada)
                 .OrderBy(c => c.CoopID)
                 .Skip((coopPage - 1) * PageSize)
                 .Take(PageSize),
@@ -25,7 +30,8 @@ namespace Saic.Controllers
                 PagAtual = coopPage,
                 ItemsPorPag = PageSize,
                 TotalItens = repository.Coops.Count()
-            }
+            },
+            CoopAtual = coopSelecionada
         });
     }
 }
