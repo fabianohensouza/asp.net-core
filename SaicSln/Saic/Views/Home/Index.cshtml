@@ -1,14 +1,17 @@
 ﻿@model CoopsListViewModel
 
-<h2>Selecione a instituição</h2>
+<p>Selecione a instituição</p>
 
-<form asp-action="Index" method="get" class="form-inline">
-    <div class="form-group mr-2">
-        <select asp-for="CoopAtual" asp-items="@(new SelectList(Model.ListaCoops))" class="form-control">
-            <option value="">-- Selecione --</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
+<form asp-controller="Home" asp-action="Index" method="get" class="d-flex align-items-center">
+    <select id="coopSelecionada" name="coopSelecionada" asp-items="@(new SelectList(Model.ListaCoops))" class="form-control mr-2">
+        <option value="">-- Selecione --</option>
+        @if (Model.CoopAtual != null)
+        {
+            <option value="@Model.CoopAtual">@Model.CoopAtual</option>
+        }
+        
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
 </form>
 
 @foreach (var c in Model?.Coops ?? Enumerable.Empty<Coop>())
