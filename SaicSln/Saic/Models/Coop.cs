@@ -18,10 +18,15 @@ namespace Saic.Models
 
         public DateTime Adesao { get; set; }
 
+        public int? QtdEqpmts { get; set; }
+
         [NotMapped]
         public string? RespMonitor { get; set; } = String.Empty;
 
         [NotMapped]
         public int? QtdServers { get; set; }
+
+        [NotMapped]
+        public int? QtdFwlls { get; set; }
     }
 }
