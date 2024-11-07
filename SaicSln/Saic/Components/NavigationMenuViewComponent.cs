@@ -4,9 +4,17 @@ namespace Saic.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        public string Invoke()
+        public IViewComponentResult Invoke()
         {
-            return "Hello from the Nav View Component";
+            return View(
+                new []{
+                    new { action = "index", controller = "unidades", label = "Unidades" },
+                    new { action = "index", controller = "painel", label = "Painel" },
+                    new { action = "index", controller = "servidores", label = "Servidores" },
+                    new { action = "index", controller = "equipamentos", label = "Equipamentos" },
+                    new { action = "index", controller = "servicos", label = "Serviços" }
+                }.AsEnumerable() 
+            );
         }
     }
 }

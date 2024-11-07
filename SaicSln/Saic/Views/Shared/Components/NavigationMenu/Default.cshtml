@@ -1,0 +1,16 @@
+﻿@model IEnumerable<T>
+<div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary" 
+    asp-action="Index" 
+    asp-controller="Home">
+        Coops
+    </a>
+    @foreach (var item in Model ?? Enumerable.Empty<T>())
+    {
+        <a class="btn btn-outline-secondary" 
+        asp-action="@item.Action"  
+        asp-controller="@item.Controller">
+            @item.Label
+        </a>
+    }
+</div>
