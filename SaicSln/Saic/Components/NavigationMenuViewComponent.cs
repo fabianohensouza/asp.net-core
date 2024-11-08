@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Saic.Models.ViewModels;
 
 namespace Saic.Components
 {
@@ -7,12 +8,32 @@ namespace Saic.Components
         public IViewComponentResult Invoke()
         {
             return View(
-                new []{
-                    new { action = "index", controller = "unidades", label = "Unidades" },
-                    new { action = "index", controller = "painel", label = "Painel" },
-                    new { action = "index", controller = "servidores", label = "Servidores" },
-                    new { action = "index", controller = "equipamentos", label = "Equipamentos" },
-                    new { action = "index", controller = "servicos", label = "Serviços" }
+                new NavigationMenuInfo[]{
+                    new NavigationMenuInfo{ 
+                        Action = "index", 
+                        Controller = "unidades",
+                        Label = "Unidades",
+                        Icone = "fa-solid fa-map-location-dot" },
+                    new NavigationMenuInfo{ 
+                        Action = "index", 
+                        Controller = "painel", 
+                        Label = "Painel" ,
+                        Icone = "fa-solid fa-list-check"},
+                    new NavigationMenuInfo{ 
+                        Action = "index", 
+                        Controller = "servidores", 
+                        Label = "Servidores" ,
+                        Icone = "fa-solid fa-server"},
+                    new NavigationMenuInfo{ 
+                        Action = "index", 
+                        Controller = "equipamentos", 
+                        Label = "Equipamentos" ,
+                        Icone = "fa-solid fa-network-wired"},
+                    new NavigationMenuInfo{ 
+                        Action = "index", 
+                        Controller = "servicos", 
+                        Label = "Serviços" ,
+                        Icone = "fa-solid fa-globe"}
                 }.AsEnumerable() 
             );
         }

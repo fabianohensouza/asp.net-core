@@ -1,15 +1,17 @@
-﻿@model IEnumerable<T>
+﻿@model IEnumerable<NavigationMenuInfo>
 <div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" 
+    <a class="btn btn-outline-secondary"
     asp-action="Index" 
     asp-controller="Home">
+        <i class="fa-solid fa-building-columns"></i>
         Coops
     </a>
-    @foreach (var item in Model ?? Enumerable.Empty<T>())
+    @foreach (var item in Model ?? Enumerable.Empty<NavigationMenuInfo>())
     {
-        <a class="btn btn-outline-secondary" 
+        <a class="btn btn-outline-secondary"
         asp-action="@item.Action"  
         asp-controller="@item.Controller">
+            <i class="@item.Icone"></i>
             @item.Label
         </a>
     }
