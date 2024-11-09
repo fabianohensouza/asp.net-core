@@ -1,10 +1,10 @@
 ﻿@model CoopsListViewModel
 
-<h4>Selecione a instituição</h4>
+<h4>Coops</h4>
 
 <form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
     <select id="coopSelecionada" name="coopSelecionada" asp-items="@(new SelectList(Model.ListaCoops))" class="form-control mx-1">
-        <option value="">-- Todas as Cooperativas --</option>
+        <option value="">-- Filtrar por responsável --</option>
         @if (Model.CoopAtual != null)
         {
             <option selected>@Model.CoopAtual</option>

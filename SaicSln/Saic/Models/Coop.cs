@@ -5,7 +5,9 @@ namespace Saic.Models
 {
     public class Coop
     {
-        public long? CoopID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid CoopID { get; set; } = Guid.NewGuid();
 
         [MaxLength(4)]
         public string CoopNumero { get; set; } = String.Empty;
@@ -28,5 +30,10 @@ namespace Saic.Models
 
         [NotMapped]
         public int? QtdFwlls { get; set; }
+
+        // Foreign key to RespCoop
+        public Guid RespID { get; set; }
+
+        public RespCoop? RespCoop { get; set; }
     }
 }

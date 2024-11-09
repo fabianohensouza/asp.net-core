@@ -8,5 +8,19 @@ namespace Saic.Models
         : base(options) { }
 
         public DbSet<Coop> Coops => Set<Coop>();
+
+        public DbSet<RespCoop> RespCoops => Set<RespCoop>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure one-to-many relationship
+            modelBuilder.Entity<Coop>()
+                .HasOne(c => c.RespCoop)
+                .WithMany(r => r.Coops)
+                .HasForeignKey(c => c.RespID)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

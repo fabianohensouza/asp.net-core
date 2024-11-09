@@ -29,7 +29,9 @@ namespace Saic.Controllers
             {
                 PagAtual = coopPage,
                 ItemsPorPag = PageSize,
-                TotalItens = repository.Coops.Count()
+                TotalItens = coopSelecionada == null 
+                    ? repository.Coops.Count()
+                    : repository.Coops.Where (c => c.CoopNumero == coopSelecionada).Count()
             },
             CoopAtual = coopSelecionada
         });
