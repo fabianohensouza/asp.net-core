@@ -1,0 +1,38 @@
+﻿@model CoopsListViewModel
+
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 8%;">Número</th>
+            <th scope="col" style="width: 25%;">Nome</th>
+            <th scope="col" style="width: 27%;">Responsável</th>
+            <th scope="col" style="width: 8%;">Adesão</th>
+            <th scope="col" style="width: 8%;">Firewalls</th>
+            <th scope="col" style="width: 8%;">Servidores</th>
+            <th scope="col" style="width: 8%;">Computadores</th>
+            <th scope="col" style="width: 8%;">Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var c in Model?.Coops ?? Enumerable.Empty<Coop>())
+        {
+            <tr>
+                <th scope="row">@c?.CoopNumero</th>
+                <td class="text-start">@c?.CoopNome</td>
+                <td class="text-start">@c?.RespMonitor</td>
+                <td>@c?.Adesao.ToString("dd/MM/yyyy")</td>
+                <td>@c?.QtdFwlls</td>
+                <td>@c?.QtdServers</td>
+                <td>@c?.QtdCompts</td>
+                <td>
+                    <form form asp-controller="EditCoop" asp-action="Index" method="post">
+                        <input type="hidden" name="CoopID" value="@c?.CoopID" />
+                        <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
+                    </form>
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>

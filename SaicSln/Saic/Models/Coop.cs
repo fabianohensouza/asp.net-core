@@ -18,7 +18,7 @@ namespace Saic.Models
 
         public DateTime Adesao { get; set; }
 
-        public int? QtdEqpmts { get; set; }
+        public int? QtdCompts { get; set; }
 
         [NotMapped]
         public string? RespMonitor { get; set; } = String.Empty;

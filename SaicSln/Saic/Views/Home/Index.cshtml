@@ -2,7 +2,7 @@
 
 <h4>Selecione a instituição</h4>
 
-<form asp-controller="Home" asp-action="Index" method="get" class="d-flex align-items-center">
+<form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
     <select id="coopSelecionada" name="coopSelecionada" asp-items="@(new SelectList(Model.ListaCoops))" class="form-control mx-1">
         <option value="">-- Todas as Cooperativas --</option>
         @if (Model.CoopAtual != null)
@@ -13,10 +13,7 @@
     <button type="submit" class="btn btn-primary">Filter</button>
 </form>
 
-@foreach (var c in Model?.Coops ?? Enumerable.Empty<Coop>())
-{
-    <partial name="CoopSummary" model="c" />
-}
+<partial name="TabelaCoops" model=@Model />
 
 <div page-model="@Model?.PagingInfo" page-action="Index" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-outline-dark"

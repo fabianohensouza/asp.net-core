@@ -7,31 +7,48 @@ namespace Saic.Components
     {
         public IViewComponentResult Invoke()
         {
+            ViewBag.SelectedMenu = RouteData?.Values["controller"];
+
             return View(
                 new NavigationMenuInfo[]{
-                    new NavigationMenuInfo{ 
-                        Action = "index", 
-                        Controller = "unidades",
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Home",
+                        Label = "Coops",
+                        Icone = "fa-solid fa-building-columns" },
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "RespCoops",
+                        Label = "Responsáveis",
+                        Icone = "fa-solid fa-briefcase" },
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Unidades",
                         Label = "Unidades",
                         Icone = "fa-solid fa-map-location-dot" },
                     new NavigationMenuInfo{ 
-                        Action = "index", 
-                        Controller = "painel", 
+                        Action = "Index", 
+                        Controller = "Painel", 
                         Label = "Painel" ,
                         Icone = "fa-solid fa-list-check"},
                     new NavigationMenuInfo{ 
-                        Action = "index", 
-                        Controller = "servidores", 
+                        Action = "Index", 
+                        Controller = "Servidores", 
                         Label = "Servidores" ,
                         Icone = "fa-solid fa-server"},
-                    new NavigationMenuInfo{ 
-                        Action = "index", 
-                        Controller = "equipamentos", 
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Firewalls",
+                        Label = "Firewalls" ,
+                        Icone = "fa-solid fa-shield-halved"},
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Equipamentos",
                         Label = "Equipamentos" ,
                         Icone = "fa-solid fa-network-wired"},
                     new NavigationMenuInfo{ 
-                        Action = "index", 
-                        Controller = "servicos", 
+                        Action = "Index", 
+                        Controller = "Servicos", 
                         Label = "Serviços" ,
                         Icone = "fa-solid fa-globe"}
                 }.AsEnumerable() 
