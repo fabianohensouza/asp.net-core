@@ -32,7 +32,7 @@ namespace Saic.Models
         public int? QtdFwlls { get; set; }
 
         // Foreign key to RespCoop
-        public Guid RespID { get; set; }
+        public Guid? RespID { get; set; }
 
         public RespCoop? RespCoop { get; set; }
     }

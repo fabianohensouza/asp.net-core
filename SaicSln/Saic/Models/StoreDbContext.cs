@@ -20,6 +20,7 @@ namespace Saic.Models
                 .HasOne(c => c.RespCoop)
                 .WithMany(r => r.Coops)
                 .HasForeignKey(c => c.RespID)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
