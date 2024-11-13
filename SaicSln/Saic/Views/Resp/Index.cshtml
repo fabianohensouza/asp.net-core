@@ -1,0 +1,32 @@
+﻿@model IEnumerable<RespCoop>
+
+<h4>Responsáveis</h4>
+
+<a asp-controller="Resp" asp-action="AddResp" type="button" class="align-items-center btn btn-secondary">
+    Criar novo
+</a>
+
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 70%;">Nome</th>
+            <th scope="col" style="width: 30%;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var r in Model ?? Enumerable.Empty<RespCoop>())
+        {
+            <tr>
+                <th scope="row">@r?.RespNome</th>
+                <td>
+                    <form form asp-controller="EditCoop" asp-action="Index" method="post">
+                        <input type="hidden" name="CoopID" value="@r?.RespID" />
+                        <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
+                    </form>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

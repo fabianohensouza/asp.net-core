@@ -1,0 +1,15 @@
+﻿@model RespCoop
+
+<h4>Adicionar Responsável</h4>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="AddResp" method="post">
+    <div class="form-group d-flex align-items-center gap-2">
+        <label>Nome:</label>
+        <input asp-for="RespNome" class="form-control" />
+    </div>
+    <div class="text-end mt-2">
+        <input class="btn btn-secondary" type="submit" value="Salvar" />
+    </div>
+</form>

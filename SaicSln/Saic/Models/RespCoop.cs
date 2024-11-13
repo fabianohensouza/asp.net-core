@@ -9,6 +9,7 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid RespID { get; set; } = Guid.NewGuid();
 
+        [Required(ErrorMessage = "Favor informar o nome")]
         [MaxLength(40)]
         public string RespNome { get; set; } = String.Empty;
 

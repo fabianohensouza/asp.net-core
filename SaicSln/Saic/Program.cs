@@ -20,6 +20,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts => {
 });
 
 builder.Services.AddScoped<ICoopRepository, EFCoopRepository>();
+builder.Services.AddScoped<IRespRepository, EFRespRepository>();
 
 var app = builder.Build();
 

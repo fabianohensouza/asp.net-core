@@ -2,7 +2,7 @@
 
 namespace Saic.Controllers
 {
-    public class EditCoop : Controller
+    public class EditCoopController : Controller
     {
         public IActionResult Index(long coopID)
         {

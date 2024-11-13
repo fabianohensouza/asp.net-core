@@ -18,12 +18,12 @@ namespace Saic.Components
                         Icone = "fa-solid fa-building-columns" },
                     new NavigationMenuInfo{
                         Action = "Index",
-                        Controller = "RespCoops",
+                        Controller = "Resp",
                         Label = "Responsáveis",
                         Icone = "fa-solid fa-briefcase" },
                     new NavigationMenuInfo{
                         Action = "Index",
-                        Controller = "Unidades",
+                        Controller = "Unidade",
                         Label = "Unidades",
                         Icone = "fa-solid fa-map-location-dot" },
                     new NavigationMenuInfo{ 
@@ -33,22 +33,22 @@ namespace Saic.Components
                         Icone = "fa-solid fa-list-check"},
                     new NavigationMenuInfo{ 
                         Action = "Index", 
-                        Controller = "Servidores", 
+                        Controller = "Servidor", 
                         Label = "Servidores" ,
                         Icone = "fa-solid fa-server"},
                     new NavigationMenuInfo{
                         Action = "Index",
-                        Controller = "Firewalls",
+                        Controller = "Firewall",
                         Label = "Firewalls" ,
                         Icone = "fa-solid fa-shield-halved"},
                     new NavigationMenuInfo{
                         Action = "Index",
-                        Controller = "Equipamentos",
+                        Controller = "Equipamento",
                         Label = "Equipamentos" ,
                         Icone = "fa-solid fa-network-wired"},
                     new NavigationMenuInfo{ 
                         Action = "Index", 
-                        Controller = "Servicos", 
+                        Controller = "Servico", 
                         Label = "Serviços" ,
                         Icone = "fa-solid fa-globe"}
                 }.AsEnumerable() 
