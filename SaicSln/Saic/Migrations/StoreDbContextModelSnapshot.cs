@@ -65,6 +65,11 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("RespEmail")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<string>("RespNome")
                         .IsRequired()
                         .HasMaxLength(40)

@@ -16,7 +16,8 @@ namespace Saic.Migrations
                 columns: table => new
                 {
                     RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RespNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    RespNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    RespEmail = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {

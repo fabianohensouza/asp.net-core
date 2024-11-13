@@ -13,6 +13,11 @@ namespace Saic.Models
         [MaxLength(40)]
         public string RespNome { get; set; } = String.Empty;
 
+        [Required(ErrorMessage = "Favor informar o email")]
+        [EmailAddress(ErrorMessage = "Favor informar o email corretamente")]
+        [MaxLength(40)]
+        public string RespEmail { get; set; } = String.Empty;
+
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
     }
 }

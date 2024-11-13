@@ -16,10 +16,10 @@ namespace Saic.Controllers
 
         public ViewResult Index() => View(repository.RespCoops);
 
-        public ViewResult AddResp() => View(new RespCoop());
+        public ViewResult EditResp(Guid? respId = null) => View(new RespCoop());
 
         [HttpPost]
-        public IActionResult AddResp(RespCoop resp)
+        public IActionResult EditResp(RespCoop resp)
         {
             if (resp.RespNome == "")
             {

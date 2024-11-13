@@ -12,7 +12,7 @@ using Saic.Models;
 namespace Saic.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20241112104641_InitialMigration")]
+    [Migration("20241113202202_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -67,6 +67,11 @@ namespace Saic.Migrations
                     b.Property<Guid>("RespID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RespEmail")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("RespNome")
                         .IsRequired()

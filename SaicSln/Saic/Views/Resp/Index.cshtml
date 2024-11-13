@@ -2,15 +2,16 @@
 
 <h4>Responsáveis</h4>
 
-<a asp-controller="Resp" asp-action="AddResp" type="button" class="align-items-center btn btn-secondary">
+<a asp-controller="Resp" asp-action="EditResp" type="button" class="align-items-center btn btn-secondary">
     Criar novo
 </a>
 
 <table class="table table-hover text-center">
-    <thead>
+    <thead class ="thead-dark">
         <tr>
-            <th scope="col" style="width: 70%;">Nome</th>
-            <th scope="col" style="width: 30%;">Ações</th>
+            <th scope="col" class="text-start" style="width: 35%;">Nome</th>
+            <th scope="col" style="width: 45%;">Email</th>
+            <th class ="text-start" scope="col" style="width: 18%;">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -18,12 +19,19 @@
         @foreach (var r in Model ?? Enumerable.Empty<RespCoop>())
         {
             <tr>
-                <th scope="row">@r?.RespNome</th>
+                <td class="text-start">@r?.RespNome</td>
+                <td>@r?.RespEmail</td>
                 <td>
-                    <form form asp-controller="EditCoop" asp-action="Index" method="post">
-                        <input type="hidden" name="CoopID" value="@r?.RespID" />
-                        <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
-                    </form>
+                    <div class="d-flex align-items-center gap-2">
+                        <form form asp-action="EditResp" method="post">
+                            <input type="hidden" name="CoopID" value="@r?.RespID" />
+                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
+                        </form>
+                        <form form asp-action="DeleteResp" method="post">
+                            <input type="hidden" name="CoopID" value="@r?.RespID" />
+                            <button type="submit" class="btn btn-sm btn-danger fa-solid fa-trash-can" />
+                        </form>
+                    </div>
                 </td>
             </tr>
         }
