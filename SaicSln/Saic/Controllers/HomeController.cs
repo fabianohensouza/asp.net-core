@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Saic.Models.Repositories;
 using Saic.Models.ViewModels;
 
@@ -6,34 +7,37 @@ namespace Saic.Controllers
 {
     public class HomeController : Controller
     {
-        private ICoopRepository repository;
+        private ICoopRepository _ctxCoops;
+        private IRespRepository _ctxResps;
         public int PageSize = 10;
 
-        public HomeController(ICoopRepository repo)
+        public HomeController(ICoopRepository coops, IRespRepository resps)
         {
-            repository = repo;
+            _ctxCoops = coops;
+            _ctxResps = resps;
         }
 
-        public ViewResult Index(string? coopSelecionada, int coopPage = 1) => View(new CoopsListViewModel
+        public ViewResult Index(string? RespSelecionado, int coopPage = 1) => View(new CoopsListViewModel
         {
-            ListaCoops = repository.Coops
-                .Select(c => c.CoopNumero)
+            ListaResps = _ctxResps.RespCoops
+                .Select(c => c.RespNome)
                 .Distinct()
                 .ToList(),
-            Coops = repository.Coops
-                .Where(c => coopSelecionada == null || c.CoopNumero == coopSelecionada)
-                .OrderBy(c => c.CoopID)
+            Coops =_ctxCoops.Coops
+                .Include(r => r.RespCoop)
+                .Where(c => RespSelecionado == null || c.RespCoop.RespNome == RespSelecionado)
+                .OrderBy(c => c.CoopNumero)
                 .Skip((coopPage - 1) * PageSize)
                 .Take(PageSize),
             PagingInfo = new PagingInfo
             {
                 PagAtual = coopPage,
                 ItemsPorPag = PageSize,
-                TotalItens = coopSelecionada == null 
-                    ? repository.Coops.Count()
-                    : repository.Coops.Where (c => c.CoopNumero == coopSelecionada).Count()
+                TotalItens = RespSelecionado == null 
+                    ?_ctxCoops.Coops.Count()
+                    :_ctxCoops.Coops.Where (c => c.CoopNumero == RespSelecionado).Count()
             },
-            CoopAtual = coopSelecionada
+            RespAtual = RespSelecionado
         });
     }
 }

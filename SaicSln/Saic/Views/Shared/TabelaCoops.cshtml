@@ -6,7 +6,7 @@
             <th scope="col" style="width: 8%;">Número</th>
             <th scope="col" class="text-start" style="width: 25%;">Nome</th>
             <th scope="col" class="text-start" style="width: 27%;">Responsável</th>
-            <th scope="col" style="width: 8%;">Adesão</th>
+            <th scope="col" class="text-start" style="width: 8%;">Adesão</th>
             <th scope="col" style="width: 8%;">Firewalls</th>
             <th scope="col" style="width: 8%;">Servidores</th>
             <th scope="col" style="width: 8%;">Computadores</th>
@@ -21,7 +21,7 @@
                 <th scope="row">@c?.CoopNumero</th>
                 <td class="text-start">@c?.CoopNome</td>
                 <td class="text-start">@c?.RespCoop?.RespNome</td>
-                <td>@c?.Adesao.ToString("dd/MM/yyyy")</td>
+                <td class="text-start">@c?.Adesao?.ToString("dd/MM/yyyy")</td>
                 <td>@c?.QtdFwlls</td>
                 <td>@c?.QtdServers</td>
                 <td>@c?.QtdCompts</td>

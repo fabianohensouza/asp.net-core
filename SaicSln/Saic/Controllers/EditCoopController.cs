@@ -1,30 +1,69 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Saic.Models;
 using Saic.Models.Repositories;
+using System.Net;
 using System.Text.Json;
 
 namespace Saic.Controllers
 {
     public class EditCoopController : Controller
     {
-        private ICoopRepository repository;
+        private ICoopRepository _ctxCoops;
+        private IRespRepository _ctxResps;
 
-        public EditCoopController(ICoopRepository repo)
+        public EditCoopController(ICoopRepository coops, IRespRepository resps)
         {
-            repository = repo;
+            _ctxCoops = coops;
+            _ctxResps = resps;
         }
 
         [HttpPost]
         public IActionResult Index(Guid coopID)
         {
-            var coop = repository.Coops
-                .Where(c => c.CoopID == coopID).
-                FirstOrDefault();
+            var coop = _ctxCoops.Coops
+                .Where(c => c.CoopID == coopID)
+                .FirstOrDefault();
 
-            ViewData["ObjectData"] = JsonSerializer.Serialize(
-                coop, new JsonSerializerOptions { WriteIndented = true }
+            if (coop == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.RespCoopList = new SelectList(
+                _ctxResps.RespCoops.ToList(), 
+                "RespID", 
+                "RespNome", 
+                coop.RespID
             );
 
             return View(coop);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SaveChanges(Coop coop)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingCoop = _ctxCoops.Coops
+                    .Where(c => c.CoopID == coop.CoopID)
+                    .FirstOrDefault();
+
+                if (existingCoop != null)
+                {
+                    existingCoop.Adesao = coop.Adesao;
+                    existingCoop.QtdCompts = coop.QtdCompts;
+                    existingCoop.RespID = coop.RespID;
+
+                    _ctxCoops.SaveCoop(existingCoop);
+                }
+                return RedirectToAction("Index", new { id = coop.CoopID });
+            }
+
+            ViewBag.RespCoopList = new SelectList(_ctxResps.RespCoops, "RespID", "RespNome", coop.RespID);
+            return View("Index", coop);
         }
     }
 }

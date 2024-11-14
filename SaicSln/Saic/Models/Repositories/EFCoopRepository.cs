@@ -11,18 +11,6 @@
 
         public IQueryable<Coop> Coops => context.Coops;
 
-        public void CreateCoop(Coop c)
-        {
-            context.Add(c);
-            context.SaveChanges();
-        }
-
-        public void DeleteCoop(Coop c)
-        {
-            context.Remove(c);
-            context.SaveChanges();
-        }
-
         public void SaveCoop(Coop c)
         {
             context.SaveChanges();

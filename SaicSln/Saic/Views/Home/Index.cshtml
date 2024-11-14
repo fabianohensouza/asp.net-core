@@ -3,11 +3,11 @@
 <h4>Coops</h4>
 
 <form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
-    <select id="coopSelecionada" name="coopSelecionada" asp-items="@(new SelectList(Model.ListaCoops))" class="form-control mx-1">
+    <select id="RespSelecionado" name="RespSelecionado" asp-items="@(new SelectList(Model.ListaResps))" class="form-control mx-1">
         <option value="">-- Filtrar por responsável --</option>
-        @if (Model.CoopAtual != null)
+        @if (Model.RespAtual != null)
         {
-            <option selected>@Model.CoopAtual</option>
+            <option selected>@Model.RespAtual</option>
         }        
     </select>
     <button type="submit" class="btn btn-secondary">Filter</button>

@@ -23,6 +23,11 @@ namespace Saic.Components
                         Icone = "fa-solid fa-briefcase" },
                     new NavigationMenuInfo{
                         Action = "Index",
+                        Controller = "Equipe",
+                        Label = "Equipe",
+                        Icone = "fa-solid fa-people-group" },
+                    new NavigationMenuInfo{
+                        Action = "Index",
                         Controller = "Unidade",
                         Label = "Unidades",
                         Icone = "fa-solid fa-map-location-dot" },

@@ -2,9 +2,9 @@
 {
     public class CoopsListViewModel
     {
-        public List<string>? ListaCoops { get; set; }
+        public List<string>? ListaResps { get; set; }
         public IEnumerable<Coop> Coops { get; set; } = Enumerable.Empty<Coop>();
         public PagingInfo PagingInfo { get; set; } = new();
-        public string? CoopAtual { get; set; }
+        public string? RespAtual { get; set; }
     }
 }
