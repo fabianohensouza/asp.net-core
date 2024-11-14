@@ -23,9 +23,6 @@ namespace Saic.Models
         public int? QtdCompts { get; set; }
 
         [NotMapped]
-        public string? RespMonitor { get; set; } = String.Empty;
-
-        [NotMapped]
         public int? QtdServers { get; set; }
 
         [NotMapped]

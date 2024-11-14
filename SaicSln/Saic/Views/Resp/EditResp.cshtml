@@ -4,14 +4,14 @@
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-action="AddResp" method="post">
+<form asp-action="EditResp" method="post">
     <div class="form-group d-flex align-items-center gap-2 mt-2">
         <label style="width: 10%">Nome:</label>
         <input asp-for="RespNome" class="form-control" />
     </div>
     <div class="form-group d-flex align-items-center gap-2 mt-2">
-        <label style="width: 10%">Email:</label>
-        <input asp-for="RespEmail" class="form-control" />
+        <label style="width: 10%">Equipe:</label>
+        <input asp-for="RespEquipe" class="form-control" />
     </div>
     <div class="text-end mt-2">
         <input class="btn btn-secondary" type="submit" value="Salvar" />

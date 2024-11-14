@@ -13,10 +13,20 @@ namespace Saic.Models
         [MaxLength(40)]
         public string RespNome { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "Favor informar o email")]
-        [EmailAddress(ErrorMessage = "Favor informar o email corretamente")]
         [MaxLength(40)]
-        public string RespEmail { get; set; } = String.Empty;
+        public string RespEquipe { get; set; } = String.Empty;
+
+        [NotMapped]
+        public int? QtdCoops { get; set; }
+
+        [NotMapped]
+        public int? QtdFwlls { get; set; }
+
+        [NotMapped]
+        public int? QtdCompts { get; set; }
+
+        [NotMapped]
+        public int? QtdServers { get; set; }
 
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
     }

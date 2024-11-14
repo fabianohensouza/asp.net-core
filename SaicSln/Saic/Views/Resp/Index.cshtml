@@ -9,9 +9,13 @@
 <table class="table table-hover text-center">
     <thead class ="thead-dark">
         <tr>
-            <th scope="col" class="text-start" style="width: 35%;">Nome</th>
-            <th scope="col" style="width: 45%;">Email</th>
-            <th class ="text-start" scope="col" style="width: 18%;">Ações</th>
+            <th scope="col" class="text-start" style="width: 25%;">Nome</th>
+            <th scope="col" style="width: 12%;">Equipe</th>
+            <th scope="col" style="width: 12%;">Coops</th>
+            <th scope="col" style="width: 12%;">Firewalls</th>
+            <th scope="col" style="width: 12%;">Computadores</th>
+            <th scope="col" style="width: 12%;">Servidores</th>
+            <th class ="text-start" scope="col" style="width: 15%;">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +24,11 @@
         {
             <tr>
                 <td class="text-start">@r?.RespNome</td>
-                <td>@r?.RespEmail</td>
+                <td>@r?.RespEquipe</td>
+                <td>@r?.QtdCoops</td>
+                <td>@r?.QtdFwlls</td>
+                <td>@r?.QtdCompts</td>
+                <td>@r?.QtdServers</td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
                         <form form asp-action="EditResp" method="post">

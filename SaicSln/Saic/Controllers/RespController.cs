@@ -29,7 +29,7 @@ namespace Saic.Controllers
             if (ModelState.IsValid)
             {
                 repository.CreateRespCoop(resp);
-                return RedirectToPage("/AddedResp", new { respId = resp.RespID });
+                return RedirectToPage("/Resp", new { respId = resp.RespID });
             }
             else
             {
