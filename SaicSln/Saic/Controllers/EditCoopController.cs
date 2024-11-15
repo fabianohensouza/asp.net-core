@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Saic.Models;
 using Saic.Models.Repositories;
-using System.Net;
-using System.Text.Json;
 
 namespace Saic.Controllers
 {
@@ -59,7 +56,7 @@ namespace Saic.Controllers
 
                     _ctxCoops.SaveCoop(existingCoop);
                 }
-                return RedirectToAction("Index", new { id = coop.CoopID });
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.RespCoopList = new SelectList(_ctxResps.RespCoops, "RespID", "RespNome", coop.RespID);

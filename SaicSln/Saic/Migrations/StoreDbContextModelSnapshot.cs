@@ -59,16 +59,34 @@ namespace Saic.Migrations
                     b.ToTable("Coops");
                 });
 
+            modelBuilder.Entity("Saic.Models.Equipe", b =>
+                {
+                    b.Property<Guid>("EquipeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EquipeDescrição")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("EquipeNome")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("EquipeID");
+
+                    b.ToTable("Equipes");
+                });
+
             modelBuilder.Entity("Saic.Models.RespCoop", b =>
                 {
                     b.Property<Guid>("RespID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RespEquipe")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                    b.Property<Guid?>("EquipeID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RespNome")
                         .IsRequired()
@@ -76,6 +94,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.HasKey("RespID");
+
+                    b.HasIndex("EquipeID");
 
                     b.ToTable("RespCoops");
                 });
@@ -88,6 +108,21 @@ namespace Saic.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("RespCoop");
+                });
+
+            modelBuilder.Entity("Saic.Models.RespCoop", b =>
+                {
+                    b.HasOne("Saic.Models.Equipe", "Equipe")
+                        .WithMany("RespCoops")
+                        .HasForeignKey("EquipeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Equipe");
+                });
+
+            modelBuilder.Entity("Saic.Models.Equipe", b =>
+                {
+                    b.Navigation("RespCoops");
                 });
 
             modelBuilder.Entity("Saic.Models.RespCoop", b =>

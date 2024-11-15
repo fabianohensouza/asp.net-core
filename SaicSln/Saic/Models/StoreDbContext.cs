@@ -8,8 +8,8 @@ namespace Saic.Models
         : base(options) { }
 
         public DbSet<Coop> Coops => Set<Coop>();
-
         public DbSet<RespCoop> RespCoops => Set<RespCoop>();
+        public DbSet<Equipe> Equipes => Set<Equipe>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,13 @@ namespace Saic.Models
                 .HasOne(c => c.RespCoop)
                 .WithMany(r => r.Coops)
                 .HasForeignKey(c => c.RespID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RespCoop>()
+                .HasOne(c => c.Equipe)
+                .WithMany(r => r.RespCoops)
+                .HasForeignKey(c => c.EquipeID)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }

@@ -12,16 +12,35 @@ namespace Saic.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Equipes",
+                columns: table => new
+                {
+                    EquipeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EquipeNome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    EquipeDescrição = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipes", x => x.EquipeID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RespCoops",
                 columns: table => new
                 {
                     RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RespNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    RespEquipe = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                    EquipeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RespCoops", x => x.RespID);
+                    table.ForeignKey(
+                        name: "FK_RespCoops_Equipes_EquipeID",
+                        column: x => x.EquipeID,
+                        principalTable: "Equipes",
+                        principalColumn: "EquipeID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +70,11 @@ namespace Saic.Migrations
                 name: "IX_Coops_RespID",
                 table: "Coops",
                 column: "RespID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RespCoops_EquipeID",
+                table: "RespCoops",
+                column: "EquipeID");
         }
 
         /// <inheritdoc />
@@ -61,6 +85,9 @@ namespace Saic.Migrations
 
             migrationBuilder.DropTable(
                 name: "RespCoops");
+
+            migrationBuilder.DropTable(
+                name: "Equipes");
         }
     }
 }

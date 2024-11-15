@@ -24,7 +24,7 @@
         {
             <tr>
                 <td class="text-start">@r?.RespNome</td>
-                <td>@r?.RespEquipe</td>
+                <td>@r?.Equipe?.EquipeNome</td>
                 <td>@r?.QtdCoops</td>
                 <td>@r?.QtdFwlls</td>
                 <td>@r?.QtdCompts</td>
@@ -32,11 +32,11 @@
                 <td>
                     <div class="d-flex align-items-center gap-2">
                         <form form asp-action="EditResp" method="post">
-                            <input type="hidden" name="CoopID" value="@r?.RespID" />
+                            <input type="hidden" name="RespID" value="@r?.RespID" />
                             <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
                         </form>
                         <form form asp-action="DeleteResp" method="post">
-                            <input type="hidden" name="CoopID" value="@r?.RespID" />
+                            <input type="hidden" name="RespID" value="@r?.RespID" />
                             <button type="submit" class="btn btn-sm btn-danger fa-solid fa-trash-can" />
                         </form>
                     </div>

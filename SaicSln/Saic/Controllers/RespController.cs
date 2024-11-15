@@ -1,40 +1,101 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Saic.Models;
 using Saic.Models.Repositories;
-using Saic.Models.ViewModels;
+using System;
+using System.Text.Json;
 
 namespace Saic.Controllers
 {
     public class RespController : Controller
     {
-        private IRespRepository repository;
+        private IRespRepository _ctxResps;
+        private readonly StoreDbContext _context;
+        private readonly IList<Equipe> _equipeList;
 
-        public RespController(IRespRepository repo)
+        public RespController(IRespRepository repo, StoreDbContext context)
         {
-            repository = repo;
+            _ctxResps = repo;
+            _context = context;
+            _equipeList = _context.Equipes
+                .OrderBy(e => e.EquipeNome)
+                .ToList();
         }
 
-        public ViewResult Index() => View(repository.RespCoops);
+        public ViewResult Index()
+        {
+            var resps = _ctxResps.RespCoops
+                .Include(r => r.Equipe)
+                .OrderBy(c => c.RespNome);
 
-        public ViewResult EditResp(Guid? respId = null) => View(new RespCoop());
+            return View(resps);
+        }
+
+        public ViewResult EditResp()
+        {
+            Guid? guid = null;
+
+            ViewBag.EquipeList = new SelectList(
+                    _equipeList,
+                    "EquipeID",
+                    "EquipeNome",
+                    guid
+                );
+
+            return View(new RespCoop());
+        }
 
         [HttpPost]
-        public IActionResult EditResp(RespCoop resp)
+        public IActionResult EditResp(Guid respId)
         {
-            if (resp.RespNome == "")
+            var resp = _ctxResps.RespCoops
+                .Where(c => c.RespID == respId)
+                .FirstOrDefault();
+
+            if (resp == null)
             {
-                ModelState.AddModelError("", "Favor informar o nome");
+                return NotFound();
             }
 
+            ViewBag.EquipeList = new SelectList(
+                _equipeList,
+                "EquipeID",
+                "EquipeNome",
+                resp.EquipeID
+            );
+
+            return View(resp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SaveChanges(RespCoop resp)
+        {
             if (ModelState.IsValid)
             {
-                repository.CreateRespCoop(resp);
-                return RedirectToPage("/Resp", new { respId = resp.RespID });
+                var existingResp = _ctxResps.RespCoops
+                    .Where(c => c.RespID == resp.RespID)
+                    .FirstOrDefault();
+
+                if (existingResp != null)
+                {
+                    existingResp.RespNome = resp.RespNome;
+                    existingResp.EquipeID = resp.EquipeID;;
+
+                    _ctxResps.SaveRespCoop(existingResp);
+                }
+                return RedirectToAction("Index", "Resp");
             }
-            else
-            {
-                return View();
-            }
+
+            ViewBag.EquipeList = new SelectList(
+                _equipeList,
+                "EquipeID",
+                "EquipeNome",
+                resp.EquipeID
+            );
+
+            return View("Index", resp);
         }
     }
 }

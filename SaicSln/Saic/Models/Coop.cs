@@ -24,7 +24,7 @@ namespace Saic.Models
         [Display(Name = "Adesão")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime? Adesao { get; set; }
+        public DateTime Adesao { get; set; }
 
         [Display(Name = "Equipamentos")]
         public int? QtdCompts { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Saic.Models
@@ -9,12 +10,10 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid RespID { get; set; } = Guid.NewGuid();
 
+        [DisplayName("Nome")]
         [Required(ErrorMessage = "Favor informar o nome")]
         [MaxLength(40)]
         public string RespNome { get; set; } = String.Empty;
-
-        [MaxLength(40)]
-        public string RespEquipe { get; set; } = String.Empty;
 
         [NotMapped]
         public int? QtdCoops { get; set; }
@@ -29,5 +28,10 @@ namespace Saic.Models
         public int? QtdServers { get; set; }
 
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
+
+        [DisplayName("Equipe")]
+        public Guid? EquipeID { get; set; }
+
+        public Equipe? Equipe { get; set; }
     }
 }

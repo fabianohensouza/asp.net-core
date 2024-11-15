@@ -105,6 +105,17 @@ namespace Saic.Models.SeedData
 
                 context.SaveChanges();
             }
+
+            if (!context.Equipes.Any())
+            {
+                context.Equipes.AddRange(
+                    new Equipe { EquipeNome = "Equipe 1" },
+                    new Equipe { EquipeNome = "Equipe 2" },
+                    new Equipe { EquipeNome = "Equipe 3" }
+                );
+
+                context.SaveChanges();
+            }
         }
     }
 }
