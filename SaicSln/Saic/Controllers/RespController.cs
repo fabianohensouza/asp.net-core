@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models;
 using Saic.Models.Repositories;
-using System;
-using System.Text.Json;
 
 namespace Saic.Controllers
 {
@@ -34,13 +32,10 @@ namespace Saic.Controllers
 
         public ViewResult EditResp()
         {
-            Guid? guid = null;
-
             ViewBag.EquipeList = new SelectList(
                     _equipeList,
                     "EquipeID",
-                    "EquipeNome",
-                    guid
+                    "EquipeNome"                    
                 );
 
             return View(new RespCoop());
@@ -55,7 +50,8 @@ namespace Saic.Controllers
 
             if (resp == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Responsável não encontrado!";
+                return RedirectToAction("Index", "Resp");
             }
 
             ViewBag.EquipeList = new SelectList(
@@ -81,10 +77,13 @@ namespace Saic.Controllers
                 if (existingResp != null)
                 {
                     existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID;;
+                    existingResp.EquipeID = resp.EquipeID; ;
 
                     _ctxResps.SaveRespCoop(existingResp);
+                    return RedirectToAction("Index", "Resp");
                 }
+
+                _ctxResps.CreateRespCoop(resp);
                 return RedirectToAction("Index", "Resp");
             }
 
@@ -96,6 +95,34 @@ namespace Saic.Controllers
             );
 
             return View("Index", resp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteResp(Guid respId)
+        {
+            var resp = _ctxResps.RespCoops
+                .Where(c => c.RespID == respId)
+                .FirstOrDefault();
+
+            if (resp == null)
+            {
+                TempData["ErrorMessage"] = "Responsável não encontrado!";
+                return RedirectToAction("Index", "Resp");
+            }
+
+            bool isDeleted = _ctxResps.DeleteRespCoop(resp);
+
+            if (isDeleted)
+            {
+                TempData["SuccessMessage"] = "Responsável removido com sucesso!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Erro ao remover o responsável!";
+            }
+
+            return RedirectToAction("Index", "Resp");
         }
     }
 }

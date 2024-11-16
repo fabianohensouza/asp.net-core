@@ -4,7 +4,7 @@
 
 <form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
     <select id="RespSelecionado" name="RespSelecionado" asp-items="@(new SelectList(Model.ListaResps))" class="form-control mx-1">
-        <option value="">-- Filtrar por responsável --</option>
+        <option value="">-- Todos os responsáveis --</option>
         @if (Model.RespAtual != null)
         {
             <option selected>@Model.RespAtual</option>

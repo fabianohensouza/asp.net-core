@@ -11,21 +11,43 @@
 
         public IQueryable<RespCoop> RespCoops => context.RespCoops;
 
-        public void CreateRespCoop(RespCoop r)
+        public bool CreateRespCoop(RespCoop r)
         {
-            context.Add(r);
-            context.SaveChanges();
+            try
+            {
+                context.Add(r);
+                return context.SaveChanges() > 0; 
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public void DeleteRespCoop(RespCoop r)
+        public bool SaveRespCoop(RespCoop r)
         {
-            context.Remove(r);
-            context.SaveChanges();
+            try
+            {
+                return context.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public void SaveRespCoop(RespCoop r)
+        public bool DeleteRespCoop(RespCoop r)
         {
-            context.SaveChanges();
+            try
+            {
+                context.Remove(r);
+                return context.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 }

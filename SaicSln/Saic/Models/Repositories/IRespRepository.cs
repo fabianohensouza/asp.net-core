@@ -4,8 +4,8 @@
     {        
         IQueryable<RespCoop> RespCoops { get; }
 
-        void SaveRespCoop(RespCoop r);
-        void CreateRespCoop(RespCoop r);
-        void DeleteRespCoop(RespCoop r);
+        bool SaveRespCoop(RespCoop r);
+        bool CreateRespCoop(RespCoop r);
+        bool DeleteRespCoop(RespCoop r);
     }
 }
