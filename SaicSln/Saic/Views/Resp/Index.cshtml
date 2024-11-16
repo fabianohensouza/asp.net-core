@@ -30,8 +30,8 @@
             <th scope="col" style="width: 12%;">Equipe</th>
             <th scope="col" style="width: 12%;">Coops</th>
             <th scope="col" style="width: 12%;">Firewalls</th>
-            <th scope="col" style="width: 12%;">Computadores</th>
             <th scope="col" style="width: 12%;">Servidores</th>
+            <th scope="col" style="width: 12%;">Computadores</th>
             <th class ="text-start" scope="col" style="width: 15%;">Ações</th>
         </tr>
     </thead>
@@ -44,8 +44,8 @@
                 <td>@r?.Equipe?.EquipeNome</td>
                 <td>@r?.QtdCoops</td>
                 <td>@r?.QtdFwlls</td>
-                <td>@r?.QtdCompts</td>
                 <td>@r?.QtdServers</td>
+                <td>@r?.QtdCompts</td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
                         <form form asp-action="EditResp" method="post">

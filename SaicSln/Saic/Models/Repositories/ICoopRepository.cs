@@ -4,6 +4,6 @@
     {        
         IQueryable<Coop> Coops { get; }
 
-        void SaveCoop(Coop c);
+        bool SaveCoop(Coop c);
     }
 }

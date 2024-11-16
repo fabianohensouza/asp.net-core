@@ -11,9 +11,16 @@
 
         public IQueryable<Coop> Coops => context.Coops;
 
-        public void SaveCoop(Coop c)
+        public bool SaveCoop(Coop c)
         {
-            context.SaveChanges();
+            try
+            {
+                return context.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

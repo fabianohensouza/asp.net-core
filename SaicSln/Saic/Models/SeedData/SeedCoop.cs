@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Saic.Models.AuxiliarModels;
 
 namespace Saic.Models.SeedData
 {
@@ -115,6 +116,40 @@ namespace Saic.Models.SeedData
                 );
 
                 context.SaveChanges();
+            }
+
+            if (!context.Fabricantes.Any())
+            {
+                context.Fabricantes.AddRange(
+                    new Fabricante { FabricanteTipo = "Firewall", FabricanteNome = "SonicWall" },
+                    new Fabricante { FabricanteTipo = "Firewall", FabricanteNome = "Fortinet" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Fortinet" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "HPE-Aruba" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Cisco" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Intelbras" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Mikrotik" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Dell" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "3Com" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "TPLink" },
+                    new Fabricante { FabricanteTipo = "Switch", FabricanteNome = "Outros" },
+                    new Fabricante { FabricanteTipo = "Servidor", FabricanteNome = "Dell" },
+                    new Fabricante { FabricanteTipo = "Servidor", FabricanteNome = "HP" },
+                    new Fabricante { FabricanteTipo = "Servidor", FabricanteNome = "Montado" }
+                );
+
+                context.SaveChanges();
+
+                if (!context.TipoLinks.Any())
+                {
+                    context.TipoLinks.AddRange(
+                        new TipoLink { TipoLinkNome = "MPLS" },
+                        new TipoLink { TipoLinkNome = "SD-WAN" },
+                        new TipoLink { TipoLinkNome = "Internet" },    
+                        new TipoLink { TipoLinkNome = "Apartado" }
+                    );
+
+                    context.SaveChanges();
+                }
             }
         }
     }

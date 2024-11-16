@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Saic.Models.AuxiliarModels;
 
 namespace Saic.Models
 {
@@ -10,6 +11,8 @@ namespace Saic.Models
         public DbSet<Coop> Coops => Set<Coop>();
         public DbSet<RespCoop> RespCoops => Set<RespCoop>();
         public DbSet<Equipe> Equipes => Set<Equipe>();
+        public DbSet<Fabricante> Fabricantes => Set<Fabricante>();
+        public DbSet<TipoLink> TipoLinks => Set<TipoLink>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

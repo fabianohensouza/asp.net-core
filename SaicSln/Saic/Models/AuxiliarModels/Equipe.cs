@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Saic.Models
+namespace Saic.Models.AuxiliarModels
 {
     public class Equipe
     {
@@ -10,7 +10,7 @@ namespace Saic.Models
         public Guid EquipeID { get; set; } = Guid.NewGuid();
 
         [MaxLength(20)]
-        public string EquipeNome { get; set; } = String.Empty;
+        public string EquipeNome { get; set; } = string.Empty;
 
         [MaxLength(20)]
         public string? EquipeDescrição { get; set; }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models;
+using Saic.Models.AuxiliarModels;
 using Saic.Models.Repositories;
 
 namespace Saic.Controllers
@@ -25,7 +26,16 @@ namespace Saic.Controllers
         {
             var resps = _ctxResps.RespCoops
                 .Include(r => r.Equipe)
+                .Include(r => r.Coops)
                 .OrderBy(c => c.RespNome);
+
+            foreach (var resp in resps)
+            {
+                resp.QtdCoops = resp.Coops.Count;
+                resp.QtdCompts = resp.Coops.Sum(c => c.QtdCompts ?? 0);
+                resp.QtdFwlls = resp.Coops.Sum(c => c.QtdFwlls ?? 0);
+                resp.QtdServers = resp.Coops.Sum(c => c.QtdServers ?? 0);
+            }
 
             return View(resps);
         }
@@ -79,11 +89,17 @@ namespace Saic.Controllers
                     existingResp.RespNome = resp.RespNome;
                     existingResp.EquipeID = resp.EquipeID; ;
 
-                    _ctxResps.SaveRespCoop(existingResp);
+                    bool isSaved = _ctxResps.SaveRespCoop(existingResp);
+                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
+                        = isSaved ? "Responsável alterado com sucesso!" : "Erro ao alterar responsável!";
+
                     return RedirectToAction("Index", "Resp");
                 }
 
-                _ctxResps.CreateRespCoop(resp);
+                bool isCreated = _ctxResps.CreateRespCoop(resp);
+                TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
+                    = isCreated ? "Responsável criado com sucesso!" : "Erro ao criar responsável!";
+
                 return RedirectToAction("Index", "Resp");
             }
 
@@ -113,14 +129,8 @@ namespace Saic.Controllers
 
             bool isDeleted = _ctxResps.DeleteRespCoop(resp);
 
-            if (isDeleted)
-            {
-                TempData["SuccessMessage"] = "Responsável removido com sucesso!";
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Erro ao remover o responsável!";
-            }
+            TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"] 
+                = isDeleted ? "Responsável removido com sucesso!" : "Erro ao remover o responsável!";
 
             return RedirectToAction("Index", "Resp");
         }

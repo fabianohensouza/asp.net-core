@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Saic.Models;
 using Saic.Models.Repositories;
@@ -25,7 +26,8 @@ namespace Saic.Controllers
 
             if (coop == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Coop não encontrada!";
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.RespCoopList = new SelectList(
@@ -54,7 +56,9 @@ namespace Saic.Controllers
                     existingCoop.QtdCompts = coop.QtdCompts;
                     existingCoop.RespID = coop.RespID;
 
-                    _ctxCoops.SaveCoop(existingCoop);
+                    bool isSaved = _ctxCoops.SaveCoop(existingCoop);
+                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
+                        = isSaved ? "Coop alterada com sucesso!" : "Erro ao alterar coop!";
                 }
                 return RedirectToAction("Index", "Home");
             }
