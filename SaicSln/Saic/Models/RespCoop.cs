@@ -20,13 +20,7 @@ namespace Saic.Models
         public int? QtdCoops { get; set; }
 
         [NotMapped]
-        public int? QtdFwlls { get; set; }
-
-        [NotMapped]
         public int? QtdCompts { get; set; }
-
-        [NotMapped]
-        public int? QtdServers { get; set; }
 
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
 
@@ -34,5 +28,19 @@ namespace Saic.Models
         public Guid? EquipeID { get; set; }
 
         public Equipe? Equipe { get; set; }
+
+        public int ReturnServers()
+        {
+            var qtdServers = 0;
+
+            return qtdServers;
+        }
+
+        public int ReturnFirewalls()
+        {
+            var qtdFirewalls = 0;
+
+            return qtdFirewalls;
+        }
     }
 }

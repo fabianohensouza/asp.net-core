@@ -1,27 +1,8 @@
 ﻿@model CoopsListViewModel
 
-@{
-    var successMessage = TempData["SuccessMessage"] as string;
-    var errorMessage = TempData["ErrorMessage"] as string;
-}
-
 <h4>Coops</h4>
 
-@if (!string.IsNullOrEmpty(successMessage))
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @successMessage
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        @errorMessage
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
+<partial name="FeedbackMessage"/>
 
 <form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
     <select id="RespSelecionado" name="RespSelecionado" asp-items="@(new SelectList(Model.ListaResps))" class="form-control mx-1">

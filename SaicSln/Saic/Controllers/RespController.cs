@@ -33,8 +33,6 @@ namespace Saic.Controllers
             {
                 resp.QtdCoops = resp.Coops.Count;
                 resp.QtdCompts = resp.Coops.Sum(c => c.QtdCompts ?? 0);
-                resp.QtdFwlls = resp.Coops.Sum(c => c.QtdFwlls ?? 0);
-                resp.QtdServers = resp.Coops.Sum(c => c.QtdServers ?? 0);
             }
 
             return View(resps);

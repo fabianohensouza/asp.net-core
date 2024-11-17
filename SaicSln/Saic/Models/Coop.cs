@@ -10,18 +10,22 @@ namespace Saic.Models
         public Guid CoopID { get; set; } = Guid.NewGuid();
 
         [Display(Name = "Número")]
+        [Required(ErrorMessage = "Número Obrigatório")]
         [MaxLength(4)]
         public string CoopNumero { get; set; } = String.Empty;
 
         [Display(Name = "Nome")]
+        [Required(ErrorMessage = "Nome Obrigatório")]
         [MaxLength(40)]
         public string CoopNome { get; set; } = String.Empty;
 
         [Display(Name = "Cidade")]
+        [Required(ErrorMessage = "Cidade Obrigatória")]
         [MaxLength(40)]
         public string CoopCidade { get; set; } = String.Empty;
 
         [Display(Name = "Adesão")]
+        [Required(ErrorMessage = "Adesão Obrigatória")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime Adesao { get; set; }
@@ -29,16 +33,26 @@ namespace Saic.Models
         [Display(Name = "Equipamentos")]
         public int? QtdCompts { get; set; }
 
-        [NotMapped]
-        public int? QtdServers { get; set; }
-
-        [NotMapped]
-        public int? QtdFwlls { get; set; }
-
         // Foreign key to RespCoop
         [Display(Name = "Responsável")]
         public Guid? RespID { get; set; }
 
         public RespCoop? RespCoop { get; set; }
+
+        public ICollection<Unidade> Unidades { get; set; } = new List<Unidade>();
+
+        public int ReturnServers()
+        {
+            var qtdServers = 0;
+
+            return qtdServers;
+        }
+
+        public int ReturnFirewalls()
+        {
+            var qtdFirewalls = 0;
+
+            return qtdFirewalls;
+        }
     }
 }

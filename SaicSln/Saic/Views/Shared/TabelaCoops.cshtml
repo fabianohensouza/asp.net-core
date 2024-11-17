@@ -22,8 +22,8 @@
                 <td class="text-start">@c?.CoopNome</td>
                 <td class="text-start">@c?.RespCoop?.RespNome</td>
                 <td class="text-start">@c?.Adesao.ToString("dd/MM/yyyy")</td>
-                <td>@c?.QtdFwlls</td>
-                <td>@c?.QtdServers</td>
+                <td>@c?.ReturnFirewalls()</td>
+                <td>@c?.ReturnServers()</td>
                 <td>@c?.QtdCompts</td>
                 <td>
                     <form form asp-controller="EditCoop" asp-action="Index" method="post">
