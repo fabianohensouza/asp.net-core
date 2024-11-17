@@ -26,11 +26,6 @@ namespace Saic.Components
                         Controller = "Equipe",
                         Label = "Equipe",
                         Icone = "fa-solid fa-people-group" },
-                    new NavigationMenuInfo{
-                        Action = "Index",
-                        Controller = "Unidade",
-                        Label = "Unidades",
-                        Icone = "fa-solid fa-map-location-dot" },
                     new NavigationMenuInfo{ 
                         Action = "Index", 
                         Controller = "Painel", 

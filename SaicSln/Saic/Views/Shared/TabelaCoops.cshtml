@@ -26,10 +26,16 @@
                 <td>@c?.ReturnServers()</td>
                 <td>@c?.QtdCompts</td>
                 <td>
-                    <form form asp-controller="EditCoop" asp-action="Index" method="post">
-                        <input type="hidden" name="CoopID" value="@c?.CoopID" />
-                        <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" />
-                    </form>
+                    <div class="d-flex align-items-center gap-2">
+                        <form form asp-controller="EditCoop" asp-action="Index" method="post">
+                            <input type="hidden" name="CoopID" value="@c?.CoopID" />
+                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
+                        </form>
+                        <form form asp-controller="Unidade" asp-action="Index" method="post">
+                            <input type="hidden" name="CoopID" value="@c?.CoopID" />
+                            <button type="submit" class="btn btn-sm btn-info fa-solid fa-map-location-dot" title="Unidades" />
+                        </form>
+                    </div>
                 </td>
             </tr>
         }
