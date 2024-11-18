@@ -1,23 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Saic.Models.AuxiliarModels;
-using Saic.Models.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Saic.Models;
+using Saic.Models.Repositories;
 
 namespace Saic.Controllers
 {
     public class UnidadeController : Controller
     {
         private IUnidadeRepository _ctxUnidades;
-        private readonly StoreDbContext _context;
-        private readonly IList<Equipe> _equipeList;
 
-        public UnidadeController(IUnidadeRepository repo, StoreDbContext context)
+        public UnidadeController(IUnidadeRepository repo)
         {
             _ctxUnidades = repo;
-            _context = context;
-            _equipeList = _context.Equipes
-                .OrderBy(e => e.EquipeNome)
-                .ToList();
         }
 
         public IActionResult Index(Guid? coopID)
@@ -29,16 +23,37 @@ namespace Saic.Controllers
             }
 
             var unidades = _ctxUnidades.Unidades
+                .Include(c => c.Coop)
                 .Where(c => c.CoopID == coopID)
                 .OrderBy(c => c.UnidadeNumero);
 
-            foreach (var resp in unidades)
+            return View(unidades);
+        }
+
+        public IActionResult EditUnidade(Guid? coopID, Guid? unidadeID = null)
+        {
+            if (coopID == null)
             {
-                //resp.QtdCoops = resp.Coops.Count;
-                //resp.QtdCompts = resp.Coops.Sum(c => c.QtdCompts ?? 0);
+                TempData["ErrorMessage"] = "Unidades não encontradas!";
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(unidades);
+            if(unidadeID == null)
+            {
+                var novaUnidade = new Unidade();
+                novaUnidade.CoopID = coopID;
+
+                return View (novaUnidade);
+            }
+
+            var unidade = _ctxUnidades.Unidades
+                .Include(c => c.Coop)
+                .Include(c => c.Firewalls)
+                .Include(c => c.Links)
+                .Where(c => c.UnidadeID == unidadeID)
+                .Where(c => c.CoopID == coopID);
+
+            return View(unidade);
         }
     }
 }

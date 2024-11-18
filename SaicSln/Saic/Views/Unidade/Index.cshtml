@@ -1,1 +1,47 @@
-﻿
+﻿@model IEnumerable<Unidade>
+
+<h4>Unidadeonsáveis</h4>
+
+<partial name="FeedbackMessage" />
+
+<table class="table table-hover text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" style="width: 10%;">Coop</th>
+            <th scope="col" style="width: 10%;">Número</th>
+            <th scope="col" style="width: 10%;">Nome</th>
+            <th scope="col" style="width: 60%;">Observações</th>
+            <th class="text-start" scope="col" style="width: 10%;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var r in Model ?? Enumerable.Empty<Unidade>())
+        {
+            <tr>
+                <td>@r?.Coop?.CoopNumero</td>
+                <td class="text-start">@r?.UnidadeNumero</td>
+                <td>@r?.UnidadeNome</td>
+                <td>@r?.UnidadeObs</td>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <form form asp-action="EditUnidade" method="post">
+                            <input type="hidden" name="UnidadeID" value="@r?.UnidadeID" />
+                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
+                        </form>
+                        <form form asp-action="DeleteUnidade" method="post">
+                            <input type="hidden" name="UnidadeID" value="@r?.UnidadeID" />
+                            <button type="submit" class="btn btn-sm btn-danger fa-solid fa-trash-can" title="Deletar" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<a asp-controller="Unidade" asp-action="EditUnidade" method="post" 
+type="button" class="align-items-center btn btn-secondary">
+    Criar novo
+</a>

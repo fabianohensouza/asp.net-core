@@ -97,7 +97,8 @@ namespace Saic.Migrations
                 {
                     UnidadeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UnidadeNumero = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    UnidadeNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    UnidadeNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    UnidadeObs = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     CoopID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -117,7 +118,9 @@ namespace Saic.Migrations
                 {
                     FirewallID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirewallModelo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    FirewallSerial = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     FirewallBackup = table.Column<bool>(type: "bit", maxLength: 40, nullable: false),
+                    FirewallObs = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     UnidadeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FabricanteID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

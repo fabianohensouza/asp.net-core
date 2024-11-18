@@ -135,6 +135,14 @@ namespace Saic.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("FirewallObs")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("FirewallSerial")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<Guid?>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
 
@@ -210,7 +218,6 @@ namespace Saic.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UnidadeNome")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -218,6 +225,10 @@ namespace Saic.Migrations
                         .IsRequired()
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("UnidadeObs")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.HasKey("UnidadeID");
 

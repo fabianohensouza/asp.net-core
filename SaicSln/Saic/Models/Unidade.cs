@@ -16,9 +16,12 @@ namespace Saic.Models
         public string UnidadeNumero { get; set; } = String.Empty;
 
         [Display(Name = "Nome")]
-        [Required(ErrorMessage = "Nome Obrigatório")]
         [MaxLength(40)]
-        public string UnidadeNome { get; set; } = String.Empty;
+        public string? UnidadeNome { get; set; } = String.Empty;
+
+        [Display(Name = "Observações")]
+        [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
+        public string? UnidadeObs { get; set; } = String.Empty;
 
         [DisplayName("Coop")]
         [Required(ErrorMessage = "Coop Obrigatória")]

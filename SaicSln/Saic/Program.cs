@@ -21,6 +21,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts => {
 
 builder.Services.AddScoped<ICoopRepository, EFCoopRepository>();
 builder.Services.AddScoped<IRespRepository, EFRespRepository>();
+builder.Services.AddScoped<IUnidadeRepository, EFUnidadeRepository>();
 
 var app = builder.Build();
 
