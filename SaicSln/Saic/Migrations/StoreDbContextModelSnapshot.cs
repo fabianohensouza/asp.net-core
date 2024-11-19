@@ -122,6 +122,9 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CoopID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("FabricanteID")
                         .IsRequired()
                         .HasColumnType("uniqueidentifier");
@@ -148,11 +151,13 @@ namespace Saic.Migrations
 
                     b.HasKey("FirewallID");
 
+                    b.HasIndex("CoopID");
+
                     b.HasIndex("FabricanteID");
 
                     b.HasIndex("UnidadeID");
 
-                    b.ToTable("Firewall");
+                    b.ToTable("Firewalls");
                 });
 
             modelBuilder.Entity("Saic.Models.Link", b =>
@@ -183,7 +188,7 @@ namespace Saic.Migrations
 
                     b.HasIndex("UnidadeID");
 
-                    b.ToTable("Link");
+                    b.ToTable("Links");
                 });
 
             modelBuilder.Entity("Saic.Models.RespCoop", b =>
@@ -214,7 +219,6 @@ namespace Saic.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CoopID")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UnidadeNome")
@@ -237,6 +241,39 @@ namespace Saic.Migrations
                     b.ToTable("Unidades");
                 });
 
+            modelBuilder.Entity("Saic.Models.Vlan", b =>
+                {
+                    b.Property<Guid>("VlanID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UnidadeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VlanIP")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("VlanNome")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("VlanObs")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("VlanTag")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("VlanID");
+
+                    b.HasIndex("UnidadeID");
+
+                    b.ToTable("Vlans");
+                });
+
             modelBuilder.Entity("Saic.Models.Coop", b =>
                 {
                     b.HasOne("Saic.Models.RespCoop", "RespCoop")
@@ -249,6 +286,10 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.Firewall", b =>
                 {
+                    b.HasOne("Saic.Models.Coop", "Coop")
+                        .WithMany()
+                        .HasForeignKey("CoopID");
+
                     b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("FabricanteID")
@@ -258,6 +299,8 @@ namespace Saic.Migrations
                         .WithMany("Firewalls")
                         .HasForeignKey("UnidadeID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Coop");
 
                     b.Navigation("Fabricante");
 
@@ -301,6 +344,16 @@ namespace Saic.Migrations
                     b.Navigation("Coop");
                 });
 
+            modelBuilder.Entity("Saic.Models.Vlan", b =>
+                {
+                    b.HasOne("Saic.Models.Unidade", "Unidade")
+                        .WithMany("Vlans")
+                        .HasForeignKey("UnidadeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Unidade");
+                });
+
             modelBuilder.Entity("Saic.Models.AuxiliarModels.Equipe", b =>
                 {
                     b.Navigation("RespCoops");
@@ -321,6 +374,8 @@ namespace Saic.Migrations
                     b.Navigation("Firewalls");
 
                     b.Navigation("Links");
+
+                    b.Navigation("Vlans");
                 });
 #pragma warning restore 612, 618
         }

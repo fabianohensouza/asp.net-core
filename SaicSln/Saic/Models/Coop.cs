@@ -40,6 +40,7 @@ namespace Saic.Models
         public RespCoop? RespCoop { get; set; }
 
         public ICollection<Unidade> Unidades { get; set; } = new List<Unidade>();
+        public ICollection<Firewall> Firewalls { get; set; } = new List<Firewall>();
 
         public int ReturnServers()
         {

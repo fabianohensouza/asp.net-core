@@ -28,6 +28,11 @@ namespace Saic.Models
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? FirewallObs { get; set; } = String.Empty;
 
+        [DisplayName("Coop")]
+        public Guid? CoopID { get; set; }
+
+        public Coop? Coop { get; set; }
+
         [DisplayName("Unidade")]
         public Guid? UnidadeID { get; set; }
 

@@ -4,46 +4,7 @@
 
 <partial name="FeedbackMessage" />
 
-<table class="table table-hover text-center">
-    <thead class ="thead-dark">
-        <tr>
-            <th scope="col" class="text-start" style="width: 25%;">Nome</th>
-            <th scope="col" style="width: 12%;">Equipe</th>
-            <th scope="col" style="width: 12%;">Coops</th>
-            <th scope="col" style="width: 12%;">Firewalls</th>
-            <th scope="col" style="width: 12%;">Servidores</th>
-            <th scope="col" style="width: 12%;">Computadores</th>
-            <th class ="text-start" scope="col" style="width: 15%;">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var r in Model ?? Enumerable.Empty<RespCoop>())
-        {
-            <tr>
-                <td class="text-start">@r?.RespNome</td>
-                <td>@r?.Equipe?.EquipeNome</td>
-                <td>@r?.QtdCoops</td>
-                <td>@r?.ReturnFirewalls()</td>
-                <td>@r?.ReturnServers()</td>
-                <td>@r?.QtdCompts</td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <form form asp-action="EditResp" method="post">
-                            <input type="hidden" name="RespID" value="@r?.RespID" />
-                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
-                        </form>
-                        <form form asp-action="DeleteResp" method="post">
-                            <input type="hidden" name="RespID" value="@r?.RespID" />
-                            <button type="submit" class="btn btn-sm btn-danger fa-solid fa-trash-can" title="Deletar" />
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        }
-
-    </tbody>
-</table>
+<partial name="Tabelas/TabelaResps" model=@Model />
 
 <a asp-controller="Resp" asp-action="EditResp" type="button" class="align-items-center btn btn-secondary">
     Criar novo

@@ -14,6 +14,9 @@ namespace Saic.Models
         public DbSet<Equipe> Equipes => Set<Equipe>();
         public DbSet<Fabricante> Fabricantes => Set<Fabricante>();
         public DbSet<TipoLink> TipoLinks => Set<TipoLink>();
+        public DbSet<Firewall> Firewalls => Set<Firewall>();
+        public DbSet<Link> Links => Set<Link>();
+        public DbSet<Vlan> Vlans => Set<Vlan>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,6 +75,14 @@ namespace Saic.Models
                 .HasOne(c => c.TipoLink)
                 .WithMany()
                 .HasForeignKey(c => c.TipoLinkID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Vlan -> Unidade)
+            modelBuilder.Entity<Vlan>()
+                .HasOne(c => c.Unidade)
+                .WithMany(r => r.Vlans)
+                .HasForeignKey(c => c.UnidadeID)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }
