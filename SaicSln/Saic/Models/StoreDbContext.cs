@@ -54,6 +54,14 @@ namespace Saic.Models
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Configure one-to-many relationship (Firewall -> Coop)
+            modelBuilder.Entity<Firewall>()
+                .HasOne(c => c.Coop)
+                .WithMany(r => r.Firewalls)
+                .HasForeignKey(c => c.CoopID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Configure one-to-many relationship (Firewall -> Fabricante)
             modelBuilder.Entity<Firewall>()
                 .HasOne(c => c.Fabricante)

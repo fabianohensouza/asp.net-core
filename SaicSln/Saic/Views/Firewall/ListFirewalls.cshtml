@@ -1,0 +1,22 @@
+﻿@model FirewallsListViewModel
+@using Newtonsoft.Json
+
+@{
+    var test = JsonConvert.SerializeObject(Model, Formatting.Indented);
+}
+
+<h4>Firewalls - @Model?.CoopAtual?.DisplayName</h4>
+
+<partial name="FeedbackMessage" />
+
+<partial name="Tabelas/TabelaFirewalls" model=@Model />
+
+<form form asp-action="EditFirewall" method="post">
+    <input type="hidden" name="CoopID" value="@Model?.CoopAtual?.CoopID" />
+    <button type="submit" class="align-items-center btn btn-secondary">
+        Cadastrar Novo
+    </button>
+</form>
+
+<pre>@test</pre>
+

@@ -17,18 +17,20 @@ namespace Saic.Models
         public string FirewallModelo { get; set; } = String.Empty;
 
         [Display(Name = "Serial")]
+        [Required(ErrorMessage = "Serial Obrigatório")]
         [MaxLength(40)]
         public string? FirewallSerial { get; set; } = String.Empty;
 
         [Display(Name = "Backup")]
         [MaxLength(40)]
-        public bool FirewallBackup { get; set; }
+        public bool FirewallBackup { get; set; } = false;
 
         [Display(Name = "Observações")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? FirewallObs { get; set; } = String.Empty;
 
         [DisplayName("Coop")]
+        [Required(ErrorMessage = "Informe a Cooperativa")]
         public Guid? CoopID { get; set; }
 
         public Coop? Coop { get; set; }

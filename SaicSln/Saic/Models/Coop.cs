@@ -42,6 +42,9 @@ namespace Saic.Models
         public ICollection<Unidade> Unidades { get; set; } = new List<Unidade>();
         public ICollection<Firewall> Firewalls { get; set; } = new List<Firewall>();
 
+        [NotMapped]
+        public string DisplayName => $"{CoopNumero} - {CoopNome}";
+
         public int ReturnServers()
         {
             var qtdServers = 0;
