@@ -3,11 +3,11 @@
 <table class="table table-hover text-center">
     <thead>
         <tr>
-            <th scope="col" class="text-start" style="width: 10%;">Fabricante</th>
-            <th scope="col" class="text-start" style="width: 15%;">Modelo</th>
-            <th scope="col" class="text-start" style="width: 15%;">Serial</th>
-            <th scope="col" class="text-start" style="width: 10%;">Local</th>
-            <th scope="col" class="text-center" style="width: 40%;">Observações</th>
+            <th scope="col" class="text-center" style="width: 8%;">Fabricante</th>
+            <th scope="col" class="text-center" style="width: 8%;">Modelo</th>
+            <th scope="col" class="text-center" style="width: 20%;">Serial</th>
+            <th scope="col" class="text-center" style="width: 9%;">Local</th>
+            <th scope="col" class="text-center" style="width: 45%;">Observações</th>
             <th scope="col" style="width: 10%;">Ações</th>
         </tr>
     </thead>
@@ -16,13 +16,13 @@
         @foreach (var f in Model?.Firewalls ?? Enumerable.Empty<Firewall>())
         {
             <tr>
-                <th scope="row" class="text-start">@f?.Fabricante?.FabricanteNome</th>
-                <td class="text-start">@f?.FirewallModelo</td>
-                <td class="text-start">@f?.FirewallSerial</td>
-                <td class="text-start">
+                <td class="text-center">@f?.Fabricante?.FabricanteNome</td>
+                <td class="text-center">@f?.FirewallModelo</td>
+                <td class="text-center">@f?.FirewallSerial</td>
+                <td class="text-center">
                     @(f.FirewallBackup ? "Backup" : f?.Unidade?.UnidadeNumero)
                 </td>
-                <td class="text-center">@f?.FirewallObs</td>
+                <td class="text-center"><p><em><small>@f?.FirewallObs</small></em></p></td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
                         <form form asp-action="EditFirewall" method="post">
@@ -32,7 +32,7 @@
                         </form>
                         <form form asp-action="AlteraCoopFirewall" method="post">
                             <input type="hidden" name="FirewallID" value="@f?.FirewallID" />
-                            <button type="submit" class="btn btn-sm btn-info fa-arrow-right-arrow-left" title="Alterar Coop" />
+                            <button type="submit" class="btn btn-sm btn-info fas fa-exchange-alt" title="Alterar Coop" />
                         </form>
 
                         <form asp-action="DeleteFirewall" method="post">

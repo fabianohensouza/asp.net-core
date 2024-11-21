@@ -113,17 +113,24 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (firewall.FirewallBackup)
+                {
+                    firewall.UnidadeID = null;
+                    firewall.Unidade = null;
+                }
+
                 var existingfirewall = _ctxFirewall.Firewalls
                     .Where(c => c.FirewallID == firewall.FirewallID)
                     .FirstOrDefault();
 
                 if (existingfirewall != null)
                 {
-                    if (firewall.FirewallBackup)
-                    {
-                        firewall.UnidadeID = null;
-                        firewall.Unidade = null;
-                    }
+                    existingfirewall.FirewallModelo = firewall.FirewallModelo;
+                    existingfirewall.FirewallBackup = firewall.FirewallBackup;
+                    existingfirewall.UnidadeID = firewall.UnidadeID;
+                    existingfirewall.FirewallSerial = firewall.FirewallSerial;
+                    existingfirewall.FabricanteID = firewall.FabricanteID;
+                    existingfirewall.FirewallObs = firewall.FirewallObs;
 
                     bool isSaved = _ctxFirewall.SaveFirewall(existingfirewall);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

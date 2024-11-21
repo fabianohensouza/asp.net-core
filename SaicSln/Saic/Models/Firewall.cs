@@ -22,7 +22,6 @@ namespace Saic.Models
         public string? FirewallSerial { get; set; } = String.Empty;
 
         [Display(Name = "Backup")]
-        [MaxLength(40)]
         public bool FirewallBackup { get; set; } = false;
 
         [Display(Name = "Observações")]

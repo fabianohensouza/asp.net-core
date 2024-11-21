@@ -1,9 +1,4 @@
 ﻿@model FirewallsListViewModel
-@using Newtonsoft.Json
-
-@{
-    var test = JsonConvert.SerializeObject(Model, Formatting.Indented);
-}
 
 <h4>Firewalls - @Model?.CoopAtual?.DisplayName</h4>
 
@@ -17,6 +12,4 @@
         Cadastrar Novo
     </button>
 </form>
-
-<pre>@test</pre>
 
