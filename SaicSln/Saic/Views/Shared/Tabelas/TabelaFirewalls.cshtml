@@ -1,41 +1,41 @@
-﻿@model FirewallsListViewModel
+﻿@model IList<Firewall>
 
 <table class="table table-hover text-center">
     <thead>
         <tr>
-            <th scope="col" class="text-center" style="width: 8%;">Fabricante</th>
-            <th scope="col" class="text-center" style="width: 8%;">Modelo</th>
+            <th scope="col" class="text-center" style="width: 4%;">Coop</th>
+            <th scope="col" class="text-center" style="width: 15%;">Modelo</th>
             <th scope="col" class="text-center" style="width: 20%;">Serial</th>
             <th scope="col" class="text-center" style="width: 9%;">Local</th>
-            <th scope="col" class="text-center" style="width: 45%;">Observações</th>
+            <th scope="col" class="text-center" style="width: 42%;">Observações</th>
             <th scope="col" style="width: 10%;">Ações</th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var f in Model?.Firewalls ?? Enumerable.Empty<Firewall>())
+        @foreach (var f in Model ?? Enumerable.Empty<Firewall>())
         {
             <tr>
-                <td class="text-center">@f?.Fabricante?.FabricanteNome</td>
-                <td class="text-center">@f?.FirewallModelo</td>
+                <td class="text-center">@f?.Coop?.CoopNumero</td>
+                <td class="text-center">@f?.Fabricante?.FabricanteNome - @f?.FirewallModelo</td>
                 <td class="text-center">@f?.FirewallSerial</td>
                 <td class="text-center">
                     @(f.FirewallBackup ? "Backup" : f?.Unidade?.UnidadeNumero)
                 </td>
-                <td class="text-center"><p><em><small>@f?.FirewallObs</small></em></p></td>
+                <td class="text-center"><p><em><small>@(f?.FirewallObs == null ? "______" : f?.FirewallObs)</small></em></p></td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
-                        <form form asp-action="EditFirewall" method="post">
+                        <form form asp-controller="Firewall" asp-action="EditFirewall" method="post">
                             <input type="hidden" name="FirewallID" value="@f?.FirewallID" />
                             <input type="hidden" name="CoopID" value="@f?.CoopID" />
                             <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
                         </form>
-                        <form form asp-action="AlteraCoopFirewall" method="post">
+                        <form form asp-controller="Firewall" asp-action="AlteraCoopFirewall" method="post">
                             <input type="hidden" name="FirewallID" value="@f?.FirewallID" />
                             <button type="submit" class="btn btn-sm btn-info fas fa-exchange-alt" title="Alterar Coop" />
                         </form>
 
-                        <form asp-action="DeleteFirewall" method="post">
+                        <form asp-controller="Firewall" asp-action="DeleteFirewall" method="post">
                             <input type="hidden" name="FirewallID" value="@f?.FirewallID" />
                             <button type="submit"
                                     class="btn btn-sm btn-danger fa-solid fa-trash-can"

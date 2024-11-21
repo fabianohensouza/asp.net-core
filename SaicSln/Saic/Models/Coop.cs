@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Saic.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Saic.Models
@@ -54,7 +55,7 @@ namespace Saic.Models
 
         public int ReturnFirewalls()
         {
-            var qtdFirewalls = 0;
+            var qtdFirewalls = Firewalls.Where(c => c.CoopID == CoopID).Count();
 
             return qtdFirewalls;
         }

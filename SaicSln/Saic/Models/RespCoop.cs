@@ -38,7 +38,13 @@ namespace Saic.Models
 
         public int ReturnFirewalls()
         {
+            var coops = Coops.Where(r => r.RespID == RespID);
             var qtdFirewalls = 0;
+
+            foreach (var firewall in coops)
+            {
+                qtdFirewalls += firewall.ReturnFirewalls();
+            }
 
             return qtdFirewalls;
         }

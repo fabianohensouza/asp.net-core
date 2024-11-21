@@ -37,7 +37,13 @@ namespace Saic.Controllers
                     "DisplayName"
                 );
 
-            return View();
+            var firewallsList =  _ctxFirewall.Firewalls
+                    .Include(f => f.Fabricante)
+                    .Include(u => u.Unidade)
+                    .Include(c => c.Coop)
+                    .ToList();
+
+            return View(firewallsList);
         }
 
         [HttpPost]
@@ -49,7 +55,8 @@ namespace Saic.Controllers
                     .Include(f => f.Fabricante)
                     .Include(u => u.Unidade)
                     .Include(c => c.Coop)
-                    .Where(c => c.Coop.CoopID == coopID),
+                    .Where(c => c.Coop.CoopID == coopID)
+                    .ToList(),
                 CoopAtual = _coopList.FirstOrDefault(c => c.CoopID == coopID)
             };                
 
@@ -101,8 +108,37 @@ namespace Saic.Controllers
             if (firewall == null)
             {
                 TempData["ErrorMessage"] = "Firewall não encontrado!";
-                return RedirectToAction("ListFirewalls", "Firewall", new { CoopID = coopID });
+                return View("RedirectToPost", coopID);
             }
+
+            return View(firewall);
+        }
+
+        [HttpPost]
+        public IActionResult AlteraCoopFirewall(Guid firewallID)
+        {
+
+            var firewall = _ctxFirewall.Firewalls
+                .Include(f => f.Fabricante)
+                .Include(f => f.Coop)
+                .Where(c => c.FirewallID == firewallID)
+                .FirstOrDefault();
+
+            if (firewall == null)
+            {
+                TempData["ErrorMessage"] = "Firewall não encontrado!";
+                return RedirectToAction("Index", "Firewall");
+            }
+
+            ViewBag.DadosFirewall = $"{firewall.Fabricante?.FabricanteNome} - {firewall.FirewallModelo}";
+            ViewBag.CoopAtual = firewall.Coop?.DisplayName;
+
+            ViewBag.CoopList = new SelectList(
+                _coopList,
+                "CoopID",
+                "DisplayName",
+                firewall.FabricanteID
+            );
 
             return View(firewall);
         }
@@ -128,7 +164,8 @@ namespace Saic.Controllers
                     existingfirewall.FirewallModelo = firewall.FirewallModelo;
                     existingfirewall.FirewallBackup = firewall.FirewallBackup;
                     existingfirewall.UnidadeID = firewall.UnidadeID;
-                    existingfirewall.FirewallSerial = firewall.FirewallSerial;
+                    existingfirewall.CoopID = firewall.CoopID;
+                    existingfirewall.FirewallSerial = firewall.FirewallSerial?.ToUpper();
                     existingfirewall.FabricanteID = firewall.FabricanteID;
                     existingfirewall.FirewallObs = firewall.FirewallObs;
 
@@ -136,18 +173,18 @@ namespace Saic.Controllers
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
                         = isSaved ? "Firewall alterado com sucesso!" : "Erro ao alterar Firewall!";
 
-                    return RedirectToAction("ListFirewalls", "Firewall", new { CoopID = firewall.CoopID });
+                    return View("RedirectToPost", firewall.CoopID);
                 }
 
                 bool isCreated = _ctxFirewall.CreateFirewall(firewall);
                 TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
                     = isCreated ? "Firewall criado com sucesso!" : "Erro ao criar Firewall!";
 
-                return RedirectToAction("ListFirewalls", "Firewall", new { CoopID = firewall.CoopID });
+                return View("RedirectToPost", firewall.CoopID);
             }
 
             TempData["ErrorMessage"] = "Erro nos dados inseridos!";
-            return RedirectToAction("ListFirewalls", "Firewall", new { CoopID = firewall.CoopID });
+            return View("RedirectToPost", firewall.CoopID);
         }
 
         [HttpPost]
@@ -169,7 +206,7 @@ namespace Saic.Controllers
             TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
                 = isDeleted ? "Firewall removido com sucesso!" : "Erro ao remover o Firewall!";
 
-            return RedirectToAction("Index", "firewall");
+            return View("RedirectToPost", firewall.CoopID);
         }
     }
 }

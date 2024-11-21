@@ -27,6 +27,7 @@ namespace Saic.Controllers
             var resps = _ctxResps.RespCoops
                 .Include(r => r.Equipe)
                 .Include(r => r.Coops)
+                    .ThenInclude(f => f.Firewalls)
                 .OrderBy(c => c.RespNome);
 
             foreach (var resp in resps)

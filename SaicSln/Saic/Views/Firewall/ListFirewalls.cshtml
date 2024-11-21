@@ -4,7 +4,7 @@
 
 <partial name="FeedbackMessage" />
 
-<partial name="Tabelas/TabelaFirewalls" model=@Model />
+<partial name="Tabelas/TabelaFirewalls" model=@Model?.Firewalls />
 
 <form form asp-action="EditFirewall" method="post">
     <input type="hidden" name="CoopID" value="@Model?.CoopAtual?.CoopID" />

@@ -25,6 +25,7 @@ namespace Saic.Controllers
                 .ToList(),
             Coops =_ctxCoops.Coops
                 .Include(r => r.RespCoop)
+                .Include(f => f.Firewalls)
                 .Where(c => RespSelecionado == null || c.RespCoop.RespNome == RespSelecionado)
                 .OrderBy(c => c.CoopNumero)
                 .Skip((coopPage - 1) * PageSize)
@@ -35,7 +36,7 @@ namespace Saic.Controllers
                 ItemsPorPag = PageSize,
                 TotalItens = RespSelecionado == null 
                     ?_ctxCoops.Coops.Count()
-                    :_ctxCoops.Coops.Where (c => c.CoopNumero == RespSelecionado).Count()
+                    :_ctxCoops.Coops.Where (c => c.RespCoop.RespNome == RespSelecionado).Count()
             },
             RespAtual = RespSelecionado
         });
