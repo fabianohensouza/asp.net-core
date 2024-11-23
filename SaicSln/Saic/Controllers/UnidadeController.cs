@@ -42,14 +42,11 @@ namespace Saic.Controllers
             });
         }
 
-        public IActionResult EditUnidade(Guid? coopID, Guid? unidadeID = null)
+        [HttpPost]
+        [Route("Unidade/EditUnidade")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditUnidade(Guid coopID, Guid? unidadeID = null)
         {
-            if (coopID == null)
-            {
-                TempData["ErrorMessage"] = "Unidades não encontradas!";
-                return RedirectToAction("Index", "Home");
-            }
-
             if (unidadeID == null)
             {
                 var novaUnidade = new Unidade();
@@ -69,6 +66,7 @@ namespace Saic.Controllers
                 .Include(c => c.Firewalls)
                     .ThenInclude(c => c.Fabricante)
                 .Include(c => c.Links)
+                    .ThenInclude(t => t.TipoLink)
                 .Include(c => c.Vlans)
                 .Where(c => c.UnidadeID == unidadeID)
                 .Where(c => c.CoopID == coopID)

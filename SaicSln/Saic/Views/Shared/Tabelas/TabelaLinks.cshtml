@@ -1,0 +1,44 @@
+﻿@model IList<Link>
+
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center" style="width: 15%;">Tipo</th>
+            <th scope="col" class="text-center" style="width: 15%;">Provedor</th>
+            <th scope="col" class="text-center" style="width: 15%;">Endereço IP</th>
+            <th scope="col" class="text-center" style="width: 40%;">Observações</th>
+            <th scope="col" class="text-start" style="width: 15%;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var l in Model ?? Enumerable.Empty<Link>())
+        {
+            <tr>
+                <td class="text-center">@((l?.TipoLink?.TipoLinkNome ?? "-"))</td>
+                <td class="text-center">@((l?.LinkProvedor ?? "-"))</td>
+                <td class="text-center">@((l?.LinkIP ?? "-"))</td>
+                <td class="text-center"><p><em><small>@(l?.LinkObs == null ? "______" : l?.LinkObs)</small></em></p></td>
+                <td class="text-end">
+                    <div class="d-flex align-items-end gap-2">
+                        <form asp-controller="Link" asp-action="EditLink" method="post">
+                            <input type="hidden" name="LinkID" value="@l?.LinkID" />
+                            <input type="hidden" name="UnidadeID" value="@l?.UnidadeID" />
+                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
+                        </form>
+
+                        <form asp-controller="Link" asp-action="DeleteLink" method="post">
+                            <input type="hidden" name="LinkID" value="@l?.LinkID" />
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger fa-solid fa-trash-can"
+                                    title="Delete"
+                                    onclick="return confirm('Confirma a deleção deste Link?');">
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>

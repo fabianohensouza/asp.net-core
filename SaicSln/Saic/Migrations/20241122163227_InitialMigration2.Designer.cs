@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Saic.Models;
 
@@ -11,9 +12,11 @@ using Saic.Models;
 namespace Saic.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241122163227_InitialMigration2")]
+    partial class InitialMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,19 +175,15 @@ namespace Saic.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("LinkObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<string>("LinkProvedor")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<Guid>("TipoLinkID")
+                    b.Property<Guid?>("TipoLinkID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UnidadeID")
+                    b.Property<Guid?>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LinkID");
@@ -223,7 +222,7 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CoopID")
+                    b.Property<Guid?>("CoopID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UnidadeNome")
@@ -255,6 +254,10 @@ namespace Saic.Migrations
                     b.Property<Guid?>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("VlanIP")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<string>("VlanNome")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
@@ -262,10 +265,6 @@ namespace Saic.Migrations
                     b.Property<string>("VlanObs")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("VlanRangeIP")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("VlanTag")
                         .IsRequired()

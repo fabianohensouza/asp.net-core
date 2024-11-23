@@ -5,7 +5,6 @@ using Saic.Models.Repositories;
 using Saic.Models;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models.ViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Saic.Controllers
 {
@@ -149,6 +148,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                firewall.FirewallSerial = firewall.FirewallSerial?.ToUpper();
+
                 if (firewall.FirewallBackup)
                 {
                     firewall.UnidadeID = null;

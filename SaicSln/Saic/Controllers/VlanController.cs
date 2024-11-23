@@ -3,117 +3,134 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Saic.Models.AuxiliarModels;
 using Saic.Models.Repositories;
 using Saic.Models;
+using Microsoft.EntityFrameworkCore;
+using Saic.Models.ViewModels;
 
 namespace Saic.Controllers
 {
     public class VlanController : Controller
     {
-        private IRespRepository _ctxResps;
+        private IVlanRepository _ctxVlans;
         private readonly StoreDbContext _context;
-        private readonly IList<Equipe> _equipeList;
 
-        public VlanController(IRespRepository repo, StoreDbContext context)
+        public VlanController(IVlanRepository repo, StoreDbContext context)
         {
-            _ctxResps = repo;
+            _ctxVlans = repo;
             _context = context;
-            _equipeList = _context.Equipes
-                .OrderBy(e => e.EquipeNome)
-                .ToList();
-        }
-
-        public ViewResult EditResp()
-        {
-            ViewBag.EquipeList = new SelectList(
-                    _equipeList,
-                    "EquipeID",
-                    "EquipeNome"
-                );
-
-            return View(new RespCoop());
-        }
-
-        [HttpPost]
-        public IActionResult EditResp(Guid respId)
-        {
-            var resp = _ctxResps.RespCoops
-                .Where(c => c.RespID == respId)
-                .FirstOrDefault();
-
-            if (resp == null)
-            {
-                TempData["ErrorMessage"] = "Responsável não encontrado!";
-                return RedirectToAction("Index", "Resp");
-            }
-
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
-            );
-
-            return View(resp);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SaveChanges(RespCoop resp)
+        public IActionResult EditVlan(Guid unidadeID, Guid? vlanID = null)
+        {
+            var unidadeList = _context.Unidades
+                .Include(c => c.Coop)
+                .OrderBy(e => e.UnidadeNumero)
+                .ToList();
+
+            if (vlanID == null)
+            {
+                var novaVlan = new Vlan();
+
+                novaVlan.UnidadeID = unidadeID;
+                novaVlan.Unidade = _context.Unidades
+                    .Include (c => c.Coop)
+                    .Where(u => u.UnidadeID == unidadeID)
+                    .FirstOrDefault();
+
+                return View(novaVlan);
+            }
+
+            var vlan = _ctxVlans.Vlans
+                .Include(u => u.Unidade)
+                    .ThenInclude(c => c.Coop)
+                .Where(l => l.VlanID == vlanID)
+                .FirstOrDefault();
+
+            return View(vlan);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SaveChanges(Vlan vlan)
         {
             if (ModelState.IsValid)
             {
-                var existingResp = _ctxResps.RespCoops
-                    .Where(c => c.RespID == resp.RespID)
+                var unidade = _context.Unidades
+                    .Where(c => c.UnidadeID == vlan.UnidadeID)
                     .FirstOrDefault();
 
-                if (existingResp != null)
+                var existingVlan = _ctxVlans.Vlans
+                    .Include(u => u.Unidade)
+                    .Where(c => c.VlanID == vlan.VlanID)
+                    .FirstOrDefault();
+
+                if (unidade.CoopID == Guid.Empty || unidade.UnidadeID == Guid.Empty)
                 {
-                    existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID; ;
-
-                    bool isSaved = _ctxResps.SaveRespCoop(existingResp);
-                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
-                        = isSaved ? "Responsável alterado com sucesso!" : "Erro ao alterar responsável!";
-
-                    return RedirectToAction("Index", "Resp");
+                    TempData["ErrorMessage"] = "Erro ao localizar a Vlan!";
+                    return View("Index", "Home");
                 }
 
-                bool isCreated = _ctxResps.CreateRespCoop(resp);
-                TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
-                    = isCreated ? "Responsável criado com sucesso!" : "Erro ao criar responsável!";
+                var unidadeModel = new UnidadePostModel
+                {
+                    CoopID = unidade.CoopID,
+                    UnidadeID = unidade.UnidadeID
+                };
 
-                return RedirectToAction("Index", "Resp");
+                if (existingVlan != null)
+                {
+                    existingVlan.VlanTag = vlan.VlanTag;
+                    existingVlan.VlanNome = vlan.VlanNome;
+                    existingVlan.VlanRangeIP = vlan.VlanRangeIP;
+                    existingVlan.VlanObs = vlan.VlanObs;
+
+                    bool isSaved = _ctxVlans.SaveVlan(existingVlan);
+                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
+                        = isSaved ? "Vlan alterada com sucesso!" : "Erro ao alterar Vlan!";
+
+                    return View("RedirectToPost", unidadeModel);
+                }
+
+                bool isCreated = _ctxVlans.CreateVlan(vlan);
+                TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
+                    = isCreated ? "Vlan criada com sucesso!" : "Erro ao criar Vlan!";
+
+                return View("RedirectToPost", unidadeModel);
             }
 
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
-            );
-
-            return View("Index", resp);
+            return View("Index", "Home");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteResp(Guid respId)
+        public IActionResult DeleteVlan(Guid vlanID)
         {
-            var resp = _ctxResps.RespCoops
-                .Where(c => c.RespID == respId)
-                .FirstOrDefault();
+            var link = _ctxVlans.Vlans
+                    .Where(c => c.VlanID == vlanID)
+                    .FirstOrDefault();
 
-            if (resp == null)
+            if (link == null)
             {
-                TempData["ErrorMessage"] = "Responsável não encontrado!";
-                return RedirectToAction("Index", "Resp");
+                TempData["ErrorMessage"] = "Vlan não encontrada!";
+                return RedirectToAction("Index", "Home");
             }
 
-            bool isDeleted = _ctxResps.DeleteRespCoop(resp);
+            var unidade = _context.Unidades
+                    .Where(c => c.UnidadeID == link.UnidadeID)
+                    .FirstOrDefault();
+
+            var unidadeModel = new UnidadePostModel
+            {
+                CoopID = unidade.CoopID,
+                UnidadeID = unidade.UnidadeID
+            };
+
+            bool isDeleted = _ctxVlans.DeleteVlan(link);
 
             TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
-                = isDeleted ? "Responsável removido com sucesso!" : "Erro ao remover o responsável!";
+                = isDeleted ? "Vlan removida com sucesso!" : "Erro ao remover a Vlan!";
 
-            return RedirectToAction("Index", "Resp");
+            return View("RedirectToPost", unidadeModel);
         }
     }
 }

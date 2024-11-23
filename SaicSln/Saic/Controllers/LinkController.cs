@@ -3,117 +3,141 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Saic.Models.AuxiliarModels;
 using Saic.Models.Repositories;
 using Saic.Models;
+using Microsoft.EntityFrameworkCore;
+using Saic.Models.ViewModels;
 
 namespace Saic.Controllers
 {
     public class LinkController : Controller
     {
-        private IRespRepository _ctxResps;
+        private ILinkRepository _ctxLinks;
         private readonly StoreDbContext _context;
-        private readonly IList<Equipe> _equipeList;
+        private readonly IList<TipoLink> _tipoLinksList;
 
-        public LinkController(IRespRepository repo, StoreDbContext context)
+        public LinkController(ILinkRepository repo, StoreDbContext context)
         {
-            _ctxResps = repo;
+            _ctxLinks = repo;
             _context = context;
-            _equipeList = _context.Equipes
-                .OrderBy(e => e.EquipeNome)
+            _tipoLinksList = _context.TipoLinks
                 .ToList();
         }
 
-        public ViewResult EditResp()
-        {
-            ViewBag.EquipeList = new SelectList(
-                    _equipeList,
-                    "EquipeID",
-                    "EquipeNome"
-                );
-
-            return View(new RespCoop());
-        }
-
         [HttpPost]
-        public IActionResult EditResp(Guid respId)
+        [ValidateAntiForgeryToken]
+        public IActionResult EditLink(Guid unidadeID, Guid? linkID = null)
         {
-            var resp = _ctxResps.RespCoops
-                .Where(c => c.RespID == respId)
-                .FirstOrDefault();
+            var unidadeList = _context.Unidades
+                .Include(c => c.Coop)
+                .OrderBy(e => e.UnidadeNumero)
+                .ToList();
 
-            if (resp == null)
-            {
-                TempData["ErrorMessage"] = "Responsável não encontrado!";
-                return RedirectToAction("Index", "Resp");
-            }
-
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
+            ViewBag.TipoLinkList = new SelectList(
+                _tipoLinksList,
+                "TipoLinkID",
+                "TipoLinkNome"
             );
 
-            return View(resp);
+            if (linkID == null)
+            {
+                var novoLink = new Link();
+
+                novoLink.UnidadeID = unidadeID;
+                novoLink.Unidade = unidadeList
+                    .Where(c => c.UnidadeID == unidadeID)
+                    .FirstOrDefault();
+
+                return View(novoLink);
+            }
+
+            var link = _ctxLinks.Links
+                .Include(u => u.Unidade)
+                    .ThenInclude(c => c.Coop)
+                .Where(l => l.LinkID == linkID)
+                .FirstOrDefault();
+
+            return View(link);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SaveChanges(RespCoop resp)
+        public IActionResult SaveChanges(Link link)
         {
             if (ModelState.IsValid)
             {
-                var existingResp = _ctxResps.RespCoops
-                    .Where(c => c.RespID == resp.RespID)
+                var unidade =  _context.Unidades
+                    .Where(c => c.UnidadeID == link.UnidadeID)
                     .FirstOrDefault();
 
-                if (existingResp != null)
+                var existinLink = _ctxLinks.Links
+                    .Include (u => u.Unidade)
+                    .Where(c => c.LinkID == link.LinkID)
+                    .FirstOrDefault();
+
+                if (unidade.CoopID == Guid.Empty || unidade.UnidadeID == Guid.Empty)
                 {
-                    existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID; ;
-
-                    bool isSaved = _ctxResps.SaveRespCoop(existingResp);
-                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
-                        = isSaved ? "Responsável alterado com sucesso!" : "Erro ao alterar responsável!";
-
-                    return RedirectToAction("Index", "Resp");
+                    TempData["ErrorMessage"] = "Erro ao localizar a Unidade!";
+                    return View("Index", "Home");
                 }
 
-                bool isCreated = _ctxResps.CreateRespCoop(resp);
-                TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
-                    = isCreated ? "Responsável criado com sucesso!" : "Erro ao criar responsável!";
+                var unidadeModel = new UnidadePostModel
+                {
+                    CoopID = unidade.CoopID,
+                    UnidadeID = unidade.UnidadeID
+                };
 
-                return RedirectToAction("Index", "Resp");
+                if (existinLink != null)
+                {
+                    existinLink.TipoLinkID = link.TipoLinkID;
+                    existinLink.LinkProvedor = link.LinkProvedor;
+                    existinLink.LinkIP = link.LinkIP;
+
+                    bool isSaved = _ctxLinks.SaveLink(existinLink);
+                    TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
+                        = isSaved ? "Link alterado com sucesso!" : "Erro ao alterar Link!";
+
+                    return View("RedirectToPost", unidadeModel);
+                }
+
+                bool isCreated = _ctxLinks.CreateLink(link);
+                TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
+                    = isCreated ? "Link criado com sucesso!" : "Erro ao criar Link!";
+
+                return View("RedirectToPost", unidadeModel);
             }
 
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
-            );
-
-            return View("Index", resp);
+            return View("Index", "Home");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteResp(Guid respId)
+        public IActionResult Deletelink(Guid linkId)
         {
-            var resp = _ctxResps.RespCoops
-                .Where(c => c.RespID == respId)
+            var link = _ctxLinks.Links
+                .Where(c => c.LinkID == linkId)
                 .FirstOrDefault();
 
-            if (resp == null)
+            if (link == null)
             {
-                TempData["ErrorMessage"] = "Responsável não encontrado!";
-                return RedirectToAction("Index", "Resp");
+                TempData["ErrorMessage"] = "Vlan não encontrada!";
+                return RedirectToAction("Index", "Home");
             }
 
-            bool isDeleted = _ctxResps.DeleteRespCoop(resp);
+            var unidade = _context.Unidades
+                    .Where(c => c.UnidadeID == link.UnidadeID)
+                    .FirstOrDefault();
+
+            var unidadeModel = new UnidadePostModel
+            {
+                CoopID = unidade.CoopID,
+                UnidadeID = unidade.UnidadeID
+            };
+
+            bool isDeleted = _ctxLinks.DeleteLink(link);
 
             TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
-                = isDeleted ? "Responsável removido com sucesso!" : "Erro ao remover o responsável!";
+                = isDeleted ? "Vlan removida com sucesso!" : "Erro ao remover a Vlan!";
 
-            return RedirectToAction("Index", "Resp");
+            return View("RedirectToPost", unidadeModel);
         }
     }
 }

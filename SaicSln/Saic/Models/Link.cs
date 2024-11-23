@@ -13,22 +13,31 @@ namespace Saic.Models
 
         [Display(Name = "Provedor")]
         [Required(ErrorMessage = "Provedor Obrigatório")]
-        [MaxLength(2)]
+        [MaxLength(30)]
         public string LinkProvedor { get; set; } = String.Empty;
 
         [Display(Name = "Endereço IP")]
-        [Required(ErrorMessage = "Endereço IP Obrigatório")]
         [MaxLength(15)]
         public string LinkIP { get; set; } = String.Empty;
 
+        [Display(Name = "Observações")]
+        [MaxLength(60)]
+        public string? LinkObs { get; set; } = String.Empty;
+
         [DisplayName("Unidade")]
-        public Guid? UnidadeID { get; set; }
+        public Guid UnidadeID { get; set; }
 
         public Unidade? Unidade { get; set; }
 
         [DisplayName("Tipo de Link")]
-        public Guid? TipoLinkID { get; set; }
+        public Guid TipoLinkID { get; set; }
 
         public TipoLink? TipoLink { get; set; }
+
+        [NotMapped]
+        public string? DisplayCoop => $"{Unidade?.Coop?.CoopNumero} - {Unidade?.Coop?.CoopNome}";
+
+        [NotMapped]
+        public string? DisplayUnidade => Unidade?.UnidadeNumero;
     }
 }

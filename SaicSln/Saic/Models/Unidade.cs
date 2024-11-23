@@ -27,7 +27,7 @@ namespace Saic.Models
         public bool UnidadeNova { get; set; } = false;
 
         [DisplayName("Coop")]
-        public Guid? CoopID { get; set; }
+        public Guid CoopID { get; set; }
 
         public Coop? Coop { get; set; }
 

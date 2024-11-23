@@ -9,6 +9,8 @@
         else
         {
             <h4>Editar Unidade</h4>
+
+            <partial name="FeedbackMessage" />
         }
     </div>
 
@@ -86,7 +88,7 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4> Links</h4>
-            <form form asp-action="EditLink" method="post">
+            <form form asp-controller="Link" asp-action="EditLink" method="post">
                 <input type="hidden" name="UnidadeID" value="@Model?.UnidadeID" />
                 <button type="submit" class="align-items-center btn btn-sm btn-secondary" style="width: 130px">
                     Novo Link
@@ -95,14 +97,14 @@
         </div>
 
         <div class="card-body">
-            <partial name="Tabelas/TabelaFirewalls" model=@Model?.Firewalls />
+            <partial name="Tabelas/TabelaLinks" model=@Model?.Links />
         </div>
     </div>
 
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4> Vlans</h4>
-            <form form asp-action="EditVlan" method="post">
+            <form form asp-controller="Vlan" asp-action="EditVlan" method="post">
                 <input type="hidden" name="UnidadeID" value="@Model?.UnidadeID" />
                 <button type="submit" class="align-items-center btn btn-sm btn-secondary" style="width: 130px">
                     Nova Vlan
@@ -111,7 +113,7 @@
         </div>
 
         <div class="card-body">
-            <partial name="Tabelas/TabelaFirewalls" model=@Model?.Firewalls />
+            <partial name="Tabelas/TabelaVlans" model=@Model?.Vlans />
         </div>
     </div>
 }

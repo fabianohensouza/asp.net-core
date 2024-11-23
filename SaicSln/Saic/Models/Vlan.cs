@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using Saic.Models.AuxiliarModels;
 
 namespace Saic.Models
 {
@@ -20,9 +19,9 @@ namespace Saic.Models
         [MaxLength(40)]
         public string? VlanNome { get; set; } = String.Empty;
 
-        [Display(Name = "Endereço IP")]
+        [Display(Name = "Range IP")]
         [MaxLength(40)]
-        public string? VlanIP { get; set; } = String.Empty;
+        public string? VlanRangeIP { get; set; } = String.Empty;
 
         [Display(Name = "Observações")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
@@ -32,5 +31,11 @@ namespace Saic.Models
         public Guid? UnidadeID { get; set; }
 
         public Unidade? Unidade { get; set; }
+
+        [NotMapped]
+        public string? DisplayCoop => $"{Unidade?.Coop?.CoopNumero} - {Unidade?.Coop?.CoopNome}";
+
+        [NotMapped]
+        public string? DisplayUnidade => Unidade?.UnidadeNumero;
     }
 }
