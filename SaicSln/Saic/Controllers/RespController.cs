@@ -32,8 +32,8 @@ namespace Saic.Controllers
 
             foreach (var resp in resps)
             {
-                resp.QtdCoops = resp.Coops.Count;
-                resp.QtdCompts = resp.Coops.Sum(c => c.QtdCompts ?? 0);
+                resp.QtdCoops = resp.ReturnCoops();
+                resp.QtdCompts = resp.ReturnCompts();
             }
 
             return View(resps);

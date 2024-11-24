@@ -24,7 +24,7 @@ namespace Saic.Components
                     new NavigationMenuInfo{
                         Action = "Index",
                         Controller = "Equipe",
-                        Label = "Equipe",
+                        Label = "Equipes",
                         Icone = "fa-solid fa-people-group" },
                     new NavigationMenuInfo{ 
                         Action = "Index", 

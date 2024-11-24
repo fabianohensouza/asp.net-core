@@ -29,24 +29,40 @@ namespace Saic.Models
 
         public Equipe? Equipe { get; set; }
 
-        public int ReturnServers()
+        public int ReturnCoops()
         {
-            var qtdServers = 0;
-
-            return qtdServers;
+            return Coops.Count;
         }
 
         public int ReturnFirewalls()
         {
-            var coops = Coops.Where(r => r.RespID == RespID);
             var qtdFirewalls = 0;
 
-            foreach (var firewall in coops)
+            foreach (var firewall in Coops)
             {
                 qtdFirewalls += firewall.ReturnFirewalls();
             }
 
             return qtdFirewalls;
+        }
+
+        public int ReturnCompts()
+        {
+            var qtdCompts = 0;
+
+            foreach (var coop in Coops)
+            {
+                qtdCompts += coop.QtdCompts ?? 0;
+            }
+
+            return qtdCompts;
+        }
+
+        public int ReturnServers()
+        {
+            var qtdServers = 0;
+
+            return qtdServers;
         }
     }
 }
