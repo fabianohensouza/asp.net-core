@@ -11,12 +11,16 @@ namespace Saic.Models
         public DbSet<Coop> Coops => Set<Coop>();
         public DbSet<RespCoop> RespCoops => Set<RespCoop>();
         public DbSet<Unidade> Unidades => Set<Unidade>();
+        public DbSet<Firewall> Firewalls => Set<Firewall>();
+        public DbSet<Servidor> Servidores => Set<Servidor>();
+        public DbSet<Link> Links => Set<Link>();
+        public DbSet<Vlan> Vlans => Set<Vlan>();
+
+        //Auxiliar models
         public DbSet<Equipe> Equipes => Set<Equipe>();
         public DbSet<Fabricante> Fabricantes => Set<Fabricante>();
         public DbSet<TipoLink> TipoLinks => Set<TipoLink>();
-        public DbSet<Firewall> Firewalls => Set<Firewall>();
-        public DbSet<Link> Links => Set<Link>();
-        public DbSet<Vlan> Vlans => Set<Vlan>();
+        public DbSet<SistOp> SistOps => Set<SistOp>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,6 +95,38 @@ namespace Saic.Models
                 .HasOne(c => c.Unidade)
                 .WithMany(r => r.Vlans)
                 .HasForeignKey(c => c.UnidadeID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Servidor -> Coop)
+            modelBuilder.Entity<Servidor>()
+                .HasOne(c => c.Coop)
+                .WithMany(r => r.Servidores)
+                .HasForeignKey(c => c.ServidorID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Servidor -> Unidade)
+            modelBuilder.Entity<Servidor>()
+                .HasOne(c => c.Unidade)
+                .WithMany(r => r.Servidores)
+                .HasForeignKey(c => c.ServidorID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Servidor -> Fabricante)
+            modelBuilder.Entity<Servidor>()
+                .HasOne(c => c.Fabricante)
+                .WithMany()
+                .HasForeignKey(c => c.FabricanteID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Servidor -> SistOp)
+            modelBuilder.Entity<Servidor>()
+                .HasOne(c => c.SistOp)
+                .WithMany()
+                .HasForeignKey(c => c.SistOpID)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }

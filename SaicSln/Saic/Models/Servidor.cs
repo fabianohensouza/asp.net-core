@@ -33,12 +33,6 @@ namespace Saic.Models
         [Display(Name = "Memória em GB")]
         public int? ServidorRAM { get; set; }
 
-        [Display(Name = "Disco SO")]
-        public int? ServidorDisco1 { get; set; }
-
-        [Display(Name = "Armazenamento Dados")]
-        public int? ServidorDisco2 { get; set; }
-
         [Display(Name = "IP Principal")]
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string? ServidorIP { get; set; } = String.Empty;
@@ -57,8 +51,14 @@ namespace Saic.Models
         public DateTime ServidorGarantia { get; set; }
 
         [Display(Name = "Observações")]
-        [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
+        [MaxLength(500, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? ServidorObs { get; set; } = String.Empty;
+
+        [DisplayName("Sistema Op.")]
+        [Required(ErrorMessage = "Informe o Sistema Operacional")]
+        public Guid SistOpID { get; set; }
+
+        public SistOp? SistOp { get; set; }
 
         [DisplayName("Coop")]
         [Required(ErrorMessage = "Informe a Localização")]
