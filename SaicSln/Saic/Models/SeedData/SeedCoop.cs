@@ -7,129 +7,64 @@ namespace Saic.Models.SeedData
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
-            StoreDbContext context = app.ApplicationServices
-            .CreateScope().ServiceProvider.GetRequiredService<StoreDbContext>();
-
-            if (context.Database.GetPendingMigrations().Any())
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                context.Database.Migrate();
-            }
+                var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
 
+                // Verifica e aplica as migrações pendentes
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+
+                // Chama os métodos para popular os dados
+                SeedCoops(context);
+                SeedEquipes(context);
+                SeedFabricantes(context);
+                SeedTipoLinks(context);
+                SeedSistOps(context);
+            }
+        }
+
+        private static void SeedCoops(StoreDbContext context)
+        {
             if (!context.Coops.Any())
             {
                 context.Coops.AddRange(
-                    new Coop
-                    {
-                        CoopNumero = "0001",
-                        CoopNome = "CrediOne",
-                        CoopCidade = "Uberlandia",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 150
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0002",
-                        CoopNome = "CrediTwo",
-                        CoopCidade = "Betim",
-                        Adesao = new DateTime(2013, 2, 22),
-                        QtdCompts = 200
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0003",
-                        CoopNome = "CrediThree",
-                        CoopCidade = "BH",
-                        Adesao = new DateTime(2021, 7, 25),
-                        QtdCompts = 300
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0004",
-                        CoopNome = "CrediFour",
-                        CoopCidade = "Uberaba",
-                        Adesao = new DateTime(2009, 9, 9),
-                        QtdCompts = 125
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0005",
-                        CoopNome = "CrediFive",
-                        CoopCidade = "Rio de Janeiro",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 275
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0006",
-                        CoopNome = "CrediSix",
-                        CoopCidade = "São Paulo",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 180
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0007",
-                        CoopNome = "CrediSeven",
-                        CoopCidade = "Sete Lagoas",
-                        Adesao = new DateTime(2011, 4, 16),
-                        QtdCompts = 220
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0008",
-                        CoopNome = "CrediEigth",
-                        CoopCidade = "Nova Lima",
-                        Adesao = new DateTime(2011, 2, 19),
-                        QtdCompts = 260
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0009",
-                        CoopNome = "CrediNine",
-                        CoopCidade = "Sabará",
-                        Adesao = new DateTime(2019, 2, 10),
-                        QtdCompts = 310
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0010",
-                        CoopNome = "CrediTen",
-                        CoopCidade = "Porto Alegre",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 140
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0011",
-                        CoopNome = "CrediEleven",
-                        CoopCidade = "Vespaiano",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 190
-                    },
-                    new Coop
-                    {
-                        CoopNumero = "0012",
-                        CoopNome = "CrediTwelve",
-                        CoopCidade = "Cuiabá",
-                        Adesao = new DateTime(2011, 2, 15),
-                        QtdCompts = 230
-                    }
+                    new Coop { CoopNumero = "0001", CoopNome = "CrediOne", CoopCidade = "Uberlandia", Adesao = new DateTime(2011, 2, 15), QtdCompts = 150 },
+                    new Coop { CoopNumero = "0002", CoopNome = "CrediTwo", CoopCidade = "Betim", Adesao = new DateTime(2013, 2, 22), QtdCompts = 200 },
+                    new Coop { CoopNumero = "0003", CoopNome = "CrediThree", CoopCidade = "BH", Adesao = new DateTime(2021, 7, 25), QtdCompts = 300 },
+                    new Coop { CoopNumero = "0004", CoopNome = "CrediFour", CoopCidade = "Uberaba", Adesao = new DateTime(2009, 9, 9), QtdCompts = 125 },
+                    new Coop { CoopNumero = "0005", CoopNome = "CrediFive", CoopCidade = "Rio de Janeiro", Adesao = new DateTime(2011, 2, 15), QtdCompts = 275 },
+                    new Coop { CoopNumero = "0006", CoopNome = "CrediSix", CoopCidade = "São Paulo", Adesao = new DateTime(2011, 2, 15), QtdCompts = 180 },
+                    new Coop { CoopNumero = "0007", CoopNome = "CrediSeven", CoopCidade = "Sete Lagoas", Adesao = new DateTime(2011, 4, 16), QtdCompts = 220 },
+                    new Coop { CoopNumero = "0008", CoopNome = "CrediEigth", CoopCidade = "Nova Lima", Adesao = new DateTime(2011, 2, 19), QtdCompts = 260 },
+                    new Coop { CoopNumero = "0009", CoopNome = "CrediNine", CoopCidade = "Sabará", Adesao = new DateTime(2019, 2, 10), QtdCompts = 310 },
+                    new Coop { CoopNumero = "0010", CoopNome = "CrediTen", CoopCidade = "Porto Alegre", Adesao = new DateTime(2011, 2, 15), QtdCompts = 140 },
+                    new Coop { CoopNumero = "0011", CoopNome = "CrediEleven", CoopCidade = "Vespaiano", Adesao = new DateTime(2011, 2, 15), QtdCompts = 190 },
+                    new Coop { CoopNumero = "0012", CoopNome = "CrediTwelve", CoopCidade = "Cuiabá", Adesao = new DateTime(2011, 2, 15), QtdCompts = 230 }
                 );
 
                 context.SaveChanges();
             }
+        }
 
-            if (!context.Equipes.Any())
+        private static void SeedEquipes(StoreDbContext context)
             {
-                context.Equipes.AddRange(
-                    new Equipe { EquipeNome = "Equipe 1" },
-                    new Equipe { EquipeNome = "Equipe 2" },
-                    new Equipe { EquipeNome = "Equipe 3" }
-                );
+                if (!context.Equipes.Any())
+                {
+                    context.Equipes.AddRange(
+                        new Equipe { EquipeNome = "Equipe 1" },
+                        new Equipe { EquipeNome = "Equipe 2" },
+                        new Equipe { EquipeNome = "Equipe 3" }
+                    );
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                }
             }
 
+        private static void SeedFabricantes(StoreDbContext context)
+        {
             if (!context.Fabricantes.Any())
             {
                 context.Fabricantes.AddRange(
@@ -151,7 +86,10 @@ namespace Saic.Models.SeedData
 
                 context.SaveChanges();
             }
+        }
 
+        private static void SeedTipoLinks(StoreDbContext context)
+        {
             if (!context.TipoLinks.Any())
             {
                 context.TipoLinks.AddRange(
@@ -163,50 +101,21 @@ namespace Saic.Models.SeedData
 
                 context.SaveChanges();
             }
+        }
 
+        private static void SeedSistOps(StoreDbContext context)
+        {
             if (!context.SistOps.Any())
             {
                 context.SistOps.AddRange(
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2008",
-                        ServidorSuporte = new DateTime(2020, 1, 14)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2008 R2",
-                        ServidorSuporte = new DateTime(2020, 1, 14)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2012",
-                        ServidorSuporte = new DateTime(2023, 10, 10)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2012 R2",
-                        ServidorSuporte = new DateTime(2023, 10, 10)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2016",
-                        ServidorSuporte = new DateTime(2027, 1, 12)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2019",
-                        ServidorSuporte = new DateTime(2029, 1, 9)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Windows Server 2022",
-                        ServidorSuporte = new DateTime(2031, 10, 14)
-                    },
-                    new SistOp
-                    {
-                        SistOpNome = "Linux",
-                        ServidorSuporte = new DateTime(2099, 01, 01)
-                    }
+                    new SistOp { SistOpNome = "Windows Server 2008", ServidorSuporte = new DateTime(2020, 1, 14) },
+                    new SistOp { SistOpNome = "Windows Server 2008 R2", ServidorSuporte = new DateTime(2020, 1, 14) },
+                    new SistOp { SistOpNome = "Windows Server 2012", ServidorSuporte = new DateTime(2023, 10, 10) },
+                    new SistOp { SistOpNome = "Windows Server 2012 R2", ServidorSuporte = new DateTime(2023, 10, 10) },
+                    new SistOp { SistOpNome = "Windows Server 2016", ServidorSuporte = new DateTime(2027, 1, 12) },
+                    new SistOp { SistOpNome = "Windows Server 2019", ServidorSuporte = new DateTime(2029, 1, 9) },
+                    new SistOp { SistOpNome = "Windows Server 2022", ServidorSuporte = new DateTime(2031, 10, 14) },
+                    new SistOp { SistOpNome = "Linux", ServidorSuporte = new DateTime(2099, 1, 1) }
                 );
 
                 context.SaveChanges();
@@ -214,4 +123,5 @@ namespace Saic.Models.SeedData
         }
     }
 }
+
 

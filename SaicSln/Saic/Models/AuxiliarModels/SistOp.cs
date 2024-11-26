@@ -9,7 +9,7 @@ namespace Saic.Models.AuxiliarModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid SistOpID { get; set; } = Guid.NewGuid();
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string SistOpNome { get; set; } = string.Empty;
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
