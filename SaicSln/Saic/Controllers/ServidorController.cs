@@ -122,10 +122,18 @@ namespace Saic.Controllers
 
                 if (existingservidor != null)
                 {
+                    existingservidor.ServidorNome = servidor.ServidorNome;
                     existingservidor.ServidorModelo = servidor.ServidorModelo;
+                    existingservidor.ServidorCPU = servidor.ServidorCPU;
+                    existingservidor.ServidorSerial = servidor.ServidorSerial;
+                    existingservidor.ServidorVirtual = servidor.ServidorVirtual;
+                    existingservidor.ServidorRAM = servidor.ServidorRAM;
+                    existingservidor.ServidorIP = servidor.ServidorIP;
+                    existingservidor.ServidorIDrac = servidor.ServidorIDrac;
+                    existingservidor.ServidorAcesso = servidor.ServidorAcesso;
+                    existingservidor.ServidorGarantia = servidor.ServidorGarantia;
                     existingservidor.UnidadeID = servidor.UnidadeID;
                     existingservidor.CoopID = servidor.CoopID;
-                    existingservidor.ServidorSerial = servidor.ServidorSerial;
                     existingservidor.FabricanteID = servidor.FabricanteID;
                     existingservidor.ServidorObs = servidor.ServidorObs;
 

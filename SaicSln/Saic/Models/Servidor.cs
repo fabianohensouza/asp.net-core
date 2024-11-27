@@ -26,32 +26,32 @@ namespace Saic.Models
         public string? ServidorCPU { get; set; } = String.Empty;
 
         [Display(Name = "Serial")]
-        [Required(ErrorMessage = "Serial Obrigatório")]
         [MaxLength(40)]
-        public string ServidorSerial { get; set; } = String.Empty;
+        public string? ServidorSerial { get; set; } = String.Empty;
+
+        [Display(Name = "Tipo")]
+        public bool ServidorVirtual { get; set; } = false;
 
         [Display(Name = "Memória em GB")]
         public int? ServidorRAM { get; set; }
 
         [Display(Name = "IP Principal")]
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
-        public string? ServidorIP { get; set; } = String.Empty;
+        public string ServidorIP { get; set; } = String.Empty;
 
         [Display(Name = "IP Principal")]
-        [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string? ServidorIDrac { get; set; } = String.Empty;
 
         [Display(Name = "Acesso Remoto")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
-        public string? ServidorAcesso { get; set; } = String.Empty;
+        public string ServidorAcesso { get; set; } = String.Empty;
 
         [Display(Name = "Garantia")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime ServidorGarantia { get; set; }
+        public DateTime? ServidorGarantia { get; set; }
 
         [Display(Name = "Observações")]
-        [MaxLength(500, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? ServidorObs { get; set; } = String.Empty;
 
         [DisplayName("Sistema Op.")]
@@ -73,8 +73,7 @@ namespace Saic.Models
         public Coop? Coop { get; set; }
 
         [Display(Name = "Fabricante")]
-        [Required(ErrorMessage = "Fabricante Obrigatório")]
-        public Guid FabricanteID { get; set; }
+        public Guid? FabricanteID { get; set; }
 
         public Fabricante? Fabricante { get; set; }
     }

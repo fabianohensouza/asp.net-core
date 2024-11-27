@@ -245,10 +245,11 @@ namespace Saic.Migrations
                     b.Property<Guid>("CoopID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FabricanteID")
+                    b.Property<Guid?>("FabricanteID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ServidorAcesso")
+                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
@@ -256,14 +257,14 @@ namespace Saic.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("ServidorGarantia")
+                    b.Property<DateTime?>("ServidorGarantia")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ServidorIDrac")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServidorIP")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -278,16 +279,17 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("ServidorObs")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ServidorRAM")
                         .HasColumnType("int");
 
                     b.Property<string>("ServidorSerial")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
+
+                    b.Property<bool>("ServidorVirtual")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("SistOpID")
                         .HasColumnType("uniqueidentifier");
