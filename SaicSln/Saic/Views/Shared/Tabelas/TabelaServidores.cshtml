@@ -1,0 +1,47 @@
+﻿@model IList<Servidor>
+
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center" style="width: 5%;">Coop</th>
+            <th scope="col" class="text-center" style="width: 20%;">Modelo</th>
+            <th scope="col" class="text-center" style="width: 20%;">Sistema Op.</th>
+            <th scope="col" class="text-center" style="width: 15%;">Serial</th>
+            <th scope="col" class="text-center" style="width: 15%;">Local</th>
+            <th scope="col" class="text-center" style="width: 15%;">Endereço Acesso</th>
+            <th scope="col" style="width: 10%;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var f in Model ?? Enumerable.Empty<Servidor>())
+        {
+            <tr>
+                <td class="text-center">@f?.Coop?.CoopNumero</td>
+                <td class="text-center">@f?.Fabricante?.FabricanteNome - @f?.ServidorModelo</td>
+                <td class="text-center">@f?.SistOp?.SistOpNome</td>
+                <td class="text-center">@f?.ServidorSerial</td>
+                <td class="text-center">@f?.Unidade?.UnidadeNumero</td>
+                <td class="text-center">@f?.ServidorAcesso</td>
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+                        <form form asp-controller="Servidor" asp-action="EditServidor" method="post">
+                            <input type="hidden" name="ServidorID" value="@f?.ServidorID" />
+                            <input type="hidden" name="CoopID" value="@f?.CoopID" />
+                            <button type="submit" class="btn btn-sm btn-warning fa-solid fa-pen-to-square" title="Editar" />
+                        </form>
+
+                        <form asp-controller="Servidor" asp-action="DeleteServidor" method="post">
+                            <input type="hidden" name="ServidorID" value="@f?.ServidorID" />
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger fa-solid fa-trash-can"
+                                    title="Delete"
+                                    onclick="return confirm('Confirma a deleção deste Servidor?');">
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }        
+    </tbody>
+</table>

@@ -1,0 +1,18 @@
+﻿@model IList<Servidor>
+
+<div class="card">
+    <div class="card-header">
+        <h4>Cadastrar - Selecione a Coop</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="ListServidores" class="d-flex align-items-center" method="post">
+            <select id="CoopID" name="CoopID" asp-items="ViewBag.CoopList" class="form-control mx-1">
+            </select>
+            <button type="submit" class="btn btn-secondary">Selecionar</button>
+        </form>
+    </div>
+</div>
+
+<h4 class="mt-4">Todos os Servidores</h4>
+
+<partial name="Tabelas/TabelaServidores" model=@Model />

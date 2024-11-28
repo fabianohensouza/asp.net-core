@@ -46,7 +46,7 @@ namespace Saic.Controllers
         }
 
         [HttpPost]
-        public ViewResult Listservidores(Guid coopID)
+        public ViewResult ListServidores(Guid coopID)
         {
             var servidoresList = new ServidoresListViewModel
             {
@@ -64,7 +64,7 @@ namespace Saic.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editservidor(Guid coopID, Guid? servidorID = null)
+        public IActionResult EditServidor(Guid coopID, Guid? servidorID = null)
         {
             var servidor = new Servidor();
 
