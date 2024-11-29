@@ -29,7 +29,7 @@ namespace Saic.Models
         [MaxLength(40)]
         public string? ServidorSerial { get; set; } = String.Empty;
 
-        [Display(Name = "Tipo")]
+        [Display(Name = "Virtual")]
         public bool ServidorVirtual { get; set; } = false;
 
         [Display(Name = "Memória em GB")]
@@ -39,10 +39,11 @@ namespace Saic.Models
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string ServidorIP { get; set; } = String.Empty;
 
-        [Display(Name = "IP Principal")]
+        [Display(Name = "IP IDrac")]
+        [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string? ServidorIDrac { get; set; } = String.Empty;
 
-        [Display(Name = "Acesso Remoto")]
+        [Display(Name = "Endereço Acesso Remoto")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string ServidorAcesso { get; set; } = String.Empty;
 
@@ -60,7 +61,7 @@ namespace Saic.Models
 
         public SistOp? SistOp { get; set; }
 
-        [DisplayName("Coop")]
+        [DisplayName("Unid.")]
         [Required(ErrorMessage = "Informe a Localização")]
         public Guid UnidadeID { get; set; }
 

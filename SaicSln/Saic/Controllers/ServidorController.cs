@@ -19,10 +19,6 @@ namespace Saic.Controllers
         {
             _ctxServidor = repo;
             _context = context;
-            _fabricanteList = _context.Fabricantes
-                .Where(f => f.FabricanteTipo == "Servidor")
-                .OrderBy(e => e.FabricanteNome)
-                .ToList();
             _coopList = _context.Coops
                 .OrderBy(e => e.CoopNumero)
                 .ToList();
@@ -73,13 +69,6 @@ namespace Saic.Controllers
 
             ViewBag.CoopList = servidor.Coop.DisplayName;
 
-            ViewBag.FabricanteList = new SelectList(
-                _fabricanteList,
-                "FabricanteID",
-                "FabricanteNome",
-                servidor.FabricanteID
-            );
-
             ViewBag.UnidadeList = new SelectList(
                 _context.Unidades
                     .Where(c => c.CoopID == coopID)
@@ -88,6 +77,25 @@ namespace Saic.Controllers
                 "UnidadeID",
                 "UnidadeNumero",
                 servidor.UnidadeID
+            );
+
+            ViewBag.FabricanteList = new SelectList(
+                _context.Fabricantes
+                    .Where(f => f.FabricanteTipo == "Servidor")
+                    .OrderBy(e => e.FabricanteNome)
+                    .ToList(),
+                "FabricanteID",
+                "FabricanteNome",
+                servidor.FabricanteID
+            );
+
+            ViewBag.SistOpList = new SelectList(
+                _context.SistOps
+                    .OrderBy(e => e.SistOpNome)
+                    .ToList(),
+                "SistOpID",
+                "SistOpNome",
+                servidor.SistOpID
             );
 
             if (servidorID == null)
@@ -124,9 +132,9 @@ namespace Saic.Controllers
                 {
                     existingservidor.ServidorNome = servidor.ServidorNome;
                     existingservidor.ServidorModelo = servidor.ServidorModelo;
-                    existingservidor.ServidorCPU = servidor.ServidorCPU;
                     existingservidor.ServidorSerial = servidor.ServidorSerial;
                     existingservidor.ServidorVirtual = servidor.ServidorVirtual;
+                    existingservidor.ServidorCPU = servidor.ServidorCPU;
                     existingservidor.ServidorRAM = servidor.ServidorRAM;
                     existingservidor.ServidorIP = servidor.ServidorIP;
                     existingservidor.ServidorIDrac = servidor.ServidorIDrac;

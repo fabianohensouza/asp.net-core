@@ -261,7 +261,8 @@ namespace Saic.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ServidorIDrac")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("ServidorIP")
                         .IsRequired()

@@ -30,7 +30,7 @@
             {
                 return context.SaveChanges() > 0;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

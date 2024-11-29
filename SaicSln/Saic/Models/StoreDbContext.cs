@@ -47,7 +47,7 @@ namespace Saic.Models
                 .HasOne(c => c.Coop)
                 .WithMany(r => r.Unidades)
                 .HasForeignKey(c => c.CoopID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Firewall -> Unidade)
@@ -63,7 +63,7 @@ namespace Saic.Models
                 .HasOne(c => c.Coop)
                 .WithMany(r => r.Firewalls)
                 .HasForeignKey(c => c.CoopID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Firewall -> Fabricante)
@@ -71,7 +71,7 @@ namespace Saic.Models
                 .HasOne(c => c.Fabricante)
                 .WithMany()
                 .HasForeignKey(c => c.FabricanteID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Link -> Unidade)
@@ -79,7 +79,7 @@ namespace Saic.Models
                 .HasOne(c => c.Unidade)
                 .WithMany(r => r.Links)
                 .HasForeignKey(c => c.UnidadeID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Link -> TipoLink)
@@ -87,7 +87,7 @@ namespace Saic.Models
                 .HasOne(c => c.TipoLink)
                 .WithMany()
                 .HasForeignKey(c => c.TipoLinkID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Vlan -> Unidade)
@@ -95,23 +95,23 @@ namespace Saic.Models
                 .HasOne(c => c.Unidade)
                 .WithMany(r => r.Vlans)
                 .HasForeignKey(c => c.UnidadeID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Servidor -> Coop)
             modelBuilder.Entity<Servidor>()
                 .HasOne(c => c.Coop)
                 .WithMany(r => r.Servidores)
-                .HasForeignKey(c => c.ServidorID)
-                .IsRequired(false)
+                .HasForeignKey(c => c.CoopID)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Servidor -> Unidade)
             modelBuilder.Entity<Servidor>()
                 .HasOne(c => c.Unidade)
                 .WithMany(r => r.Servidores)
-                .HasForeignKey(c => c.ServidorID)
-                .IsRequired(false)
+                .HasForeignKey(c => c.CoopID)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Servidor -> Fabricante)
@@ -119,7 +119,7 @@ namespace Saic.Models
                 .HasOne(c => c.Fabricante)
                 .WithMany()
                 .HasForeignKey(c => c.FabricanteID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Servidor -> SistOp)
@@ -127,7 +127,7 @@ namespace Saic.Models
                 .HasOne(c => c.SistOp)
                 .WithMany()
                 .HasForeignKey(c => c.SistOpID)
-                .IsRequired(false)
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
