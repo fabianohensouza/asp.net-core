@@ -6,8 +6,7 @@ namespace Saic.Models.AuxiliarModels
     public class SistOp
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid SistOpID { get; set; } = Guid.NewGuid();
+        public int SistOpID { get; set; }
 
         [MaxLength(50)]
         public string SistOpNome { get; set; } = string.Empty;

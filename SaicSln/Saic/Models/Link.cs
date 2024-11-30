@@ -24,13 +24,15 @@ namespace Saic.Models
         [MaxLength(60)]
         public string? LinkObs { get; set; } = String.Empty;
 
+        public DateTime LastChange { get; set; }
+
         [DisplayName("Unidade")]
         public Guid UnidadeID { get; set; }
 
         public Unidade? Unidade { get; set; }
 
         [DisplayName("Tipo de Link")]
-        public Guid TipoLinkID { get; set; }
+        public int TipoLinkID { get; set; }
 
         public TipoLink? TipoLink { get; set; }
 

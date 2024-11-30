@@ -55,6 +55,7 @@ namespace Saic.Controllers
                     existingCoop.Adesao = coop.Adesao;
                     existingCoop.QtdCompts = coop.QtdCompts;
                     existingCoop.RespID = coop.RespID;
+                    existingCoop.LastChange = DateTime.Now;
 
                     bool isSaved = _ctxCoops.SaveCoop(existingCoop);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

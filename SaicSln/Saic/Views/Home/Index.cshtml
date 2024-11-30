@@ -1,19 +1,24 @@
 ﻿@model CoopsListViewModel
 
-<h4>Coops</h4>
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Coops</h4>
+    </div>
+    <div class="card-body">
+        <form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
+            <select id="RespSelecionado" name="RespSelecionado" asp-items="@(new SelectList(Model.ListaResps))" class="form-control mx-1">
+                <option value="">-- Todos os responsáveis --</option>
+                @if (Model.RespAtual != null)
+                {
+                    <option selected>@Model.RespAtual</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-secondary">Filter</button>
+        </form>
+    </div>
+</div>
 
 <partial name="FeedbackMessage"/>
-
-<form asp-controller="Home" asp-action="Index" method="post" class="d-flex align-items-center">
-    <select id="RespSelecionado" name="RespSelecionado" asp-items="@(new SelectList(Model.ListaResps))" class="form-control mx-1">
-        <option value="">-- Todos os responsáveis --</option>
-        @if (Model.RespAtual != null)
-        {
-            <option selected>@Model.RespAtual</option>
-        }        
-    </select>
-    <button type="submit" class="btn btn-secondary">Filter</button>
-</form>
 
 <partial name="Tabelas/TabelaCoops" model=@Model />
 

@@ -1,14 +1,19 @@
 ﻿@model ServidoresListViewModel
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-    <h4>Servidores - @Model?.CoopAtual?.DisplayName</h4>
+<div class="card mb-4">
+    <div class="card-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4>Servidores - @Model?.CoopAtual?.DisplayName</h4>
 
-    <form asp-action="EditServidor" method="post">
-        <input type="hidden" name="CoopID" value="@Model?.CoopAtual?.CoopID" />
-        <button type="submit" class="align-items-center btn btn-secondary">
-            Cadastrar Novo
-        </button>
-    </form>
+            <form asp-action="EditServidor" method="post">
+                <input type="hidden" name="CoopID" value="@Model?.CoopAtual?.CoopID" />
+                <button type="submit" class="align-items-center btn btn-secondary">
+                    Cadastrar Novo
+                </button>
+            </form>
+        </div>
+        
+    </div>
 </div>
 
 <partial name="FeedbackMessage" />

@@ -24,9 +24,11 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.AuxiliarModels.Equipe", b =>
                 {
-                    b.Property<Guid>("EquipeID")
+                    b.Property<int>("EquipeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipeID"));
 
                     b.Property<string>("EquipeDescrição")
                         .HasMaxLength(20)
@@ -44,9 +46,11 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.AuxiliarModels.Fabricante", b =>
                 {
-                    b.Property<Guid>("FabricanteID")
+                    b.Property<int>("FabricanteID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FabricanteID"));
 
                     b.Property<string>("FabricanteNome")
                         .IsRequired()
@@ -65,9 +69,11 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.AuxiliarModels.SistOp", b =>
                 {
-                    b.Property<Guid>("SistOpID")
+                    b.Property<int>("SistOpID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SistOpID"));
 
                     b.Property<DateTime>("ServidorSuporte")
                         .HasColumnType("datetime2");
@@ -84,9 +90,11 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.AuxiliarModels.TipoLink", b =>
                 {
-                    b.Property<Guid>("TipoLinkID")
+                    b.Property<int>("TipoLinkID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoLinkID"));
 
                     b.Property<string>("TipoLinkNome")
                         .IsRequired()
@@ -145,9 +153,9 @@ namespace Saic.Migrations
                         .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("FabricanteID")
+                    b.Property<int?>("FabricanteID")
                         .IsRequired()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
                     b.Property<bool>("FirewallBackup")
                         .HasColumnType("bit");
@@ -200,8 +208,8 @@ namespace Saic.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<Guid>("TipoLinkID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("TipoLinkID")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
@@ -221,8 +229,8 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EquipeID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("EquipeID")
+                        .HasColumnType("int");
 
                     b.Property<string>("RespNome")
                         .IsRequired()
@@ -245,8 +253,9 @@ namespace Saic.Migrations
                     b.Property<Guid>("CoopID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("FabricanteID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("FabricanteID")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<string>("ServidorAcesso")
                         .IsRequired()
@@ -292,17 +301,21 @@ namespace Saic.Migrations
                     b.Property<bool>("ServidorVirtual")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("SistOpID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("SistOpID")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ServidorID");
 
+                    b.HasIndex("CoopID");
+
                     b.HasIndex("FabricanteID");
 
                     b.HasIndex("SistOpID");
+
+                    b.HasIndex("UnidadeID");
 
                     b.ToTable("Servidores");
                 });
@@ -343,6 +356,7 @@ namespace Saic.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UnidadeID")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("VlanNome")
@@ -384,12 +398,14 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Coop", "Coop")
                         .WithMany("Firewalls")
                         .HasForeignKey("CoopID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("FabricanteID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Firewalls")
@@ -408,12 +424,14 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.AuxiliarModels.TipoLink", "TipoLink")
                         .WithMany()
                         .HasForeignKey("TipoLinkID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Links")
                         .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoLink");
 
@@ -432,25 +450,29 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.Servidor", b =>
                 {
+                    b.HasOne("Saic.Models.Coop", "Coop")
+                        .WithMany("Servidores")
+                        .HasForeignKey("CoopID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("FabricanteID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Saic.Models.Coop", "Coop")
-                        .WithMany("Servidores")
-                        .HasForeignKey("ServidorID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Saic.Models.Unidade", "Unidade")
-                        .WithMany("Servidores")
-                        .HasForeignKey("ServidorID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Saic.Models.AuxiliarModels.SistOp", "SistOp")
                         .WithMany()
                         .HasForeignKey("SistOpID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Saic.Models.Unidade", "Unidade")
+                        .WithMany("Servidores")
+                        .HasForeignKey("UnidadeID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Coop");
 
@@ -466,7 +488,8 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Coop", "Coop")
                         .WithMany("Unidades")
                         .HasForeignKey("CoopID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Coop");
                 });
@@ -476,7 +499,8 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Vlans")
                         .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Unidade");
                 });

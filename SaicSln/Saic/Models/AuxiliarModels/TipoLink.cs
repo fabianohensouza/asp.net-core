@@ -6,8 +6,7 @@ namespace Saic.Models.AuxiliarModels
     public class TipoLink
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TipoLinkID { get; set; } = Guid.NewGuid();
+        public int TipoLinkID { get; set; }
 
         [MaxLength(20)]
         public string TipoLinkNome { get; set; } = string.Empty;

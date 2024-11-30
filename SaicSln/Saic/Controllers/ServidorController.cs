@@ -12,7 +12,6 @@ namespace Saic.Controllers
     {
         private IServidorRepository _ctxServidor;
         private readonly StoreDbContext _context;
-        private readonly IList<Fabricante> _fabricanteList;
         private readonly IList<Coop> _coopList;
 
         public ServidorController(IServidorRepository repo, StoreDbContext context)
@@ -36,6 +35,7 @@ namespace Saic.Controllers
                     .Include(f => f.Fabricante)
                     .Include(u => u.Unidade)
                     .Include(c => c.Coop)
+                    .Include(s => s.SistOp)
                     .ToList();
 
             return View(servidoresList);
@@ -50,6 +50,7 @@ namespace Saic.Controllers
                     .Include(f => f.Fabricante)
                     .Include(u => u.Unidade)
                     .Include(c => c.Coop)
+                    .Include(s => s.SistOp)
                     .Where(c => c.Coop.CoopID == coopID)
                     .ToList(),
 
@@ -91,7 +92,7 @@ namespace Saic.Controllers
 
             ViewBag.SistOpList = new SelectList(
                 _context.SistOps
-                    .OrderBy(e => e.SistOpNome)
+                    .OrderBy(e => e.SistOpID)
                     .ToList(),
                 "SistOpID",
                 "SistOpNome",
@@ -123,6 +124,17 @@ namespace Saic.Controllers
             if (ModelState.IsValid)
             {
                 servidor.ServidorSerial = servidor.ServidorSerial.ToUpper();
+                servidor.LastChange = DateTime.Now;
+
+                if (servidor.ServidorVirtual)
+                {
+                    servidor.ServidorGarantia = null;
+                    servidor.FabricanteID = null;
+                    servidor.ServidorCPU = null;
+                    servidor.ServidorIDrac = null;
+                    servidor.ServidorSerial = null;
+                    servidor.ServidorModelo = "Virtual";
+                }
 
                 var existingservidor = _ctxServidor.Servidores
                     .Where(c => c.ServidorID == servidor.ServidorID)
@@ -144,6 +156,7 @@ namespace Saic.Controllers
                     existingservidor.CoopID = servidor.CoopID;
                     existingservidor.FabricanteID = servidor.FabricanteID;
                     existingservidor.ServidorObs = servidor.ServidorObs;
+                    existingservidor.LastChange = servidor.LastChange;
 
                     bool isSaved = _ctxServidor.SaveServidor(existingservidor);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

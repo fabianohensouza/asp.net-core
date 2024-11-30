@@ -22,10 +22,12 @@ namespace Saic.Models
         [NotMapped]
         public int? QtdCompts { get; set; }
 
+        public DateTime LastChange { get; set; }
+
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
 
         [DisplayName("Equipe")]
-        public Guid? EquipeID { get; set; }
+        public int? EquipeID { get; set; }
 
         public Equipe? Equipe { get; set; }
 

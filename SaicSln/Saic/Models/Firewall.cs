@@ -28,6 +28,8 @@ namespace Saic.Models
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? FirewallObs { get; set; } = String.Empty;
 
+        public DateTime LastChange { get; set; }
+
         [DisplayName("Coop")]
         [Required(ErrorMessage = "Informe a Cooperativa")]
         public Guid? CoopID { get; set; }
@@ -41,7 +43,7 @@ namespace Saic.Models
 
         [Display(Name = "Fabricante")]
         [Required(ErrorMessage = "Fabricante Obrigatório")]
-        public Guid? FabricanteID { get; set; }
+        public int? FabricanteID { get; set; }
 
         public Fabricante? Fabricante { get; set; }
     }

@@ -81,6 +81,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                unidade.LastChange = DateTime.Now;
+
                 var existingUnidade = _ctxUnidades.Unidades
                     .Where(c => c.UnidadeID == unidade.UnidadeID)
                     .FirstOrDefault();
@@ -90,6 +92,7 @@ namespace Saic.Controllers
                     existingUnidade.UnidadeNumero = unidade.UnidadeNumero;
                     existingUnidade.UnidadeNome = unidade.UnidadeNome;
                     existingUnidade.UnidadeObs = unidade.UnidadeObs;
+                    existingUnidade.LastChange = unidade.LastChange;
 
                     bool isSaved = _ctxUnidades.SaveUnidade(existingUnidade);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

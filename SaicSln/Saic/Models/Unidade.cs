@@ -23,12 +23,13 @@ namespace Saic.Models
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? UnidadeObs { get; set; } = String.Empty;
 
+        public DateTime LastChange { get; set; }
+
         [NotMapped]
         public bool UnidadeNova { get; set; } = false;
 
         [DisplayName("Coop")]
         public Guid CoopID { get; set; }
-
         public Coop? Coop { get; set; }
 
         public ICollection<Firewall> Firewalls { get; set; } = new List<Firewall>();

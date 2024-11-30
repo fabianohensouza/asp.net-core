@@ -79,6 +79,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                resp.LastChange = DateTime.Now;
+
                 var existingResp = _ctxResps.RespCoops
                     .Where(c => c.RespID == resp.RespID)
                     .FirstOrDefault();
@@ -86,7 +88,8 @@ namespace Saic.Controllers
                 if (existingResp != null)
                 {
                     existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID; ;
+                    existingResp.EquipeID = resp.EquipeID; 
+                    existingResp.LastChange = resp.LastChange;
 
                     bool isSaved = _ctxResps.SaveRespCoop(existingResp);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

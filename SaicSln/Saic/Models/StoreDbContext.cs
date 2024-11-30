@@ -110,7 +110,7 @@ namespace Saic.Models
             modelBuilder.Entity<Servidor>()
                 .HasOne(c => c.Unidade)
                 .WithMany(r => r.Servidores)
-                .HasForeignKey(c => c.CoopID)
+                .HasForeignKey(c => c.UnidadeID)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

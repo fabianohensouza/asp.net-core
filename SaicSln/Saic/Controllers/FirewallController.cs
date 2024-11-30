@@ -148,6 +148,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                firewall.LastChange = DateTime.Now;
+
                 firewall.FirewallSerial = firewall.FirewallSerial?.ToUpper();
 
                 if (firewall.FirewallBackup)
@@ -169,6 +171,7 @@ namespace Saic.Controllers
                     existingfirewall.FirewallSerial = firewall.FirewallSerial?.ToUpper();
                     existingfirewall.FabricanteID = firewall.FabricanteID;
                     existingfirewall.FirewallObs = firewall.FirewallObs;
+                    existingfirewall.LastChange = firewall.LastChange;
 
                     bool isSaved = _ctxFirewall.SaveFirewall(existingfirewall);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

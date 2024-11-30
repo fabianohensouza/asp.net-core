@@ -4,12 +4,14 @@
     <thead>
         <tr>
             <th scope="col" class="text-center" style="width: 5%;">Coop</th>
-            <th scope="col" class="text-center" style="width: 20%;">Modelo</th>
+            <th scope="col" class="text-center" style="width: 15%;">Modelo</th>
             <th scope="col" class="text-center" style="width: 20%;">Sistema Op.</th>
+            <th scope="col" class="text-center" style="width: 15%;">Nome</th>
             <th scope="col" class="text-center" style="width: 15%;">Serial</th>
-            <th scope="col" class="text-center" style="width: 15%;">Local</th>
-            <th scope="col" class="text-center" style="width: 15%;">Endereço Acesso</th>
-            <th scope="col" style="width: 10%;">Ações</th>
+            <th scope="col" class="text-center" style="width: 7%;">Tipo</th>
+            <th scope="col" class="text-center" style="width: 7%;">Local</th>
+            <th scope="col" class="text-center" style="width: 8%;">Endereço Acesso</th>
+            <th scope="col" style="width: 8%;">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +22,9 @@
                 <td class="text-center">@f?.Coop?.CoopNumero</td>
                 <td class="text-center">@f?.Fabricante?.FabricanteNome - @f?.ServidorModelo</td>
                 <td class="text-center">@f?.SistOp?.SistOpNome</td>
+                <td class="text-center">@f?.ServidorNome</td>
                 <td class="text-center">@f?.ServidorSerial</td>
+                <td class="text-center">@((f?.ServidorVirtual == true) ? "Virtual" : "Físico")</td>
                 <td class="text-center">@f?.Unidade?.UnidadeNumero</td>
                 <td class="text-center">@f?.ServidorAcesso</td>
                 <td>

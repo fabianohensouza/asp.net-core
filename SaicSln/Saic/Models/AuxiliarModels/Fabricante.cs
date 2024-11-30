@@ -6,8 +6,7 @@ namespace Saic.Models.AuxiliarModels
     public class Fabricante
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid FabricanteID { get; set; } = Guid.NewGuid();
+        public int FabricanteID { get; set; }
 
         [MaxLength(20)]
         public string FabricanteTipo { get; set; } = string.Empty;

@@ -64,6 +64,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                link.LastChange = DateTime.Now;
+
                 var unidade =  _context.Unidades
                     .Where(c => c.UnidadeID == link.UnidadeID)
                     .FirstOrDefault();
@@ -90,6 +92,7 @@ namespace Saic.Controllers
                     existinLink.TipoLinkID = link.TipoLinkID;
                     existinLink.LinkProvedor = link.LinkProvedor;
                     existinLink.LinkIP = link.LinkIP;
+                    existinLink.LastChange = link.LastChange;
 
                     bool isSaved = _ctxLinks.SaveLink(existinLink);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

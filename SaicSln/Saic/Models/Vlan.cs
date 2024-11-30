@@ -27,6 +27,8 @@ namespace Saic.Models
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string? VlanObs { get; set; } = String.Empty;
 
+        public DateTime LastChange { get; set; }
+
         [DisplayName("Unidade")]
         public Guid? UnidadeID { get; set; }
 

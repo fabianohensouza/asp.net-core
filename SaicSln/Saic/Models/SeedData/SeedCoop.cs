@@ -19,10 +19,10 @@ namespace Saic.Models.SeedData
 
                 // Chama os métodos para popular os dados
                 SeedCoops(context);
-                SeedEquipes(context);
                 SeedFabricantes(context);
                 SeedTipoLinks(context);
                 SeedSistOps(context);
+                SeedEquipes(context);
             }
         }
 

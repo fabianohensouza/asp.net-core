@@ -34,6 +34,8 @@ namespace Saic.Models
         [Display(Name = "Equipamentos")]
         public int? QtdCompts { get; set; }
 
+        public DateTime LastChange { get; set; }
+
         // Foreign key to RespCoop
         [Display(Name = "Responsável")]
         public Guid? RespID { get; set; }

@@ -56,6 +56,8 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
+                vlan.LastChange = DateTime.Now;
+
                 var unidade = _context.Unidades
                     .Where(c => c.UnidadeID == vlan.UnidadeID)
                     .FirstOrDefault();
@@ -83,6 +85,7 @@ namespace Saic.Controllers
                     existingVlan.VlanNome = vlan.VlanNome;
                     existingVlan.VlanRangeIP = vlan.VlanRangeIP;
                     existingVlan.VlanObs = vlan.VlanObs;
+                    existingVlan.LastChange = vlan.LastChange;
 
                     bool isSaved = _ctxVlans.SaveVlan(existingVlan);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]

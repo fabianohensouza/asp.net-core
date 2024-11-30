@@ -33,7 +33,8 @@ namespace Saic.Models
         public bool ServidorVirtual { get; set; } = false;
 
         [Display(Name = "Memória em GB")]
-        public int? ServidorRAM { get; set; }
+        [Required(ErrorMessage = "Favor informar memória")]
+        public int ServidorRAM { get; set; }
 
         [Display(Name = "IP Principal")]
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
@@ -43,7 +44,7 @@ namespace Saic.Models
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string? ServidorIDrac { get; set; } = String.Empty;
 
-        [Display(Name = "Endereço Acesso Remoto")]
+        [Display(Name = "Acesso Remoto")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string ServidorAcesso { get; set; } = String.Empty;
 
@@ -55,9 +56,11 @@ namespace Saic.Models
         [Display(Name = "Observações")]
         public string? ServidorObs { get; set; } = String.Empty;
 
+        public DateTime LastChange { get; set; }
+
         [DisplayName("Sistema Op.")]
         [Required(ErrorMessage = "Informe o Sistema Operacional")]
-        public Guid SistOpID { get; set; }
+        public int SistOpID { get; set; }
 
         public SistOp? SistOp { get; set; }
 
@@ -74,7 +77,7 @@ namespace Saic.Models
         public Coop? Coop { get; set; }
 
         [Display(Name = "Fabricante")]
-        public Guid? FabricanteID { get; set; }
+        public int? FabricanteID { get; set; }
 
         public Fabricante? Fabricante { get; set; }
     }
