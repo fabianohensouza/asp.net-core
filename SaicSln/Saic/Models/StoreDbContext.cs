@@ -119,7 +119,7 @@ namespace Saic.Models
                 .HasOne(c => c.Fabricante)
                 .WithMany()
                 .HasForeignKey(c => c.FabricanteID)
-                .IsRequired(true)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Servidor -> SistOp)

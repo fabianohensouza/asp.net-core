@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Saic.Models.AuxiliarModels;
 using Saic.Models.Repositories;
 using Saic.Models;
 using Microsoft.EntityFrameworkCore;
@@ -123,18 +122,18 @@ namespace Saic.Controllers
         {
             if (ModelState.IsValid)
             {
-                servidor.ServidorSerial = servidor.ServidorSerial.ToUpper();
-                servidor.LastChange = DateTime.Now;
-
                 if (servidor.ServidorVirtual)
                 {
                     servidor.ServidorGarantia = null;
                     servidor.FabricanteID = null;
-                    servidor.ServidorCPU = null;
-                    servidor.ServidorIDrac = null;
-                    servidor.ServidorSerial = null;
-                    servidor.ServidorModelo = "Virtual";
+                    servidor.ServidorCPU = "-";
+                    servidor.ServidorIDrac = "-";
+                    servidor.ServidorSerial = "-";
+                    servidor.ServidorModelo = "-";
                 }
+
+                servidor.ServidorSerial = servidor.ServidorSerial.ToUpper();
+                servidor.LastChange = DateTime.Now;
 
                 var existingservidor = _ctxServidor.Servidores
                     .Where(c => c.ServidorID == servidor.ServidorID)
@@ -160,14 +159,14 @@ namespace Saic.Controllers
 
                     bool isSaved = _ctxServidor.SaveServidor(existingservidor);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
-                        = isSaved ? "servidor alterado com sucesso!" : "Erro ao alterar servidor!";
+                        = isSaved ? "Servidor alterado com sucesso!" : "Erro ao alterar servidor!";
 
                     return View("RedirectToPost", servidor.CoopID);
                 }
 
                 bool isCreated = _ctxServidor.CreateServidor(servidor);
                 TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
-                    = isCreated ? "servidor criado com sucesso!" : "Erro ao criar servidor!";
+                    = isCreated ? "Servidor criado com sucesso!" : "Erro ao criar servidor!";
 
                 return View("RedirectToPost", servidor.CoopID);
             }
@@ -186,14 +185,14 @@ namespace Saic.Controllers
 
             if (servidor == null)
             {
-                TempData["ErrorMessage"] = "servidor não encontrado!";
+                TempData["ErrorMessage"] = "Servidor não encontrado!";
                 return RedirectToAction("Index", "Servidor");
             }
 
             bool isDeleted = _ctxServidor.DeleteServidor(servidor);
 
             TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
-                = isDeleted ? "servidor removido com sucesso!" : "Erro ao remover o servidor!";
+                = isDeleted ? "Servidor removido com sucesso!" : "Erro ao remover o servidor!";
 
             return View("RedirectToPost", servidor.CoopID);
         }

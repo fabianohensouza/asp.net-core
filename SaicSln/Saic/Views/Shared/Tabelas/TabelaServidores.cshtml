@@ -20,7 +20,11 @@
         {
             <tr>
                 <td class="text-center">@f?.Coop?.CoopNumero</td>
-                <td class="text-center">@f?.Fabricante?.FabricanteNome - @f?.ServidorModelo</td>
+                <td class="text-center">
+                    @((f?.ServidorVirtual == true)
+                        ? "Virtual"
+                        : $"{f?.Fabricante?.FabricanteNome} - {f?.ServidorModelo}")
+                </td>
                 <td class="text-center">@f?.SistOp?.SistOpNome</td>
                 <td class="text-center">@f?.ServidorNome</td>
                 <td class="text-center">@f?.ServidorSerial</td>
