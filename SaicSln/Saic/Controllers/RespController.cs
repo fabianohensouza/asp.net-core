@@ -28,6 +28,8 @@ namespace Saic.Controllers
                 .Include(r => r.Equipe)
                 .Include(r => r.Coops)
                     .ThenInclude(f => f.Firewalls)
+                .Include(r => r.Coops)
+                    .ThenInclude(s => s.Servidores)
                 .OrderBy(c => c.RespNome);
 
             foreach (var resp in resps)

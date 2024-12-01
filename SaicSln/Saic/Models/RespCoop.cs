@@ -64,6 +64,11 @@ namespace Saic.Models
         {
             var qtdServers = 0;
 
+            foreach (var coop in Coops)
+            {
+                qtdServers += coop.ReturnServers();
+            }
+
             return qtdServers;
         }
     }

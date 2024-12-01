@@ -26,6 +26,7 @@ namespace Saic.Controllers
             Coops =_ctxCoops.Coops
                 .Include(r => r.RespCoop)
                 .Include(f => f.Firewalls)
+                .Include(s => s.Servidores)
                 .Where(c => RespSelecionado == null || c.RespCoop.RespNome == RespSelecionado)
                 .OrderBy(c => c.CoopNumero)
                 .Skip((coopPage - 1) * PageSize)

@@ -16,6 +16,10 @@ namespace Saic.Controllers
             var equipeRespsList = _context.Equipes
                 .Include(r => r.RespCoops)
                     .ThenInclude(c => c.Coops)
+                        .ThenInclude(s => s.Servidores)
+                .Include(r => r.RespCoops)
+                    .ThenInclude(c => c.Coops)
+                        .ThenInclude(s => s.Firewalls)
                 .ToList();
 
             return View(equipeRespsList);

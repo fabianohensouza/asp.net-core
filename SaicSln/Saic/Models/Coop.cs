@@ -51,7 +51,7 @@ namespace Saic.Models
 
         public int ReturnServers()
         {
-            var qtdServers = 0;
+            var qtdServers = Servidores.Where(c => c.CoopID == CoopID).Count();
 
             return qtdServers;
         }
