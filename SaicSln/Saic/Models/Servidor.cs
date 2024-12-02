@@ -64,7 +64,7 @@ namespace Saic.Models
 
         public SistOp? SistOp { get; set; }
 
-        [DisplayName("Unid.")]
+        [DisplayName("Local")]
         [Required(ErrorMessage = "Informe a Localização")]
         public Guid UnidadeID { get; set; }
 
