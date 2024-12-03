@@ -110,7 +110,7 @@ namespace Saic.Controllers
             if (servidor == null)
             {
                 TempData["ErrorMessage"] = "Servidor não encontrado!";
-                return View("RedirectToPost", coopID);
+                return View("RedirectToList", coopID);
             }
 
             return View(servidor);
@@ -134,6 +134,7 @@ namespace Saic.Controllers
 
                 servidor.ServidorSerial = servidor.ServidorSerial.ToUpper();
                 servidor.LastChange = DateTime.Now;
+                servidor.ServidorNovo = false;
 
                 var existingservidor = _ctxServidor.Servidores
                     .Where(c => c.ServidorID == servidor.ServidorID)
@@ -161,18 +162,24 @@ namespace Saic.Controllers
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
                         = isSaved ? "Servidor alterado com sucesso!" : "Erro ao alterar servidor!";
 
-                    return View("RedirectToPost", servidor.CoopID);
+                    return View("RedirectToList", servidor.CoopID);
                 }
 
                 bool isCreated = _ctxServidor.CreateServidor(servidor);
                 TempData[isCreated ? "SuccessMessage" : "ErrorMessage"]
                     = isCreated ? "Servidor criado com sucesso!" : "Erro ao criar servidor!";
 
-                return View("RedirectToPost", servidor.CoopID);
+                return View("RedirectToList", servidor.CoopID);
             }
 
-            TempData["ErrorMessage"] = "Erro nos dados inseridos!";
-            return View("RedirectToPost", servidor.CoopID);
+            var servidorModel = new ServidorPostModel
+            {
+                CoopID = servidor.CoopID,
+                ServidorID = (servidor.ServidorNovo) ? null : servidor.ServidorID
+            };
+
+            TempData["ErrorMessage"] = "Erro nos dados inseridos, favor preencher todos os dados obrigatórios! (*)";
+            return View("RedirectToEdit", servidorModel);
         }
 
         [HttpPost]
@@ -194,7 +201,7 @@ namespace Saic.Controllers
             TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
                 = isDeleted ? "Servidor removido com sucesso!" : "Erro ao remover o servidor!";
 
-            return View("RedirectToPost", servidor.CoopID);
+            return View("RedirectToList", servidor.CoopID);
         }
     }
 }

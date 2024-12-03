@@ -11,12 +11,12 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ServidorID { get; set; } = Guid.NewGuid();
 
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome *")]
         [Required(ErrorMessage = "Nome Obrigatório")]
         [MaxLength(40)]
         public string ServidorNome { get; set; } = String.Empty;
 
-        [Display(Name = "Modelo")]
+        [Display(Name = "Modelo *")]
         [Required(ErrorMessage = "Modelo Obrigatório")]
         [MaxLength(40)]
         public string ServidorModelo { get; set; } = String.Empty;
@@ -32,11 +32,11 @@ namespace Saic.Models
         [Display(Name = "Virtual")]
         public bool ServidorVirtual { get; set; } = false;
 
-        [Display(Name = "Memória em GB")]
+        [Display(Name = "Memória em GB *")]
         [Required(ErrorMessage = "Favor informar memória")]
         public int ServidorRAM { get; set; }
 
-        [Display(Name = "IP Principal")]
+        [Display(Name = "IP Principal *")]
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string ServidorIP { get; set; } = String.Empty;
 
@@ -44,7 +44,7 @@ namespace Saic.Models
         [MaxLength(15, ErrorMessage = "Máximo de 15 caracteres em observações")]
         public string? ServidorIDrac { get; set; } = String.Empty;
 
-        [Display(Name = "Acesso Remoto")]
+        [Display(Name = "Acesso Remoto *")]
         [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
         public string ServidorAcesso { get; set; } = String.Empty;
 
@@ -58,13 +58,16 @@ namespace Saic.Models
 
         public DateTime LastChange { get; set; }
 
-        [DisplayName("Sistema Op.")]
+        [DisplayName("Sistema Op *")]
         [Required(ErrorMessage = "Informe o Sistema Operacional")]
         public int SistOpID { get; set; }
 
         public SistOp? SistOp { get; set; }
 
-        [DisplayName("Local")]
+        [NotMapped]
+        public bool ServidorNovo { get; set; } = true;
+
+        [DisplayName("Local *")]
         [Required(ErrorMessage = "Informe a Localização")]
         public Guid UnidadeID { get; set; }
 
