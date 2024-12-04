@@ -19,7 +19,7 @@ namespace Saic.Models
         //Auxiliar models
         public DbSet<Equipe> Equipes => Set<Equipe>();
         public DbSet<Fabricante> Fabricantes => Set<Fabricante>();
-        public DbSet<TipoLink> TipoLinks => Set<TipoLink>();
+        public DbSet<TipoAuxiliar> TipoAuxiliares => Set<TipoAuxiliar>();
         public DbSet<SistOp> SistOps => Set<SistOp>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,7 +82,7 @@ namespace Saic.Models
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure one-to-many relationship (Link -> TipoLink)
+            // Configure one-to-many relationship (Link -> TipoAuxiliar)
             modelBuilder.Entity<Link>()
                 .HasOne(c => c.TipoLink)
                 .WithMany()

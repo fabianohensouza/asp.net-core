@@ -18,7 +18,7 @@ namespace Saic.Controllers
         {
             _ctxLinks = repo;
             _context = context;
-            _tipoLinksList = _context.TipoLinks
+            _tipoLinksList = _context.TipoAuxiliares
                 .ToList();
         }
 

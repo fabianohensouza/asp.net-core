@@ -34,7 +34,7 @@ namespace Saic.Models
         [DisplayName("Tipo de Link")]
         public int TipoLinkID { get; set; }
 
-        public TipoLink? TipoLink { get; set; }
+        public TipoAuxiliar? TipoLink { get; set; }
 
         [NotMapped]
         public string? DisplayCoop => $"{Unidade?.Coop?.CoopNumero} - {Unidade?.Coop?.CoopNome}";
