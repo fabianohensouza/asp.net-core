@@ -54,16 +54,17 @@ namespace Saic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoLinks",
+                name: "TipoAuxiliares",
                 columns: table => new
                 {
-                    TipoLinkID = table.Column<int>(type: "int", nullable: false)
+                    TipoID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoLinkNome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    TipoNome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    TipoCategoria = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoLinks", x => x.TipoLinkID);
+                    table.PrimaryKey("PK_TipoAuxiliares", x => x.TipoID);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,10 +186,10 @@ namespace Saic.Migrations
                 {
                     table.PrimaryKey("PK_Links", x => x.LinkID);
                     table.ForeignKey(
-                        name: "FK_Links_TipoLinks_TipoLinkID",
+                        name: "FK_Links_TipoAuxiliares_TipoLinkID",
                         column: x => x.TipoLinkID,
-                        principalTable: "TipoLinks",
-                        principalColumn: "TipoLinkID",
+                        principalTable: "TipoAuxiliares",
+                        principalColumn: "TipoID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Links_Unidades_UnidadeID",
@@ -354,7 +355,7 @@ namespace Saic.Migrations
                 name: "Vlans");
 
             migrationBuilder.DropTable(
-                name: "TipoLinks");
+                name: "TipoAuxiliares");
 
             migrationBuilder.DropTable(
                 name: "Fabricantes");

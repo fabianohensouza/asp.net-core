@@ -20,7 +20,7 @@ namespace Saic.Models.SeedData
                 // Chama os métodos para popular os dados
                 SeedCoops(context);
                 SeedFabricantes(context);
-                SeedTipoLinks(context);
+                SeedTipos(context);
                 SeedSistOps(context);
                 SeedEquipes(context);
             }
@@ -88,15 +88,15 @@ namespace Saic.Models.SeedData
             }
         }
 
-        private static void SeedTipoLinks(StoreDbContext context)
+        private static void SeedTipos(StoreDbContext context)
         {
-            if (!context.TipoLinks.Any())
+            if (!context.TipoAuxiliares.Any())
             {
-                context.TipoLinks.AddRange(
-                    new TipoLink { TipoLinkNome = "MPLS" },
-                    new TipoLink { TipoLinkNome = "SD-WAN" },
-                    new TipoLink { TipoLinkNome = "Internet" },
-                    new TipoLink { TipoLinkNome = "Apartado" }
+                context.TipoAuxiliares.AddRange(
+                    new TipoAuxiliar { TipoNome = "MPLS", TipoCategoria = "Link" },
+                    new TipoAuxiliar { TipoNome = "SD-WAN", TipoCategoria = "Link" },
+                    new TipoAuxiliar { TipoNome = "Internet", TipoCategoria = "Link" },
+                    new TipoAuxiliar { TipoNome = "Apartado", TipoCategoria = "Link" }
                 );
 
                 context.SaveChanges();

@@ -15,7 +15,7 @@
         @foreach (var l in Model ?? Enumerable.Empty<Link>())
         {
             <tr>
-                <td class="text-center">@((l?.TipoLink?.TipoLinkNome ?? "-"))</td>
+                <td class="text-center">@((l?.TipoLink?.TipoNome ?? "-"))</td>
                 <td class="text-center">@((l?.LinkProvedor ?? "-"))</td>
                 <td class="text-center">@((l?.LinkIP ?? "-"))</td>
                 <td class="text-center"><p><em><small>@(l?.LinkObs == null ? "______" : l?.LinkObs)</small></em></p></td>

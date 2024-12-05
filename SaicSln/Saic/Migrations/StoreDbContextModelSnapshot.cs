@@ -88,22 +88,26 @@ namespace Saic.Migrations
                     b.ToTable("SistOps");
                 });
 
-            modelBuilder.Entity("Saic.Models.AuxiliarModels.TipoLink", b =>
+            modelBuilder.Entity("Saic.Models.AuxiliarModels.TipoAuxiliar", b =>
                 {
-                    b.Property<int>("TipoLinkID")
+                    b.Property<int>("TipoID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoLinkID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoID"));
 
-                    b.Property<string>("TipoLinkNome")
+                    b.Property<string>("TipoCategoria")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoNome")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("TipoLinkID");
+                    b.HasKey("TipoID");
 
-                    b.ToTable("TipoLinks");
+                    b.ToTable("TipoAuxiliares");
                 });
 
             modelBuilder.Entity("Saic.Models.Coop", b =>
@@ -441,7 +445,7 @@ namespace Saic.Migrations
 
             modelBuilder.Entity("Saic.Models.Link", b =>
                 {
-                    b.HasOne("Saic.Models.AuxiliarModels.TipoLink", "TipoLink")
+                    b.HasOne("Saic.Models.AuxiliarModels.TipoAuxiliar", "TipoLink")
                         .WithMany()
                         .HasForeignKey("TipoLinkID")
                         .OnDelete(DeleteBehavior.Restrict)

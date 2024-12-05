@@ -12,13 +12,14 @@ namespace Saic.Controllers
     {
         private ILinkRepository _ctxLinks;
         private readonly StoreDbContext _context;
-        private readonly IList<TipoLink> _tipoLinksList;
+        private readonly IList<TipoAuxiliar> _tipoLinksList;
 
         public LinkController(ILinkRepository repo, StoreDbContext context)
         {
             _ctxLinks = repo;
             _context = context;
             _tipoLinksList = _context.TipoAuxiliares
+                .Where(t => t.TipoCategoria == "Link")
                 .ToList();
         }
 
@@ -33,8 +34,8 @@ namespace Saic.Controllers
 
             ViewBag.TipoLinkList = new SelectList(
                 _tipoLinksList,
-                "TipoLinkID",
-                "TipoLinkNome"
+                "TipoID",
+                "TipoNome"
             );
 
             if (linkID == null)
