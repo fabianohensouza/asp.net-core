@@ -15,6 +15,7 @@ namespace Saic.Models
         public DbSet<Servidor> Servidores => Set<Servidor>();
         public DbSet<Link> Links => Set<Link>();
         public DbSet<Vlan> Vlans => Set<Vlan>();
+        public DbSet<Ad> Ads => Set<Ad>();
 
         //Auxiliar models
         public DbSet<Equipe> Equipes => Set<Equipe>();
@@ -127,6 +128,22 @@ namespace Saic.Models
                 .HasOne(c => c.SistOp)
                 .WithMany()
                 .HasForeignKey(c => c.SistOpID)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Firewall -> Unidade)
+            modelBuilder.Entity<Firewall>()
+                .HasOne(c => c.Unidade)
+                .WithMany(r => r.Firewalls)
+                .HasForeignKey(c => c.UnidadeID)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Firewall -> Coop)
+            modelBuilder.Entity<Firewall>()
+                .HasOne(c => c.Coop)
+                .WithMany(r => r.Firewalls)
+                .HasForeignKey(c => c.CoopID)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
         }

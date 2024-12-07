@@ -12,7 +12,7 @@ using Saic.Models;
 namespace Saic.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20241205100704_InitialMigration")]
+    [Migration("20241207140333_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,50 @@ namespace Saic.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Saic.Models.Ad", b =>
+                {
+                    b.Property<Guid>("AdID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdNome")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("AdObs")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<bool>("AdTiers")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("CoopID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DCPrimarioID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DCSecundarioID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastChange")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AdID");
+
+                    b.HasIndex("CoopID");
+
+                    b.HasIndex("DCPrimarioID");
+
+                    b.HasIndex("DCSecundarioID");
+
+                    b.ToTable("Ads");
+                });
 
             modelBuilder.Entity("Saic.Models.AuxiliarModels.Equipe", b =>
                 {
@@ -143,12 +187,15 @@ namespace Saic.Migrations
                     b.Property<int?>("QtdCompts")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("RespCoopRespID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("RespID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CoopID");
 
-                    b.HasIndex("RespID");
+                    b.HasIndex("RespCoopRespID");
 
                     b.ToTable("Coops");
                 });
@@ -383,7 +430,6 @@ namespace Saic.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UnidadeID")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("VlanNome")
@@ -410,12 +456,38 @@ namespace Saic.Migrations
                     b.ToTable("Vlans");
                 });
 
+            modelBuilder.Entity("Saic.Models.Ad", b =>
+                {
+                    b.HasOne("Saic.Models.Coop", "Coop")
+                        .WithMany()
+                        .HasForeignKey("CoopID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Saic.Models.Servidor", "DCPrimario")
+                        .WithMany()
+                        .HasForeignKey("DCPrimarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Saic.Models.Servidor", "DCSecundario")
+                        .WithMany()
+                        .HasForeignKey("DCSecundarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coop");
+
+                    b.Navigation("DCPrimario");
+
+                    b.Navigation("DCSecundario");
+                });
+
             modelBuilder.Entity("Saic.Models.Coop", b =>
                 {
                     b.HasOne("Saic.Models.RespCoop", "RespCoop")
                         .WithMany("Coops")
-                        .HasForeignKey("RespID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RespCoopRespID");
 
                     b.Navigation("RespCoop");
                 });
@@ -425,19 +497,18 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Coop", "Coop")
                         .WithMany("Firewalls")
                         .HasForeignKey("CoopID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("FabricanteID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Firewalls")
-                        .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UnidadeID");
 
                     b.Navigation("Coop");
 
@@ -451,13 +522,13 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.AuxiliarModels.TipoAuxiliar", "TipoLink")
                         .WithMany()
                         .HasForeignKey("TipoLinkID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Links")
                         .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TipoLink");
@@ -469,8 +540,7 @@ namespace Saic.Migrations
                 {
                     b.HasOne("Saic.Models.AuxiliarModels.Equipe", "Equipe")
                         .WithMany("RespCoops")
-                        .HasForeignKey("EquipeID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("EquipeID");
 
                     b.Navigation("Equipe");
                 });
@@ -480,24 +550,23 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Coop", "Coop")
                         .WithMany("Servidores")
                         .HasForeignKey("CoopID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("FabricanteID");
 
                     b.HasOne("Saic.Models.AuxiliarModels.SistOp", "SistOp")
                         .WithMany()
                         .HasForeignKey("SistOpID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Servidores")
                         .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Coop");
@@ -514,7 +583,7 @@ namespace Saic.Migrations
                     b.HasOne("Saic.Models.Coop", "Coop")
                         .WithMany("Unidades")
                         .HasForeignKey("CoopID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Coop");
@@ -524,9 +593,7 @@ namespace Saic.Migrations
                 {
                     b.HasOne("Saic.Models.Unidade", "Unidade")
                         .WithMany("Vlans")
-                        .HasForeignKey("UnidadeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UnidadeID");
 
                     b.Navigation("Unidade");
                 });
