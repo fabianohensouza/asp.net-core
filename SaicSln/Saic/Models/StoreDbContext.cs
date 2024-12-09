@@ -131,20 +131,28 @@ namespace Saic.Models
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure one-to-many relationship (Firewall -> Unidade)
-            modelBuilder.Entity<Firewall>()
-                .HasOne(c => c.Unidade)
-                .WithMany(r => r.Firewalls)
-                .HasForeignKey(c => c.UnidadeID)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Configure one-to-many relationship (Firewall -> Coop)
-            modelBuilder.Entity<Firewall>()
+            // Configure one-to-many relationship (Ad -> Coop)
+            modelBuilder.Entity<Ad>()
                 .HasOne(c => c.Coop)
-                .WithMany(r => r.Firewalls)
+                .WithMany()
                 .HasForeignKey(c => c.CoopID)
                 .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Ad -> DCPrimario)
+            modelBuilder.Entity<Ad>()
+                .HasOne(c => c.DCPrimario)
+                .WithMany()
+                .HasForeignKey(c => c.DCPrimarioID)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Ad -> DCSecundario)
+            modelBuilder.Entity<Ad>()
+                .HasOne(c => c.DCSecundario)
+                .WithMany()
+                .HasForeignKey(c => c.DCSecundarioID)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

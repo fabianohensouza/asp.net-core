@@ -83,7 +83,8 @@ namespace Saic.Migrations
                         name: "FK_RespCoops_Equipes_EquipeID",
                         column: x => x.EquipeID,
                         principalTable: "Equipes",
-                        principalColumn: "EquipeID");
+                        principalColumn: "EquipeID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,17 +98,17 @@ namespace Saic.Migrations
                     Adesao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QtdCompts = table.Column<int>(type: "int", nullable: true),
                     LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RespCoopRespID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coops", x => x.CoopID);
                     table.ForeignKey(
-                        name: "FK_Coops_RespCoops_RespCoopRespID",
-                        column: x => x.RespCoopRespID,
+                        name: "FK_Coops_RespCoops_RespID",
+                        column: x => x.RespID,
                         principalTable: "RespCoops",
-                        principalColumn: "RespID");
+                        principalColumn: "RespID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,7 +130,7 @@ namespace Saic.Migrations
                         column: x => x.CoopID,
                         principalTable: "Coops",
                         principalColumn: "CoopID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,18 +155,19 @@ namespace Saic.Migrations
                         column: x => x.CoopID,
                         principalTable: "Coops",
                         principalColumn: "CoopID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Firewalls_Fabricantes_FabricanteID",
                         column: x => x.FabricanteID,
                         principalTable: "Fabricantes",
                         principalColumn: "FabricanteID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Firewalls_Unidades_UnidadeID",
                         column: x => x.UnidadeID,
                         principalTable: "Unidades",
-                        principalColumn: "UnidadeID");
+                        principalColumn: "UnidadeID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,13 +190,13 @@ namespace Saic.Migrations
                         column: x => x.TipoLinkID,
                         principalTable: "TipoAuxiliares",
                         principalColumn: "TipoID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Links_Unidades_UnidadeID",
                         column: x => x.UnidadeID,
                         principalTable: "Unidades",
                         principalColumn: "UnidadeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,24 +229,25 @@ namespace Saic.Migrations
                         column: x => x.CoopID,
                         principalTable: "Coops",
                         principalColumn: "CoopID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Servidores_Fabricantes_FabricanteID",
                         column: x => x.FabricanteID,
                         principalTable: "Fabricantes",
-                        principalColumn: "FabricanteID");
+                        principalColumn: "FabricanteID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Servidores_SistOps_SistOpID",
                         column: x => x.SistOpID,
                         principalTable: "SistOps",
                         principalColumn: "SistOpID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Servidores_Unidades_UnidadeID",
                         column: x => x.UnidadeID,
                         principalTable: "Unidades",
                         principalColumn: "UnidadeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +260,7 @@ namespace Saic.Migrations
                     VlanRangeIP = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     VlanObs = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnidadeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UnidadeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,7 +269,8 @@ namespace Saic.Migrations
                         name: "FK_Vlans_Unidades_UnidadeID",
                         column: x => x.UnidadeID,
                         principalTable: "Unidades",
-                        principalColumn: "UnidadeID");
+                        principalColumn: "UnidadeID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -279,7 +283,7 @@ namespace Saic.Migrations
                     AdObs = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DCPrimarioID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DCSecundarioID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DCSecundarioID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CoopID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -290,19 +294,19 @@ namespace Saic.Migrations
                         column: x => x.CoopID,
                         principalTable: "Coops",
                         principalColumn: "CoopID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ads_Servidores_DCPrimarioID",
                         column: x => x.DCPrimarioID,
                         principalTable: "Servidores",
                         principalColumn: "ServidorID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ads_Servidores_DCSecundarioID",
                         column: x => x.DCSecundarioID,
                         principalTable: "Servidores",
                         principalColumn: "ServidorID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -321,9 +325,9 @@ namespace Saic.Migrations
                 column: "DCSecundarioID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coops_RespCoopRespID",
+                name: "IX_Coops_RespID",
                 table: "Coops",
-                column: "RespCoopRespID");
+                column: "RespID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Firewalls_CoopID",

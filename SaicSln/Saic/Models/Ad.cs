@@ -31,7 +31,6 @@ namespace Saic.Models
         public Servidor? DCPrimario { get; set; }
 
         [DisplayName("DC Secundário")]
-        [Required(ErrorMessage = "Informe o servidor Secundário")]
         public Guid? DCSecundarioID { get; set; }
 
         public Servidor? DCSecundario { get; set; }
