@@ -19,7 +19,7 @@ namespace Saic.Models
         public bool AdTiers { get; set; } = false;
 
         [Display(Name = "Observações")]
-        [MaxLength(60, ErrorMessage = "Máximo de 300 caracteres em observações")]
+        [MaxLength(300)]
         public string? AdObs { get; set; } = String.Empty;
 
         public DateTime LastChange { get; set; }
@@ -27,18 +27,15 @@ namespace Saic.Models
         [DisplayName("DC Primário")]
         [Required(ErrorMessage = "Informe o servidor Primário")]
         public Guid? DCPrimarioID { get; set; }
-
         public Servidor? DCPrimario { get; set; }
 
         [DisplayName("DC Secundário")]
         public Guid? DCSecundarioID { get; set; }
-
         public Servidor? DCSecundario { get; set; }
 
         [DisplayName("Coop")]
         [Required(ErrorMessage = "Informe a Cooperativa")]
         public Guid? CoopID { get; set; }
-
         public Coop? Coop { get; set; }
 
 

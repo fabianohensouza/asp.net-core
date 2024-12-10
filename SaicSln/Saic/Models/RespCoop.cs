@@ -11,7 +11,7 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid RespID { get; set; } = Guid.NewGuid();
 
-        [DisplayName("Nome")]
+        [DisplayName("Nome *")]
         [Required(ErrorMessage = "Favor informar o nome")]
         [MaxLength(40)]
         public string RespNome { get; set; } = String.Empty;
@@ -24,12 +24,11 @@ namespace Saic.Models
 
         public DateTime LastChange { get; set; }
 
-        public ICollection<Coop> Coops { get; set; } = new List<Coop>();
-
         [DisplayName("Equipe")]
         public int? EquipeID { get; set; }
-
         public Equipe? Equipe { get; set; }
+
+        public ICollection<Coop> Coops { get; set; } = new List<Coop>();
 
         public int ReturnCoops()
         {

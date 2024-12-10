@@ -34,8 +34,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("AdObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<bool>("AdTiers")
                         .HasColumnType("bit");
@@ -216,8 +216,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("FirewallObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("FirewallSerial")
                         .IsRequired()
@@ -256,8 +256,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("LinkObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("LinkProvedor")
                         .IsRequired()
@@ -350,7 +350,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("ServidorObs")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("ServidorRAM")
                         .HasColumnType("int");
@@ -403,8 +404,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(2)");
 
                     b.Property<string>("UnidadeObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("UnidadeID");
 
@@ -431,8 +432,8 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("VlanObs")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("VlanRangeIP")
                         .HasMaxLength(40)

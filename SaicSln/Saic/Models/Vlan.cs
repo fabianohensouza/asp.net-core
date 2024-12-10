@@ -10,7 +10,7 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid VlanID { get; set; } = Guid.NewGuid();
 
-        [Display(Name = "Tag")]
+        [Display(Name = "Tag *")]
         [Required(ErrorMessage = "Tag Obrigatória")]
         [MaxLength(20)]
         public string VlanTag { get; set; } = String.Empty;
@@ -24,14 +24,14 @@ namespace Saic.Models
         public string? VlanRangeIP { get; set; } = String.Empty;
 
         [Display(Name = "Observações")]
-        [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
+        [MaxLength(300)]
         public string? VlanObs { get; set; } = String.Empty;
 
         public DateTime LastChange { get; set; }
 
-        [DisplayName("Unidade")]
+        [DisplayName("Unidade *")]
+        [Required(ErrorMessage = "Favor informar a unidade")]
         public Guid? UnidadeID { get; set; }
-
         public Unidade? Unidade { get; set; }
 
         [NotMapped]

@@ -10,7 +10,7 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UnidadeID { get; set; } = Guid.NewGuid();
 
-        [Display(Name = "Número")]
+        [Display(Name = "Número *")]
         [Required(ErrorMessage = "Número Obrigatório")]
         [MaxLength(2)]
         public string UnidadeNumero { get; set; } = String.Empty;
@@ -20,7 +20,7 @@ namespace Saic.Models
         public string? UnidadeNome { get; set; } = String.Empty;
 
         [Display(Name = "Observações")]
-        [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
+        [MaxLength(300)]
         public string? UnidadeObs { get; set; } = String.Empty;
 
         public DateTime LastChange { get; set; }

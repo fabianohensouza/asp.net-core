@@ -12,11 +12,11 @@ namespace Saic.Models
         public Guid FirewallID { get; set; } = Guid.NewGuid();
 
         [Display(Name = "Modelo")]
-        [Required(ErrorMessage = "Modelo Obrigatório")]
+        [Required(ErrorMessage = "Modelo Obrigatório *")]
         [MaxLength(40)]
         public string FirewallModelo { get; set; } = String.Empty;
 
-        [Display(Name = "Serial")]
+        [Display(Name = "Serial *")]
         [Required(ErrorMessage = "Serial Obrigatório")]
         [MaxLength(40)]
         public string? FirewallSerial { get; set; } = String.Empty;
@@ -25,26 +25,23 @@ namespace Saic.Models
         public bool FirewallBackup { get; set; } = false;
 
         [Display(Name = "Observações")]
-        [MaxLength(60, ErrorMessage = "Máximo de 60 caracteres em observações")]
+        [MaxLength(300)]
         public string? FirewallObs { get; set; } = String.Empty;
 
         public DateTime LastChange { get; set; }
 
-        [DisplayName("Coop")]
+        [DisplayName("Coop *")]
         [Required(ErrorMessage = "Informe a Cooperativa")]
         public Guid? CoopID { get; set; }
-
         public Coop? Coop { get; set; }
 
         [DisplayName("Unidade")]
         public Guid? UnidadeID { get; set; }
-
         public Unidade? Unidade { get; set; }
 
-        [Display(Name = "Fabricante")]
+        [Display(Name = "Fabricante *")]
         [Required(ErrorMessage = "Fabricante Obrigatório")]
         public int? FabricanteID { get; set; }
-
         public Fabricante? Fabricante { get; set; }
     }
 }

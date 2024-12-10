@@ -134,7 +134,7 @@ namespace Saic.Controllers
 
                 servidor.ServidorSerial = (servidor.ServidorSerial != null) ? 
                     servidor.ServidorSerial.ToUpper() : "-";
-                servidor.ServidorModelo = (servidor.Fabricante.FabricanteNome != "Montado") ?
+                servidor.ServidorModelo = (servidor?.Fabricante?.FabricanteNome != "Montado") ?
                     servidor.ServidorModelo : "-";
                 servidor.LastChange = DateTime.Now;
                 servidor.ServidorNovo = false;

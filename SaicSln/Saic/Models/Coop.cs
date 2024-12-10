@@ -39,7 +39,6 @@ namespace Saic.Models
         // Foreign key to RespCoop
         [Display(Name = "Responsável")]
         public Guid? RespID { get; set; }
-
         public RespCoop? RespCoop { get; set; }
 
         public ICollection<Unidade> Unidades { get; set; } = new List<Unidade>();
