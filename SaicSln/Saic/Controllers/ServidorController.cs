@@ -4,6 +4,7 @@ using Saic.Models.Repositories;
 using Saic.Models;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models.ViewModels;
+using System.Net;
 
 namespace Saic.Controllers
 {
@@ -59,8 +60,29 @@ namespace Saic.Controllers
             return View(servidoresList);
         }
 
+
         [HttpPost]
         public IActionResult EditServidor(Guid coopID, Guid? servidorID = null)
+        {
+            if (servidorID == null)
+            {
+                return View(new Servidor { CoopID = coopID });
+            }
+
+            var servidor = _ctxServidor.Servidores
+                    .Where(c => c.ServidorID == servidorID)
+                    .FirstOrDefault();
+
+            if (servidor == null)
+            {
+                return NotFound(); // Handle user not found
+            }
+
+            return View(servidor);
+        }
+
+        [HttpPost]
+        public IActionResult EditServidor(Servidor servidor)
         {
             var servidor = new Servidor();
 
