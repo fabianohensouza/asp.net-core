@@ -61,80 +61,38 @@ namespace Saic.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("EditServidor/Load")]
         public IActionResult EditServidor(Guid coopID, Guid? servidorID = null)
         {
             if (servidorID == null)
             {
-                return View(new Servidor { CoopID = coopID });
+                var servidor = new Servidor { CoopID = coopID };
+                LoadViewBags(servidor);
+                return View(servidor);
             }
 
-            var servidor = _ctxServidor.Servidores
+            var existingServidor = _ctxServidor.Servidores
                     .Where(c => c.ServidorID == servidorID)
                     .FirstOrDefault();
 
-            if (servidor == null)
+            if (existingServidor == null)
             {
                 return NotFound(); // Handle user not found
             }
 
-            return View(servidor);
+            LoadViewBags(existingServidor);
+            return View(existingServidor);
         }
 
-        [HttpPost]
+        [HttpPost("EditServidor/Reload")]
         public IActionResult EditServidor(Servidor servidor)
         {
-            var servidor = new Servidor();
-
-            servidor.Coop = _coopList.FirstOrDefault(c => c.CoopID == coopID);
-            servidor.CoopID = coopID;
-
-            ViewBag.CoopList = servidor.Coop.DisplayName;
-
-            ViewBag.UnidadeList = new SelectList(
-                _context.Unidades
-                    .Where(c => c.CoopID == coopID)
-                    .OrderBy(e => e.UnidadeNumero)
-                    .ToList(),
-                "UnidadeID",
-                "UnidadeNumero",
-                servidor.UnidadeID
-            );
-
-            ViewBag.FabricanteList = new SelectList(
-                _context.Fabricantes
-                    .Where(f => f.FabricanteTipo == "Servidor")
-                    .OrderBy(e => e.FabricanteNome)
-                    .ToList(),
-                "FabricanteID",
-                "FabricanteNome",
-                servidor.FabricanteID
-            );
-
-            ViewBag.SistOpList = new SelectList(
-                _context.SistOps
-                    .OrderBy(e => e.SistOpID)
-                    .ToList(),
-                "SistOpID",
-                "SistOpNome",
-                servidor.SistOpID
-            );
-
-            if (servidorID == null)
+            if (servidor?.CoopID == null)
             {
-                return View(servidor);
+                return NotFound(); // Handle user not found
             }
 
-            servidor = _ctxServidor.Servidores
-                .Where(c => c.ServidorID == servidorID)
-                .FirstOrDefault();
-
-            if (servidor == null)
-            {
-                TempData["ErrorMessage"] = "Servidor não encontrado!";
-                return View("RedirectToList", coopID);
-            }
-
+            LoadViewBags(servidor);
             return View(servidor);
         }
 
@@ -227,6 +185,41 @@ namespace Saic.Controllers
                 = isDeleted ? "Servidor removido com sucesso!" : "Erro ao remover o servidor!";
 
             return View("RedirectToList", servidor.CoopID);
+        }
+
+        private void LoadViewBags(Servidor servidor)
+        {
+            ViewBag.CoopList = servidor.Coop?.DisplayName;
+
+            ViewBag.UnidadeList = new SelectList(
+                _context.Unidades
+                    .Where(c => c.CoopID == servidor.CoopID)
+                    .OrderBy(e => e.UnidadeNumero)
+                    .ToList(),
+                "UnidadeID",
+                "UnidadeNumero",
+                servidor.UnidadeID
+            );
+
+            ViewBag.FabricanteList = new SelectList(
+                _context.Fabricantes
+                    .Where(f => f.FabricanteTipo == "Servidor")
+                    .OrderBy(e => e.FabricanteNome)
+                    .ToList(),
+                "FabricanteID",
+                "FabricanteNome",
+                servidor.FabricanteID
+            );
+
+            ViewBag.SistOpList = new SelectList(
+                _context.SistOps
+                    .OrderBy(e => e.SistOpID)
+                    .ToList(),
+                "SistOpID",
+                "SistOpNome",
+                servidor.SistOpID
+            );
+
         }
     }
 }
