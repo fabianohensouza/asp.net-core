@@ -66,12 +66,12 @@ namespace Saic.Models
 
         [DisplayName("Sistema Op *")]
         [Required(ErrorMessage = "Informe o Sistema Operacional")]
-        public int SistOpID { get; set; }
+        public int? SistOpID { get; set; }
         public SistOp? SistOp { get; set; }
 
         [DisplayName("Local *")]
         [Required(ErrorMessage = "Informe a Localização")]
-        public Guid UnidadeID { get; set; }
+        public Guid? UnidadeID { get; set; }
         public Unidade? Unidade { get; set; }
 
         [DisplayName("Coop")]

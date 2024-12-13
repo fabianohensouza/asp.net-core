@@ -4,7 +4,6 @@ using Saic.Models.Repositories;
 using Saic.Models;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models.ViewModels;
-using System.Net;
 
 namespace Saic.Controllers
 {
@@ -61,7 +60,7 @@ namespace Saic.Controllers
         }
 
 
-        [HttpPost("EditServidor/Load")]
+        [HttpPost]
         public IActionResult EditServidor(Guid coopID, Guid? servidorID = null)
         {
             if (servidorID == null)
@@ -84,8 +83,8 @@ namespace Saic.Controllers
             return View(existingServidor);
         }
 
-        [HttpPost("EditServidor/Reload")]
-        public IActionResult EditServidor(Servidor servidor)
+        [HttpPost]
+        public IActionResult ReloadServidor(Servidor servidor)
         {
             if (servidor?.CoopID == null)
             {
@@ -93,7 +92,7 @@ namespace Saic.Controllers
             }
 
             LoadViewBags(servidor);
-            return View(servidor);
+            return View("EditServidor", servidor);
         }
 
         [HttpPost]
@@ -155,14 +154,16 @@ namespace Saic.Controllers
                 return View("RedirectToList", servidor.CoopID);
             }
 
-            var servidorModel = new ServidorPostModel
-            {
-                CoopID = servidor.CoopID,
-                ServidorID = (servidor.ServidorNovo) ? null : servidor.ServidorID
-            };
+            return ReloadServidor(servidor);
 
-            TempData["ErrorMessage"] = "Erro nos dados inseridos, favor preencher todos os dados obrigatórios! (*)";
-            return View("RedirectToEdit", servidorModel);
+            //var servidorModel = new ServidorPostModel
+            //{
+            //    CoopID = servidor.CoopID,
+            //    ServidorID = (servidor.ServidorNovo) ? null : servidor.ServidorID
+            //};
+
+            //TempData["ErrorMessage"] = "Erro nos dados inseridos, favor preencher todos os dados obrigatórios! (*)";
+            //return View("RedirectToEdit", servidorModel);
         }
 
         [HttpPost]
@@ -189,7 +190,11 @@ namespace Saic.Controllers
 
         private void LoadViewBags(Servidor servidor)
         {
-            ViewBag.CoopList = servidor.Coop?.DisplayName;
+            var coop = _coopList
+                .Where(c => c.CoopID == servidor.CoopID)
+                .FirstOrDefault();
+
+            ViewBag.DisplayCoop = coop?.DisplayName;
 
             ViewBag.UnidadeList = new SelectList(
                 _context.Unidades
