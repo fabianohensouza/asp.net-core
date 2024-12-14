@@ -21,10 +21,6 @@ namespace Saic.Models
         [MaxLength(40)]
         public string ServidorModelo { get; set; } = String.Empty;
 
-        [Display(Name = "Processador")]
-        [MaxLength(40)]
-        public string? ServidorCPU { get; set; } = String.Empty;
-
         [Display(Name = "Serial")]
         [MaxLength(40)]
         public string? ServidorSerial { get; set; } = String.Empty;
@@ -34,7 +30,8 @@ namespace Saic.Models
 
         [Display(Name = "Memória em GB *")]
         [Required(ErrorMessage = "Favor informar memória")]
-        public int ServidorRAM { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "A memória deve ser maior que 0")]
+        public int? ServidorRAM { get; set; }
 
         [Display(Name = "IP Principal *")]
         [Required(ErrorMessage = "Favor informar IP Principal")]
@@ -45,7 +42,7 @@ namespace Saic.Models
         [MaxLength(15)]
         public string? ServidorIDrac { get; set; } = String.Empty;
 
-        [Display(Name = "Acesso Remoto *")]
+        [Display(Name = "Endereço de Acesso *")]
         [Required(ErrorMessage = "Favor informar endereço de acesso remoto")]
         [MaxLength(60)]
         public string ServidorAcesso { get; set; } = String.Empty;
@@ -64,7 +61,7 @@ namespace Saic.Models
         [NotMapped]
         public bool ServidorNovo { get; set; } = true;
 
-        [DisplayName("Sistema Op *")]
+        [DisplayName("Sistema Operacional *")]
         [Required(ErrorMessage = "Informe o Sistema Operacional")]
         public int? SistOpID { get; set; }
         public SistOp? SistOp { get; set; }

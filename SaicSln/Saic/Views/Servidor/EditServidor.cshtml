@@ -18,89 +18,81 @@
     <input type="hidden" asp-for="CoopID" />
 
     <div class="form-group row mb-3">
-        <div class="col-md-5 d-flex align-items-center">
-            <label class="col-form-label me-2" style="width: 45%">Coop</label>
+        <div class="col-md-4">
+            <label class="mb-0">Coop</label>
             <input class="form-control" value="@ViewBag.DisplayCoop" readonly />
         </div>
-        <div class="col-md-3 d-flex align-items-center">
-            <label asp-for="UnidadeID" class="col-form-label me-2" style="width: 20%"></label>
+    
+        <div class="col-md-4">
+            <label asp-for="UnidadeID" class="mb-0"></label>
             <select asp-for="UnidadeID" class="form-control" asp-items="ViewBag.UnidadeList">
                 <option value="" disabled selected>Selecione unidade</option>
             </select>
         </div>
-        <div class="col-md-4 d-flex align-items-center">
-            <label asp-for="ServidorNome" class="col-form-label me-2" style="width: 20%"></label>
+
+        <div class="col-md-4">
+            <label asp-for="ServidorNome" class="mb-0"></label>
             <input asp-for="ServidorNome" class="form-control" />
         </div>
     </div>
-
+    
     <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="FabricanteID" class="col-form-label me-2" style="width: 35%"></label>
+        <div class="col-md-4">
+            <label asp-for="FabricanteID" class="mb-0"></label>
             <select asp-for="FabricanteID" class="form-control" asp-items="ViewBag.FabricanteList">
                 <option value="">-- Selecione Fabricante --</option>
             </select>
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorModelo" class="col-form-label me-2" style="width: 20%"></label>
-            <input asp-for="ServidorModelo" class="form-control"/>
+        <div class="col-md-4">
+            <label asp-for="ServidorModelo" class="mb-0"></label>
+             <input asp-for="ServidorModelo" class="form-control" />
         </div>
-    </div>
-
-    <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="SistOpID" class="col-form-label me-2" style="width: 35%"></label>
-            <select asp-for="SistOpID" class="form-control" asp-items="ViewBag.SistOpList">
-                <option value="">-- Selecione o S.O. --</option>
-            </select>
-        </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorSerial" class="col-form-label me-2" style="width: 20%"></label>
+        <div class="col-md-4">
+            <label asp-for="ServidorSerial" class="mb-0"></label>
             <input asp-for="ServidorSerial" class="form-control" />
         </div>
     </div>
 
     <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorCPU" class="col-form-label me-2" style="width: 35%"></label>
-            <input asp-for="ServidorCPU" class="form-control" />
+        <div class="col-md-4">            
+            <label asp-for="SistOpID" class="mb-0"></label>
+            <select asp-for="SistOpID" class="form-control" asp-items="ViewBag.SistOpList">
+                <option value="">-- Selecione o S.O. --</option>
+            </select>
         </div>
-        <div class="col-md-4 d-flex align-items-center">
-            <label asp-for="ServidorRAM" class="col-form-label me-2" style="width: 36%"></label>
-            <input asp-for="ServidorRAM" class="form-control" />
+        <div class="col-md-4">
+            <label asp-for="ServidorGarantia" class="mb-0"></label>
+            <input asp-for="ServidorGarantia" class="form-control" type="date" value="@Model.ServidorGarantia?.ToString("yyyy-MM-dd")" />
         </div>
-        <div class="col-md-2 d-flex align-items-center">
-            <label class="col-form-label me-2" style="margin-bottom: 0;">Virtual</label>
+        <div class="col-md-2">
+            <label asp-for="ServidorRAM" class="mb-0"></label>
+            <input asp-for="ServidorRAM" class="form-control" type="number" min="1" step="1" />
+        </div>
+        <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
+            <label class="mb-2">Servidor Virtual</label>
             <input asp-for="ServidorVirtual" type="checkbox" class="form-check-input" value="true" />
         </div>
     </div>
 
     <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorIP" class="form-label" style="width: 35%"></label>
-            <input asp-for="ServidorIP" class="form-control" maxlength="20%" />
+        <div class="col-md-4">
+            <label asp-for="ServidorIP" class="mb-0"></label>
+            <input asp-for="ServidorIP" class="form-control" maxlength="15" />
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorGarantia" class="col-form-label me-2" style="width: 20%"></label>
-            <input asp-for="ServidorGarantia" class="form-control" type="date" value="@Model.ServidorGarantia?.ToString("yyyy-MM-dd")" />
-        </div>
-    </div>
-
-    <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorIDrac" class="form-label" style="width: 35%"></label>
+        <div class="col-md-4">
+            <label asp-for="ServidorIDrac" class="mb-0"></label>
             <input asp-for="ServidorIDrac" class="form-control" maxlength="15" />
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="ServidorAcesso" class="form-label" style="width: 20%"></label>
-            <input asp-for="ServidorAcesso" class="form-control" maxlength="60" />
+        <div class="col-md-4">
+            <label asp-for="ServidorAcesso" class="mb-0"></label>
+            <input asp-for="ServidorAcesso" class="form-control" maxlength="300" />
         </div>
     </div>
 
     <div class="form-group row mb-3">
-        <div class="col-md-12 d-flex align-items-center">
-            <label asp-for="ServidorObs" class="col-form-label me-2" style="width: 14%"></label>
-            <input asp-for="ServidorObs" class="form-control" />
+        <div class="col-md-12">
+            <label asp-for="ServidorObs" class="mb-0"></label>
+            <textarea asp-for="ServidorObs" class="form-control" rows="4"></textarea>
         </div>
     </div>
 

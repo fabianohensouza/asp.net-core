@@ -105,7 +105,6 @@ namespace Saic.Controllers
                 {
                     servidor.ServidorGarantia = null;
                     servidor.FabricanteID = null;
-                    servidor.ServidorCPU = "-";
                     servidor.ServidorIDrac = "-";
                     servidor.ServidorSerial = "-";
                     servidor.ServidorModelo = "-";
@@ -128,7 +127,6 @@ namespace Saic.Controllers
                     existingservidor.ServidorModelo = servidor.ServidorModelo;
                     existingservidor.ServidorSerial = servidor.ServidorSerial;
                     existingservidor.ServidorVirtual = servidor.ServidorVirtual;
-                    existingservidor.ServidorCPU = servidor.ServidorCPU;
                     existingservidor.ServidorRAM = servidor.ServidorRAM;
                     existingservidor.ServidorIP = servidor.ServidorIP;
                     existingservidor.ServidorIDrac = servidor.ServidorIDrac;

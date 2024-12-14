@@ -2,7 +2,7 @@
 
 <div class="card mb-4">
     <div class="card-header">
-        <h2>Editar Coop</h2>
+        <h4>Editar Coop</h4>
     </div>
 </div>
 
@@ -11,36 +11,33 @@
     <input type="hidden" asp-for="CoopID" />
 
     <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="CoopNumero" class="col-form-label me-2" style="width: 30%"></label>
+        <div class="col-md-4">
+            <label asp-for="CoopNumero" class="mb-0" ></label>
             <input asp-for="CoopNumero" class="form-control" readonly />
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="CoopNome" class="col-form-label me-2" style="width: 30%"></label>
+        <div class="col-md-4">
+            <label asp-for="CoopNome" class="mb-0" ></label>
             <input asp-for="CoopNome" class="form-control" readonly />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="CoopCidade" class="mb-0"></label>
+            <input asp-for="CoopCidade" class="form-control" />
         </div>
     </div>
 
     <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="CoopCidade" class="col-form-label me-2" style="width: 30%"></label>
-            <input asp-for="CoopCidade" class="form-control" />
-        </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="RespID" class="col-form-label me-2" style="width: 30%"></label>
+        <div class="col-md-4">
+            <label asp-for="RespID" class="mb-0" ></label>
             <select asp-for="RespID" class="form-control" asp-items="ViewBag.RespCoopList">
                 <option value="">-- Selecione um responsável --</option>
             </select>
         </div>
-    </div>
-
-    <div class="form-group row mb-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="QtdCompts" class="col-form-label me-2" style="width: 30%"></label>
+        <div class="col-md-4">
+            <label asp-for="QtdCompts" class="mb-0" ></label>
             <input asp-for="QtdCompts" class="form-control" type="number" />
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <label asp-for="Adesao" class="col-form-label me-2" style="width: 30%"></label>
+        <div class="col-md-4">
+            <label asp-for="Adesao" class="mb-0" ></label>
             <input asp-for="Adesao" class="form-control" type="date" value="@Model.Adesao.ToString("yyyy-MM-dd")" />
         </div>
     </div>
