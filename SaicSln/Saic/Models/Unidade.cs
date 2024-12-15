@@ -26,7 +26,7 @@ namespace Saic.Models
         public DateTime LastChange { get; set; }
 
         [NotMapped]
-        public bool UnidadeNova { get; set; } = true;
+        public bool UnidadeNova { get; set; } = false;
 
         [DisplayName("Coop")]
         public Guid CoopID { get; set; }

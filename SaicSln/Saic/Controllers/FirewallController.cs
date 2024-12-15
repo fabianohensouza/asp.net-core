@@ -5,6 +5,7 @@ using Saic.Models.Repositories;
 using Saic.Models;
 using Microsoft.EntityFrameworkCore;
 using Saic.Models.ViewModels;
+using System.Net;
 
 namespace Saic.Controllers
 {
@@ -75,25 +76,7 @@ namespace Saic.Controllers
 
             firewall.Coop = _coopList.FirstOrDefault(c => c.CoopID == coopID);
             firewall.CoopID = coopID;
-
-            ViewBag.CoopList = firewall.Coop.DisplayName;
-
-            ViewBag.FabricanteList = new SelectList(
-                _fabricanteList,
-                "FabricanteID",
-                "FabricanteNome",
-                firewall.FabricanteID
-            );
-
-            ViewBag.UnidadeList = new SelectList(
-                _context.Unidades
-                    .Where(c => c.CoopID == coopID)
-                    .OrderBy(e => e.UnidadeNumero)
-                    .ToList(),
-                "UnidadeID",
-                "UnidadeNumero",
-                firewall.UnidadeID
-            );
+            LoadViewBags(firewall);
 
             if (firewallID == null)
             {
@@ -111,6 +94,19 @@ namespace Saic.Controllers
             }
 
             return View(firewall);
+        }
+
+        [HttpPost]
+        public IActionResult ReloadFirewall(Firewall firewall)
+        {
+            if (firewall?.CoopID == null)
+            {
+                return NotFound(); // Handle user not found
+            }
+
+            firewall.Coop = _coopList.FirstOrDefault(c => c.CoopID == firewall.CoopID);
+            LoadViewBags(firewall);
+            return View("EditFirewall", firewall);
         }
 
         [HttpPost]
@@ -187,8 +183,7 @@ namespace Saic.Controllers
                 return View("RedirectToPost", firewall.CoopID);
             }
 
-            TempData["ErrorMessage"] = "Erro nos dados inseridos!";
-            return View("RedirectToPost", firewall.CoopID);
+            return ReloadFirewall(firewall);
         }
 
         [HttpPost]
@@ -211,6 +206,28 @@ namespace Saic.Controllers
                 = isDeleted ? "Firewall removido com sucesso!" : "Erro ao remover o Firewall!";
 
             return View("RedirectToPost", firewall.CoopID);
+        }
+
+        private void LoadViewBags(Firewall firewall)
+        {
+            ViewBag.CoopList = firewall.Coop.DisplayName;
+
+            ViewBag.FabricanteList = new SelectList(
+                _fabricanteList,
+                "FabricanteID",
+                "FabricanteNome",
+                firewall.FabricanteID
+            );
+
+            ViewBag.UnidadeList = new SelectList(
+                _context.Unidades
+                    .Where(c => c.CoopID == firewall.CoopID)
+                    .OrderBy(e => e.UnidadeNumero)
+                    .ToList(),
+                "UnidadeID",
+                "UnidadeNumero",
+                firewall.UnidadeID
+            );
         }
     }
 }

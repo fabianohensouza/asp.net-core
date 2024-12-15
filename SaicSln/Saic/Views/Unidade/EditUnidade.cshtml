@@ -24,6 +24,8 @@
             <input type="hidden" asp-for="UnidadeID" />
             @* Hidden field for CoopID *@
             <input type="hidden" asp-for="CoopID" />
+            @* Hidden field for UnidadeNova *@
+            <input type="hidden" asp-for="UnidadeNova" />
 
             <div class="form-group row mb-3">
                 <div class="col-md-4">
@@ -62,7 +64,7 @@
     </div>
 </div>
 
-@if (!Model.UnidadeNova)
+@if (Model.UnidadeNova == false)
 {
     <hr />
 

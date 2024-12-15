@@ -11,8 +11,8 @@ namespace Saic.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid FirewallID { get; set; } = Guid.NewGuid();
 
-        [Display(Name = "Modelo")]
-        [Required(ErrorMessage = "Modelo Obrigatório *")]
+        [Display(Name = "Modelo *")]
+        [Required(ErrorMessage = "Modelo Obrigatório")]
         [MaxLength(40)]
         public string FirewallModelo { get; set; } = String.Empty;
 

@@ -153,15 +153,6 @@ namespace Saic.Controllers
             }
 
             return ReloadServidor(servidor);
-
-            //var servidorModel = new ServidorPostModel
-            //{
-            //    CoopID = servidor.CoopID,
-            //    ServidorID = (servidor.ServidorNovo) ? null : servidor.ServidorID
-            //};
-
-            //TempData["ErrorMessage"] = "Erro nos dados inseridos, favor preencher todos os dados obrigatórios! (*)";
-            //return View("RedirectToEdit", servidorModel);
         }
 
         [HttpPost]

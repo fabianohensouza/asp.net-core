@@ -56,6 +56,7 @@ namespace Saic.Controllers
                     .FirstOrDefault();
 
                 novaUnidade.CoopID = coopID;
+                novaUnidade.UnidadeNova = true;
 
                 return View (novaUnidade);
             }
@@ -70,7 +71,7 @@ namespace Saic.Controllers
                 .Where(c => c.UnidadeID == unidadeID)
                 .Where(c => c.CoopID == coopID)
                 .FirstOrDefault();
-            
+
             return View(unidade);
         }
 
@@ -82,6 +83,8 @@ namespace Saic.Controllers
                 return NotFound(); // Handle user not found
             }
 
+            unidade.Coop = _ctxCoops.Coops
+                .FirstOrDefault(c => c.CoopID == unidade.CoopID);
             return View("EditUnidade", unidade);
         }
 
@@ -92,7 +95,6 @@ namespace Saic.Controllers
             if (ModelState.IsValid)
             {
                 unidade.LastChange = DateTime.Now;
-                unidade.UnidadeNova = false;
 
                 var existingUnidade = _ctxUnidades.Unidades
                     .Where(c => c.UnidadeID == unidade.UnidadeID)
@@ -104,7 +106,6 @@ namespace Saic.Controllers
                     existingUnidade.UnidadeNome = unidade.UnidadeNome;
                     existingUnidade.UnidadeObs = unidade.UnidadeObs;
                     existingUnidade.LastChange = unidade.LastChange;
-                    existingUnidade.UnidadeNova = unidade.UnidadeNova;
 
                     bool isSaved = _ctxUnidades.SaveUnidade(existingUnidade);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
@@ -121,11 +122,6 @@ namespace Saic.Controllers
             }
 
             return ReloadUnidade(unidade);
-
-            //return RedirectToAction("EditUnidade", new { 
-            //    CoopID = unidade.CoopID,
-            //    UnidadeID = unidade.UnidadeID
-            //});
         }
 
         [HttpPost]

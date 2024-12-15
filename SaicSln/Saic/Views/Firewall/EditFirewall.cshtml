@@ -6,6 +6,8 @@
     </div>
 </div>
 
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form asp-action="SaveChanges" method="post">
     @* Hidden field for FirewallID *@
     <input type="hidden" asp-for="FirewallID" />
@@ -35,11 +37,11 @@
         </div>
     </div>
     <div class="form-group row mb-3">
-        <div class="col-md-9">
+        <div class="col-md-10">
             <label asp-for="FirewallSerial" class="mb-0"></label>
             <input asp-for="FirewallSerial" class="form-control"/>
         </div>
-        <div class="col-md-3 d-flex align-items-center justify-content-start">
+        <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
             <label class="mb-0 me-2">Backup</label>
             <input asp-for="FirewallBackup" type="checkbox" class="form-check-input" value="true" />
         </div>
