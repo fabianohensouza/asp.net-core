@@ -52,11 +52,10 @@ namespace Saic.Controllers
                 var novaUnidade = new Unidade();
 
                 novaUnidade.Coop = _ctxCoops.Coops
-                .Where(c => c.CoopID == coopID)
-                .FirstOrDefault();
+                    .Where(c => c.CoopID == coopID)
+                    .FirstOrDefault();
 
                 novaUnidade.CoopID = coopID;
-                novaUnidade.UnidadeNova = true;
 
                 return View (novaUnidade);
             }
@@ -76,12 +75,24 @@ namespace Saic.Controllers
         }
 
         [HttpPost]
+        public IActionResult ReloadUnidade(Unidade unidade)
+        {
+            if (unidade?.CoopID == null)
+            {
+                return NotFound(); // Handle user not found
+            }
+
+            return View("EditUnidade", unidade);
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SaveChanges(Unidade unidade)
         {
             if (ModelState.IsValid)
             {
                 unidade.LastChange = DateTime.Now;
+                unidade.UnidadeNova = false;
 
                 var existingUnidade = _ctxUnidades.Unidades
                     .Where(c => c.UnidadeID == unidade.UnidadeID)
@@ -93,6 +104,7 @@ namespace Saic.Controllers
                     existingUnidade.UnidadeNome = unidade.UnidadeNome;
                     existingUnidade.UnidadeObs = unidade.UnidadeObs;
                     existingUnidade.LastChange = unidade.LastChange;
+                    existingUnidade.UnidadeNova = unidade.UnidadeNova;
 
                     bool isSaved = _ctxUnidades.SaveUnidade(existingUnidade);
                     TempData[isSaved ? "SuccessMessage" : "ErrorMessage"]
@@ -108,10 +120,12 @@ namespace Saic.Controllers
                 return RedirectToAction("Index", "Unidade", new { CoopID = unidade.CoopID });
             }
 
-            return RedirectToAction("EditUnidade", new { 
-                CoopID = unidade.CoopID,
-                UnidadeID = unidade.UnidadeID
-            });
+            return ReloadUnidade(unidade);
+
+            //return RedirectToAction("EditUnidade", new { 
+            //    CoopID = unidade.CoopID,
+            //    UnidadeID = unidade.UnidadeID
+            //});
         }
 
         [HttpPost]
