@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Saic.Models;
 using Saic.Models.AuxiliarModels;
 using Saic.Models.Repositories;
+using System.Net;
 
 namespace Saic.Controllers
 {
@@ -41,38 +42,39 @@ namespace Saic.Controllers
             return View(resps);
         }
 
-        public ViewResult EditResp()
-        {
-            ViewBag.EquipeList = new SelectList(
-                    _equipeList,
-                    "EquipeID",
-                    "EquipeNome"                    
-                );
-
-            return View(new RespCoop());
-        }
-
         [HttpPost]
-        public IActionResult EditResp(Guid respId)
+        public IActionResult EditResp(Guid? respId = null)
         {
-            var resp = _ctxResps.RespCoops
+            if (respId == null)
+            {
+                LoadViewBags();
+                return View(new RespCoop());
+            }
+
+            var existingResp = _ctxResps.RespCoops
                 .Where(c => c.RespID == respId)
                 .FirstOrDefault();
 
-            if (resp == null)
+            if (existingResp == null)
             {
                 TempData["ErrorMessage"] = "Responsável não encontrado!";
                 return RedirectToAction("Index", "Resp");
             }
 
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
-            );
+            LoadViewBags();
+            return View(existingResp);
+        }
 
-            return View(resp);
+        [HttpPost]
+        public IActionResult ReloadResp(RespCoop resp)
+        {
+            if (resp?.RespID == null)
+            {
+                return NotFound(); // Handle user not found
+            }
+
+            LoadViewBags();
+            return View("EditResp", resp);
         }
 
         [HttpPost]
@@ -90,7 +92,7 @@ namespace Saic.Controllers
                 if (existingResp != null)
                 {
                     existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID; 
+                    existingResp.EquipeID = resp.EquipeID;
                     existingResp.LastChange = resp.LastChange;
 
                     bool isSaved = _ctxResps.SaveRespCoop(existingResp);
@@ -107,14 +109,7 @@ namespace Saic.Controllers
                 return RedirectToAction("Index", "Resp");
             }
 
-            ViewBag.EquipeList = new SelectList(
-                _equipeList,
-                "EquipeID",
-                "EquipeNome",
-                resp.EquipeID
-            );
-
-            return View("Index", resp);
+            return ReloadResp(resp);
         }
 
         [HttpPost]
@@ -133,10 +128,20 @@ namespace Saic.Controllers
 
             bool isDeleted = _ctxResps.DeleteRespCoop(resp);
 
-            TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"] 
+            TempData[isDeleted ? "SuccessMessage" : "ErrorMessage"]
                 = isDeleted ? "Responsável removido com sucesso!" : "Erro ao remover o responsável!";
 
             return RedirectToAction("Index", "Resp");
         }
+
+        private void LoadViewBags()
+        {
+            ViewBag.EquipeList = new SelectList(
+                    _equipeList,
+                    "EquipeID",
+                    "EquipeNome"
+            );
+        }
     }
 }
+

@@ -10,6 +10,8 @@
 
 <partial name="Tabelas/TabelaResps" model=@Model />
 
-<a asp-controller="Resp" asp-action="EditResp" type="button" class="align-items-center btn btn-secondary">
-    Criar novo
-</a>
+<form asp-controller="Resp" asp-action="EditResp" method="post">
+    <button type="submit" class="align-items-center btn btn-secondary">
+        Criar novo
+    </button>
+</form>

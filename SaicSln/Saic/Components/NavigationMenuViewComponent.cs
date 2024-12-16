@@ -43,8 +43,8 @@ namespace Saic.Components
                         Icone = "fa-solid fa-shield-halved"},
                     new NavigationMenuInfo{
                         Action = "Index",
-                        Controller = "Equipamento",
-                        Label = "Equipamentos" ,
+                        Controller = "Switches",
+                        Label = "Switches" ,
                         Icone = "fa-solid fa-network-wired"},
                     new NavigationMenuInfo{ 
                         Action = "Index", 
