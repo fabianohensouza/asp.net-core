@@ -33,6 +33,7 @@ namespace Saic.Models
         public Coop? Coop { get; set; }
 
         public ICollection<Firewall> Firewalls { get; set; } = new List<Firewall>();
+        public ICollection<Switch> Switches { get; set; } = new List<Switch>();
         public ICollection<Servidor> Servidores { get; set; } = new List<Servidor>();
         public ICollection<Link> Links { get; set; } = new List<Link>();
         public ICollection<Vlan> Vlans { get; set; } = new List<Vlan>();

@@ -43,6 +43,7 @@ namespace Saic.Models
 
         public ICollection<Unidade> Unidades { get; set; } = new List<Unidade>();
         public ICollection<Firewall> Firewalls { get; set; } = new List<Firewall>();
+        public ICollection<Switch> Switches { get; set; } = new List<Switch>();
         public ICollection<Servidor> Servidores { get; set; } = new List<Servidor>();
 
         [NotMapped]

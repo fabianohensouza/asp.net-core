@@ -12,6 +12,7 @@ namespace Saic.Models
         public DbSet<RespCoop> RespCoops => Set<RespCoop>();
         public DbSet<Unidade> Unidades => Set<Unidade>();
         public DbSet<Firewall> Firewalls => Set<Firewall>();
+        public DbSet<Switch> Switches => Set<Switch>();
         public DbSet<Servidor> Servidores => Set<Servidor>();
         public DbSet<Link> Links => Set<Link>();
         public DbSet<Vlan> Vlans => Set<Vlan>();
@@ -51,6 +52,14 @@ namespace Saic.Models
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Configure one-to-many relationship (Firewall -> Coop)
+            modelBuilder.Entity<Firewall>()
+                .HasOne(c => c.Coop)
+                .WithMany(r => r.Firewalls)
+                .HasForeignKey(c => c.CoopID)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Configure one-to-many relationship (Firewall -> Unidade)
             modelBuilder.Entity<Firewall>()
                 .HasOne(c => c.Unidade)
@@ -59,12 +68,20 @@ namespace Saic.Models
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure one-to-many relationship (Firewall -> Coop)
-            modelBuilder.Entity<Firewall>()
+            // Configure one-to-many relationship (Switch -> Coop)
+            modelBuilder.Entity<Switch>()
                 .HasOne(c => c.Coop)
-                .WithMany(r => r.Firewalls)
+                .WithMany(r => r.Switches)
                 .HasForeignKey(c => c.CoopID)
                 .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure one-to-many relationship (Switch -> Unidade)
+            modelBuilder.Entity<Switch>()
+                .HasOne(c => c.Unidade)
+                .WithMany(r => r.Switches)
+                .HasForeignKey(c => c.UnidadeID)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure one-to-many relationship (Firewall -> Fabricante)

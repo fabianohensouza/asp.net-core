@@ -1,0 +1,19 @@
+﻿@model FirewallsListViewModel
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Firewalls - @Model?.CoopAtual?.DisplayName</h4>
+    </div>
+</div>
+
+<partial name="FeedbackMessage" />
+
+<partial name="Tabelas/TabelaFirewalls" model=@Model?.Firewalls />
+
+<form form asp-action="EditFirewall" method="post">
+    <input type="hidden" name="CoopID" value="@Model?.CoopAtual?.CoopID" />
+    <button type="submit" class="align-items-center btn btn-secondary">
+        Cadastrar Novo
+    </button>
+</form>
+

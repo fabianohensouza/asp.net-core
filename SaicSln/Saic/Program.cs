@@ -24,6 +24,7 @@ builder.Services.AddScoped<ILinkRepository, EFLinkRepository>();
 builder.Services.AddScoped<IFirewallRepository, EFFirewallRepository>();
 builder.Services.AddScoped<IVlanRepository, EFVlanRepository>();
 builder.Services.AddScoped<IServidorRepository, EFServidorRepository>();
+builder.Services.AddScoped<ISwitchRepository, EFSwitchRepository>();
 
 var app = builder.Build();
 
