@@ -46,9 +46,14 @@ namespace Saic.Components
                         Controller = "Switch",
                         Label = "Switches" ,
                         Icone = "fa-solid fa-network-wired"},
-                    new NavigationMenuInfo{ 
-                        Action = "Index", 
-                        Controller = "Servico", 
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Backup",
+                        Label = "Backup" ,
+                        Icone = "fa-solid fa-cloud-arrow-up"},
+                    new NavigationMenuInfo{
+                        Action = "Index",
+                        Controller = "Servico",
                         Label = "Serviços" ,
                         Icone = "fa-solid fa-globe"}
                 }.AsEnumerable() 
