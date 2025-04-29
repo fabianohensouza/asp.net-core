@@ -17,7 +17,7 @@ namespace Saic.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -40,12 +40,10 @@ namespace Saic.Migrations
                     b.Property<bool>("AdTiers")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("CoopID")
-                        .IsRequired()
+                    b.Property<Guid>("CoopID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DCPrimarioID")
-                        .IsRequired()
+                    b.Property<Guid>("DCPrimarioID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DCSecundarioID")
@@ -199,12 +197,10 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CoopID")
-                        .IsRequired()
+                    b.Property<Guid>("CoopID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("FabricanteID")
-                        .IsRequired()
+                    b.Property<int>("FabricanteID")
                         .HasColumnType("int");
 
                     b.Property<bool>("FirewallBackup")
@@ -323,10 +319,6 @@ namespace Saic.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<string>("ServidorCPU")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
                     b.Property<DateTime?>("ServidorGarantia")
                         .HasColumnType("datetime2");
 
@@ -382,6 +374,60 @@ namespace Saic.Migrations
                     b.ToTable("Servidores");
                 });
 
+            modelBuilder.Entity("Saic.Models.Switch", b =>
+                {
+                    b.Property<Guid>("SwitchID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CoopID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("FabricanteID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastChange")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SwitchAcesso")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("SwitchBackup")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SwitchModelo")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("SwitchObs")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("SwitchPortas")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SwitchSerial")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<Guid?>("UnidadeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SwitchID");
+
+                    b.HasIndex("CoopID");
+
+                    b.HasIndex("FabricanteID");
+
+                    b.HasIndex("UnidadeID");
+
+                    b.ToTable("Switches");
+                });
+
             modelBuilder.Entity("Saic.Models.Unidade", b =>
                 {
                     b.Property<Guid>("UnidadeID")
@@ -423,8 +469,7 @@ namespace Saic.Migrations
                     b.Property<DateTime>("LastChange")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UnidadeID")
-                        .IsRequired()
+                    b.Property<Guid>("UnidadeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("VlanNome")
@@ -576,6 +621,32 @@ namespace Saic.Migrations
                     b.Navigation("Unidade");
                 });
 
+            modelBuilder.Entity("Saic.Models.Switch", b =>
+                {
+                    b.HasOne("Saic.Models.Coop", "Coop")
+                        .WithMany("Switches")
+                        .HasForeignKey("CoopID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Saic.Models.AuxiliarModels.Fabricante", "Fabricante")
+                        .WithMany()
+                        .HasForeignKey("FabricanteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Saic.Models.Unidade", "Unidade")
+                        .WithMany("Switches")
+                        .HasForeignKey("UnidadeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Coop");
+
+                    b.Navigation("Fabricante");
+
+                    b.Navigation("Unidade");
+                });
+
             modelBuilder.Entity("Saic.Models.Unidade", b =>
                 {
                     b.HasOne("Saic.Models.Coop", "Coop")
@@ -609,6 +680,8 @@ namespace Saic.Migrations
 
                     b.Navigation("Servidores");
 
+                    b.Navigation("Switches");
+
                     b.Navigation("Unidades");
                 });
 
@@ -624,6 +697,8 @@ namespace Saic.Migrations
                     b.Navigation("Links");
 
                     b.Navigation("Servidores");
+
+                    b.Navigation("Switches");
 
                     b.Navigation("Vlans");
                 });
