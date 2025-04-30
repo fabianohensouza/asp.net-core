@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20241112100020_InitialMigration.cs" />
-    <Compile Remove="Migrations\20241112100020_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\StoreDbContextModelSnapshot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
