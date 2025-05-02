@@ -63,28 +63,6 @@ namespace Saic.Migrations
                     b.ToTable("Ads");
                 });
 
-            modelBuilder.Entity("Saic.Models.AuxiliarModels.Equipe", b =>
-                {
-                    b.Property<int>("EquipeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipeID"));
-
-                    b.Property<string>("EquipeDescrição")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("EquipeNome")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("EquipeID");
-
-                    b.ToTable("Equipes");
-                });
-
             modelBuilder.Entity("Saic.Models.AuxiliarModels.Fabricante", b =>
                 {
                     b.Property<int>("FabricanteID")
@@ -281,9 +259,6 @@ namespace Saic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("EquipeID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("LastChange")
                         .HasColumnType("datetime2");
 
@@ -293,8 +268,6 @@ namespace Saic.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.HasKey("RespID");
-
-                    b.HasIndex("EquipeID");
 
                     b.ToTable("RespCoops");
                 });
@@ -577,16 +550,6 @@ namespace Saic.Migrations
                     b.Navigation("Unidade");
                 });
 
-            modelBuilder.Entity("Saic.Models.RespCoop", b =>
-                {
-                    b.HasOne("Saic.Models.AuxiliarModels.Equipe", "Equipe")
-                        .WithMany("RespCoops")
-                        .HasForeignKey("EquipeID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Equipe");
-                });
-
             modelBuilder.Entity("Saic.Models.Servidor", b =>
                 {
                     b.HasOne("Saic.Models.Coop", "Coop")
@@ -667,11 +630,6 @@ namespace Saic.Migrations
                         .IsRequired();
 
                     b.Navigation("Unidade");
-                });
-
-            modelBuilder.Entity("Saic.Models.AuxiliarModels.Equipe", b =>
-                {
-                    b.Navigation("RespCoops");
                 });
 
             modelBuilder.Entity("Saic.Models.Coop", b =>

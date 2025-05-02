@@ -19,7 +19,6 @@ namespace Saic.Models
         public DbSet<Ad> Ads => Set<Ad>();
 
         //Auxiliar models
-        public DbSet<Equipe> Equipes => Set<Equipe>();
         public DbSet<Fabricante> Fabricantes => Set<Fabricante>();
         public DbSet<TipoAuxiliar> TipoAuxiliares => Set<TipoAuxiliar>();
         public DbSet<SistOp> SistOps => Set<SistOp>();
@@ -33,14 +32,6 @@ namespace Saic.Models
                 .HasOne(c => c.RespCoop)
                 .WithMany(r => r.Coops)
                 .HasForeignKey(c => c.RespID)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Configure one-to-many relationship (RespCoop -> Equipe)
-            modelBuilder.Entity<RespCoop>()
-                .HasOne(c => c.Equipe)
-                .WithMany(r => r.RespCoops)
-                .HasForeignKey(c => c.EquipeID)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 

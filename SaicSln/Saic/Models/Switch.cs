@@ -41,7 +41,7 @@ namespace Saic.Models
 
         [DisplayName("Coop *")]
         [Required(ErrorMessage = "Informe a Cooperativa")]
-        public Guid CoopID { get; set; }
+        public Guid? CoopID { get; set; }
         public Coop? Coop { get; set; }
 
         [DisplayName("Unidade")]
@@ -50,7 +50,7 @@ namespace Saic.Models
 
         [Display(Name = "Fabricante *")]
         [Required(ErrorMessage = "Fabricante Obrigatório")]
-        public int FabricanteID { get; set; }
+        public int? FabricanteID { get; set; }
         public Fabricante? Fabricante { get; set; }
     }
 }

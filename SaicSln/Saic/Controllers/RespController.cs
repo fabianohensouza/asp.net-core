@@ -12,21 +12,16 @@ namespace Saic.Controllers
     {
         private IRespRepository _ctxResps;
         private readonly StoreDbContext _context;
-        private readonly IList<Equipe> _equipeList;
 
         public RespController(IRespRepository repo, StoreDbContext context)
         {
             _ctxResps = repo;
-            _context = context;
-            _equipeList = _context.Equipes
-                .OrderBy(e => e.EquipeNome)
-                .ToList();
+            //_context = context;
         }
 
         public ViewResult Index()
         {
             var resps = _ctxResps.RespCoops
-                .Include(r => r.Equipe)
                 .Include(r => r.Coops)
                     .ThenInclude(f => f.Firewalls)
                 .Include(r => r.Coops)
@@ -47,7 +42,6 @@ namespace Saic.Controllers
         {
             if (respId == null)
             {
-                LoadViewBags();
                 return View(new RespCoop());
             }
 
@@ -61,7 +55,6 @@ namespace Saic.Controllers
                 return RedirectToAction("Index", "Resp");
             }
 
-            LoadViewBags();
             return View(existingResp);
         }
 
@@ -73,7 +66,6 @@ namespace Saic.Controllers
                 return NotFound(); // Handle user not found
             }
 
-            LoadViewBags();
             return View("EditResp", resp);
         }
 
@@ -92,7 +84,6 @@ namespace Saic.Controllers
                 if (existingResp != null)
                 {
                     existingResp.RespNome = resp.RespNome;
-                    existingResp.EquipeID = resp.EquipeID;
                     existingResp.LastChange = resp.LastChange;
 
                     bool isSaved = _ctxResps.SaveRespCoop(existingResp);
@@ -134,14 +125,14 @@ namespace Saic.Controllers
             return RedirectToAction("Index", "Resp");
         }
 
-        private void LoadViewBags()
-        {
-            ViewBag.EquipeList = new SelectList(
-                    _equipeList,
-                    "EquipeID",
-                    "EquipeNome"
-            );
-        }
+        //private void LoadViewBags()
+        //{
+        //    ViewBag.EquipeList = new SelectList(
+        //            _equipeList,
+        //            "EquipeID",
+        //            "EquipeNome"
+        //    );
+        //}
     }
 }
 

@@ -12,20 +12,6 @@ namespace Saic.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Equipes",
-                columns: table => new
-                {
-                    EquipeID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EquipeNome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    EquipeDescrição = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipes", x => x.EquipeID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Fabricantes",
                 columns: table => new
                 {
@@ -37,6 +23,19 @@ namespace Saic.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fabricantes", x => x.FabricanteID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RespCoops",
+                columns: table => new
+                {
+                    RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RespNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    LastChange = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RespCoops", x => x.RespID);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,26 +64,6 @@ namespace Saic.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoAuxiliares", x => x.TipoID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RespCoops",
-                columns: table => new
-                {
-                    RespID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RespNome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EquipeID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RespCoops", x => x.RespID);
-                    table.ForeignKey(
-                        name: "FK_RespCoops_Equipes_EquipeID",
-                        column: x => x.EquipeID,
-                        principalTable: "Equipes",
-                        principalColumn: "EquipeID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -393,11 +372,6 @@ namespace Saic.Migrations
                 column: "UnidadeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RespCoops_EquipeID",
-                table: "RespCoops",
-                column: "EquipeID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Servidores_CoopID",
                 table: "Servidores",
                 column: "CoopID");
@@ -481,9 +455,6 @@ namespace Saic.Migrations
 
             migrationBuilder.DropTable(
                 name: "RespCoops");
-
-            migrationBuilder.DropTable(
-                name: "Equipes");
         }
     }
 }

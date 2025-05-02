@@ -22,7 +22,6 @@ namespace Saic.Models.SeedData
                 SeedFabricantes(context);
                 SeedTipos(context);
                 SeedSistOps(context);
-                SeedEquipes(context);
             }
         }
 
@@ -48,20 +47,6 @@ namespace Saic.Models.SeedData
                 context.SaveChanges();
             }
         }
-
-        private static void SeedEquipes(StoreDbContext context)
-            {
-                if (!context.Equipes.Any())
-                {
-                    context.Equipes.AddRange(
-                        new Equipe { EquipeNome = "Equipe 1" },
-                        new Equipe { EquipeNome = "Equipe 2" },
-                        new Equipe { EquipeNome = "Equipe 3" }
-                    );
-
-                    context.SaveChanges();
-                }
-            }
 
         private static void SeedFabricantes(StoreDbContext context)
         {

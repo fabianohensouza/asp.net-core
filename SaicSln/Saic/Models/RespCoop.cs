@@ -24,10 +24,6 @@ namespace Saic.Models
 
         public DateTime LastChange { get; set; }
 
-        [DisplayName("Equipe")]
-        public int? EquipeID { get; set; }
-        public Equipe? Equipe { get; set; }
-
         public ICollection<Coop> Coops { get; set; } = new List<Coop>();
 
         public int ReturnCoops()
