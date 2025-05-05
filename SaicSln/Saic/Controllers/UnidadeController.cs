@@ -64,9 +64,11 @@ namespace Saic.Controllers
             var unidade = _ctxUnidades.Unidades
                 .Include(c => c.Coop)
                 .Include(c => c.Firewalls)
-                    .ThenInclude(c => c.Fabricante)
+                    .ThenInclude(f => f.Fabricante)
                 .Include(c => c.Links)
                     .ThenInclude(t => t.TipoLink)
+                .Include(c => c.Switches)
+                    .ThenInclude(f => f.Fabricante)
                 .Include(c => c.Vlans)
                 .Where(c => c.UnidadeID == unidadeID)
                 .Where(c => c.CoopID == coopID)

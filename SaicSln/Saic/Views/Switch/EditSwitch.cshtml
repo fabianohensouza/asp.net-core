@@ -1,16 +1,16 @@
-﻿@model Firewall
+﻿@model Switch
 
 <div class="card mb-4">
     <div class="card-header">
-        <h4>Cadastro de Firewall</h4>
+        <h4>Cadastro de Switch</h4>
     </div>
 </div>
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="SaveChanges" method="post">
-    @* Hidden field for FirewallID *@
-    <input type="hidden" asp-for="FirewallID" />
+    @* Hidden field for SwitchID *@
+    <input type="hidden" asp-for="SwitchID" />
     @* Hidden field for CoopID *@
     <input type="hidden" asp-for="CoopID" />
 
@@ -32,35 +32,43 @@
             </select>
         </div>
         <div class="col-md-3">
-            <label asp-for="FirewallModelo" class="mb0"></label>
-            <input asp-for="FirewallModelo" class="form-control"/>
+            <label asp-for="SwitchModelo" class="mb0"></label>
+            <input asp-for="SwitchModelo" class="form-control"/>
         </div>
     </div>
     <div class="form-group row mb-3">
-        <div class="col-md-10">
-            <label asp-for="FirewallSerial" class="mb-0"></label>
-            <input asp-for="FirewallSerial" class="form-control"/>
+        <div class="col-md-3">
+            <label asp-for="SwitchPortas" class="mb0"></label>
+            <input asp-for="SwitchPortas" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="SwitchAcesso" class="mb0"></label>
+            <input asp-for="SwitchAcesso" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="SwitchSerial" class="mb-0"></label>
+            <input asp-for="SwitchSerial" class="form-control"/>
         </div>
         <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
             <label class="mb-0 me-2">Backup</label>
-            <input asp-for="FirewallBackup" type="checkbox" class="form-check-input" value="true" />
+            <input asp-for="SwitchBackup" type="checkbox" class="form-check-input" value="true" />
         </div>
     </div>
 
     <div class="form-group row mb-3">
         <div class="col-md-12">
-            <label asp-for="FirewallObs" class="mb-0"></label>
-            <textarea asp-for="FirewallObs" class="form-control" rows="4"></textarea>
+            <label asp-for="SwitchObs" class="mb-0"></label>
+            <textarea asp-for="SwitchObs" class="form-control" rows="4"></textarea>
         </div>
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-2">
         <form asp-action="SaveChanges" method="post" class="mb-0">
-            <input type="hidden" asp-for="FirewallID" />
+            <input type="hidden" asp-for="SwitchID" />
             <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
 
-        <form asp-action="ListFirewalls" method="post" class="mb-0">
+        <form asp-action="ListSwitchs" method="post" class="mb-0">
             <input type="hidden" name="CoopID" value="@Model.CoopID" />
             <button type="submit" class="btn btn-secondary">Retornar</button>
         </form>

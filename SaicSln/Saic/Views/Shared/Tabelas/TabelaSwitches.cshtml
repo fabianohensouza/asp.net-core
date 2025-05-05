@@ -3,10 +3,12 @@
 <table class="table table-hover text-center">
     <thead>
         <tr>
-            <th scope="col" class="text-center" style="width: 4%;">Coop</th>
+            <th scope="col" class="text-center" style="width: 5%;">Coop</th>
             <th scope="col" class="text-center" style="width: 15%;">Modelo</th>
-            <th scope="col" class="text-center" style="width: 20%;">Serial</th>
-            <th scope="col" class="text-center" style="width: 42%;">Observações</th>
+            <th scope="col" class="text-center" style="width: 15%;">Serial</th>
+            <th scope="col" class="text-center" style="width: 10%;">Unidade</th>
+            <th scope="col" class="text-center" style="width: 5%;">Portas</th>
+            <th scope="col" class="text-center" style="width: 30%;">Observações</th>
             <th scope="col" style="width: 10%;">Ações</th>
         </tr>
     </thead>
@@ -21,6 +23,8 @@
                 <td class="text-center">
                     @(f.SwitchBackup ? "Backup" : f?.Unidade?.UnidadeNumero)
                 </td>
+                <td class="text-center">@f?.Unidade</td>
+                <td class="text-center">@f?.SwitchPortas</td>
                 <td class="text-center"><p><em><small>@(f?.SwitchObs == null ? "______" : f?.SwitchObs)</small></em></p></td>
                 <td>
                     <div class="d-flex align-items-center gap-2">

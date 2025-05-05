@@ -21,11 +21,6 @@ namespace Saic.Components
                         Controller = "Resp",
                         Label = "Responsáveis",
                         Icone = "fa-solid fa-briefcase" },
-                    new NavigationMenuInfo{
-                        Action = "Index",
-                        Controller = "Equipe",
-                        Label = "Equipes",
-                        Icone = "fa-solid fa-people-group" },
                     new NavigationMenuInfo{ 
                         Action = "Index", 
                         Controller = "Painel", 
